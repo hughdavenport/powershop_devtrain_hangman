@@ -38,6 +38,9 @@ RSpec.describe Hangman do
             it "should not lose on new game" do
                 expect(@game.lost).not_to eq true
             end
+            it "should have a guessed_word of _______ (hangman)" do
+                expect(@game.guessed_word).to eq ("_"*"hangman".length)
+            end
         end
         context "almost lost game" do
             before do
@@ -52,6 +55,9 @@ RSpec.describe Hangman do
             end
             it "should have a score of 1" do
                 expect(@game.score).to eq 1
+            end
+            it "should still have a guessed_word of _______ (testing)" do
+                expect(@game.guessed_word).to eq ("_"*"testing".length)
             end
             it "should lose next bad guess" do
                 @game.guess 'z'
@@ -84,6 +90,9 @@ RSpec.describe Hangman do
             end
             it "should have a score of 6 (one less than 7)" do
                 expect(@game.score).to eq 6
+            end
+            it "should have a guessed_word of mega_roso_ous (megaprosopous)" do
+                expect(@game.guessed_word).to eq ("megaprosopous".gsub("p", "_"))
             end
             it "should not win on a wrong letter" do
                 @game.guess 'z'

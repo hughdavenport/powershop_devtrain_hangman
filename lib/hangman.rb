@@ -7,6 +7,7 @@ class Hangman
     def initialize(params={})
         @score = params.fetch(:score, 7)
         @word = params.fetch(:word, "hangman")
+        @guessed_word = ("_"*@word.length)
     end
 
     def won()
