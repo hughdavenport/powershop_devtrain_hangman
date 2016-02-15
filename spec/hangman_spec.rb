@@ -27,4 +27,14 @@ RSpec.describe Hangman do
         end
     end
 
+    describe "#won" do
+        context "new game" do
+            before do
+                @game = Hangman.new
+            end
+            it "should not win on new game" do
+                expect(@game.won).not_to eq true
+            end
+        end
+    end
 end

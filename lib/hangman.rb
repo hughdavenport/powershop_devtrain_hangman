@@ -8,4 +8,8 @@ class Hangman
         @word = params.fetch(:word, "hangman")
     end
 
+    def won()
+        @score == 0
+    end
+
 end
