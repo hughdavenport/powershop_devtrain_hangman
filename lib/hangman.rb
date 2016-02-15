@@ -2,6 +2,7 @@ class Hangman
 
     attr_reader :score
     attr_reader :word
+    attr_reader :guessed_word
 
     def initialize(params={})
         @score = params.fetch(:score, 7)
@@ -9,7 +10,7 @@ class Hangman
     end
 
     def won()
-        @score == 0
+        @score > 0 and @guessed_word.eql? @word
     end
 
 end
