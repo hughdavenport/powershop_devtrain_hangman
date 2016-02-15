@@ -17,4 +17,8 @@ class Hangman
         @score == 0
     end
 
+    def guess(letter)
+        @score -= 1 if not word.include? letter
+    end
+
 end

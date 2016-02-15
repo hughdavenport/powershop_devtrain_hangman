@@ -27,7 +27,7 @@ RSpec.describe Hangman do
         end
     end
 
-    describe "winning and losing" do
+    describe "won/lost" do
         context "new game" do
             before do
                 @game = Hangman.new
@@ -39,5 +39,81 @@ RSpec.describe Hangman do
                 expect(@game.lost).not_to eq true
             end
         end
+        context "almost lost game" do
+            before do
+                @game = Hangman.new( {:score => 7, :word => "testing"} )
+                (1..6).each { @game.guess 'z' } # Word doesn't have a z in it
+            end
+            it "should not have won the game" do
+                expect(@game.won).not_to eq true
+            end
+            it "should not have lost .. yet" do
+                expect(@game.lost).not_to eq true
+            end
+            it "should have a score of 1" do
+                expect(@game.score).to eq 1
+            end
+            it "should lose next bad guess" do
+                @game.guess 'z'
+                expect(@game.lost).to eq true
+            end
+            it "should not win next bad guess" do
+                @game.guess 'z'
+                expect(@game.won).not_to eq true
+            end
+        end
+        context "almost winning game" do
+            before do
+                @game = Hangman.new( {:score => 7, :word => "megaprosopous"} )
+                @game.guess 'e'
+                @game.guess 'a'
+                @game.guess 'o'
+                @game.guess 'u'
+                @game.guess 'i' # wrong, should make score 6
+                @game.guess 'm'
+                @game.guess 'r'
+                @game.guess 's'
+                @game.guess 'g'
+                # Just missing a p, score should be 6
+            end
+            it "should not have won .. yet" do
+                expect(@game.won).not_to eq true
+            end
+            it "should not have lost" do
+                expect(@game.lost).not_to eq true
+            end
+            it "should have a score of 6 (one less than 7)" do
+                expect(@game.score).to eq 6
+            end
+            it "should not win on a wrong letter" do
+                @game.guess 'z'
+                expect(@game.won).not_to eq true
+            end
+            it "should not win on a repeat letter" do
+                @game.guess 'g'
+                expect(@game.won).not_to eq true
+            end
+            it "should not lose on a wrong letter" do
+                @game.guess 'z'
+                expect(@game.lost).not_to eq true
+            end
+            it "should not lost on a repeat letter" do
+                @game.guess 'g'
+                expect(@game.lost).not_to eq true
+            end
+            it "should win on a p" do
+                @game.guess 'p'
+                expect(@game.won).to eq true
+            end
+            it "should not lose on a p" do
+                @game.guess 'p'
+                expect(@game.lost).not_to eq true
+            end
+            it "should have a score of 6 after a p still" do
+                @game.guess 'p'
+                expect(@game.score).to eq 6
+            end
+        end
+
     end
 end
