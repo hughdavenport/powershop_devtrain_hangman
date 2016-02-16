@@ -43,8 +43,8 @@ RSpec.describe Wordlist do
         before do
             @wordlist = Wordlist.new("tests/valid")
             @words = [
-                'apple',
-                'banana',
+                'abcd',
+                'abcdefghijklmno',
             ]
         end
         it "should return apple or banana" do
