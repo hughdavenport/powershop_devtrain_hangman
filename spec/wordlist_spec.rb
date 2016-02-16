@@ -25,4 +25,14 @@ RSpec.describe Wordlist do
             expect(word.length).to be <= 10
         end
     end
+    context "empty wordlist" do
+        it "should fail on empty wordlist" do
+            expect { Wordlist.new("/dev/null") }.to raise_error(StandardError)
+        end
+    end
+    context "invalid wordlist" do
+        it "should fail on an invalid path" do
+            expect { Wordlist.new("/nonexistantpath") }.to raise_error(StandardError)
+        end
+    end
 end
