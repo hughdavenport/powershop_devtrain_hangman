@@ -10,11 +10,11 @@ class Hangman
         @guessed_word = ("_"*@word.length)
     end
 
-    def won()
+    def won?
         @score > 0 and @guessed_word.eql? @word
     end
 
-    def lost()
+    def lost?
         @score == 0
     end
 
