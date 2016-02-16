@@ -15,7 +15,7 @@ class Language
         if STRINGS.include? string
             STRINGS[string]
         else
-            "[[" + string + "]]"
+            "[[" + string.to_s + "]]"
         end
     end
 
