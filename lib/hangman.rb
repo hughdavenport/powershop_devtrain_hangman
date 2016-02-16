@@ -23,9 +23,9 @@ class Hangman
     end
 
     def validate_letter(letter)
-        raise TypeError if not letter.is_a? String
-        raise ArgumentError if letter.length != 1
-        raise ArgumentError if not ('a'..'z').include? letter
+        raise ValidateError if not letter.is_a? String
+        raise ValidateError if letter.length != 1
+        raise ValidateError if not ('a'..'z').include? letter
     end
 
     def guess(letter)

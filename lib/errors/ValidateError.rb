@@ -1,0 +1,3 @@
+class ValidateError < HangmanError
+
+end

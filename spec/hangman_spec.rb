@@ -1,4 +1,5 @@
 require 'hangman'
+Dir[File.dirname(__FILE__) + "/../lib/errors/*.rb"].each {|file| require file }
 
 RSpec.describe Hangman do
     describe "#initilize" do
@@ -146,22 +147,22 @@ RSpec.describe Hangman do
             @game = Hangman.new
         end
         it "should not allow nil letter" do
-            expect { @game.guess nil }.to raise_error(StandardError)
+            expect { @game.guess nil }.to raise_error(ValidateError)
         end
         it "should not allow non strings" do
-            expect { @game.guess [] }.to raise_error(StandardError)
+            expect { @game.guess [] }.to raise_error(ValidateError)
         end
         it "should not allow empty letters" do
-            expect { @game.guess '' }.to raise_error(StandardError)
+            expect { @game.guess '' }.to raise_error(ValidateError)
         end
         it "should not allow multiple letters" do
-            expect { @game.guess 'aa' }.to raise_error(StandardError)
+            expect { @game.guess 'aa' }.to raise_error(ValidateError)
         end
         it "should not allow upper case letters" do
-            expect { @game.guess 'A' }.to raise_error(StandardError)
+            expect { @game.guess 'A' }.to raise_error(ValidateError)
         end
         it "should not allow non alphabet letters" do
-            expect { @game.guess '~' }.to raise_error(StandardError)
+            expect { @game.guess '~' }.to raise_error(ValidateError)
         end
     end
 end
