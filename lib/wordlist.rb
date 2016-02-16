@@ -13,7 +13,8 @@ class Wordlist
                     words << line
                 end
             end
-        rescue IOError, Errno::ENOENT
+        rescue IOError
+        rescue Errno::ENOENT
         end
         raise NoUsableWordsError if @words.empty?
     end
