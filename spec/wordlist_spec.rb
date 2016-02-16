@@ -47,7 +47,7 @@ RSpec.describe Wordlist do
                 'abcdefghijklmno',
             ]
         end
-        it "should return apple or banana" do
+        it "should return a word from the wordlist" do
             word = @wordlist.get_word
             expect(@words).to include word
         end
