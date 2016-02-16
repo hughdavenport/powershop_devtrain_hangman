@@ -38,6 +38,9 @@ RSpec.describe Hangman do
             it "should not lose on new game" do
                 expect(@game).not_to be_lost
             end
+            it "should not be finished" do
+                expect(@game).not_to be_finished
+            end
             it "should have a guessed_word of _______ (hangman)" do
                 expect(@game.guessed_word).to eq ("_"*"hangman".length)
             end
@@ -53,6 +56,9 @@ RSpec.describe Hangman do
             it "should not have lost .. yet" do
                 expect(@game).not_to be_lost
             end
+            it "should not be finished .. yet" do
+                expect(@game).not_to be_finished
+            end
             it "should have a score of 1" do
                 expect(@game.score).to eq 1
             end
@@ -66,6 +72,10 @@ RSpec.describe Hangman do
             it "should not win next bad guess" do
                 @game.guess 'z'
                 expect(@game).not_to be_won
+            end
+            it "should be finished with next bad guess" do
+                @game.guess 'z'
+                expect(@game).to be_finished
             end
         end
         context "almost winning game" do
@@ -87,6 +97,9 @@ RSpec.describe Hangman do
             end
             it "should not have lost" do
                 expect(@game).not_to be_lost
+            end
+            it "should be finished .. yet" do
+                expect(@game).not_to be_finished
             end
             it "should have a score of 6 (one less than 7)" do
                 expect(@game.score).to eq 6
@@ -117,6 +130,10 @@ RSpec.describe Hangman do
             it "should not lose on a p" do
                 @game.guess 'p'
                 expect(@game).not_to be_lost
+            end
+            it "should be finished after a p" do
+                @game.guess 'p'
+                expect(@game).to be_finished
             end
             it "should have a score of 6 after a p still" do
                 @game.guess 'p'

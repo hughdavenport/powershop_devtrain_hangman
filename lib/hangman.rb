@@ -18,6 +18,10 @@ class Hangman
         @score == 0
     end
 
+    def finished?
+        won? or lost?
+    end
+
     def guess(letter)
         @score -= 1 if not word.include? letter
         index = @word.index(letter)
