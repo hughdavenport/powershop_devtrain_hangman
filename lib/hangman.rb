@@ -20,6 +20,11 @@ class Hangman
 
     def guess(letter)
         @score -= 1 if not word.include? letter
+        index = @word.index(letter)
+        while not index.nil?
+            @guessed_word[index] = @word[index]
+            index = @word.index(letter, index + 1)
+        end
     end
 
 end
