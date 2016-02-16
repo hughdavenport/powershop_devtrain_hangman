@@ -140,6 +140,28 @@ RSpec.describe Hangman do
                 expect(@game.score).to eq 6
             end
         end
-
+    end
+    describe "#guess" do
+        before do
+            @game = Hangman.new
+        end
+        it "should not allow nil letter" do
+            expect { @game.guess nil }.to raise_error(StandardError)
+        end
+        it "should not allow non strings" do
+            expect { @game.guess [] }.to raise_error(StandardError)
+        end
+        it "should not allow empty letters" do
+            expect { @game.guess '' }.to raise_error(StandardError)
+        end
+        it "should not allow multiple letters" do
+            expect { @game.guess 'aa' }.to raise_error(StandardError)
+        end
+        it "should not allow upper case letters" do
+            expect { @game.guess 'A' }.to raise_error(StandardError)
+        end
+        it "should not allow non alphabet letters" do
+            expect { @game.guess '~' }.to raise_error(StandardError)
+        end
     end
 end

@@ -22,7 +22,14 @@ class Hangman
         won? or lost?
     end
 
+    def validate_letter(letter)
+        raise TypeError if not letter.is_a? String
+        raise ArgumentError if letter.length != 1
+        raise ArgumentError if not ('a'..'z').include? letter
+    end
+
     def guess(letter)
+        validate_letter letter
         @score -= 1 if not word.include? letter
         index = @word.index(letter)
         while not index.nil?
