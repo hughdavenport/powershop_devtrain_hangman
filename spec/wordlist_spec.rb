@@ -20,10 +20,10 @@ RSpec.describe Wordlist do
             word = @wordlist.get_word
             expect(word).to match /\A[a-z]*\z$/
         end
-        it "should be between 3 and 10 characters" do
+        it "should be between 4 and 15 characters" do
             word = @wordlist.get_word
-            expect(word.length).to be >= 3
-            expect(word.length).to be <= 10
+            expect(word.length).to be >= 4
+            expect(word.length).to be <= 15
         end
     end
     context "empty wordlist" do

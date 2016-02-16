@@ -9,7 +9,7 @@ class Wordlist
                 f.each_line do |line|
                     line.chomp!
                     next if not /^[a-z]*$/ =~ line
-                    next if line.length < 3 or line.length > 10
+                    next if line.length < 4 or line.length > 15
                     words << line
                 end
             end
