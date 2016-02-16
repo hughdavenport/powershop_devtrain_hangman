@@ -9,13 +9,21 @@ class IO
         @output = params.fetch(:output, STDOUT)
     end
 
-    def get_input
+    def get_char
         @input.getch
     end
 
-    def write_output(text)
+    def print_text(text)
         @output.print text
         @output.flush
+    end
+
+    def print_newline
+        print_text "\n"
+    end
+
+    def print_text_with_newline(text)
+        print_text text + "\n"
     end
 
 end
