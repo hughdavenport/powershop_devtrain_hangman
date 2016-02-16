@@ -39,4 +39,17 @@ RSpec.describe Wordlist do
             expect { Wordlist.new("tests/invalid") }.to raise_error(NoUsableWordsError)
         end
     end
+    context "valid wordlist" do
+        before do
+            @wordlist = Wordlist.new("tests/valid")
+            @words = [
+                'apple',
+                'banana',
+            ]
+        end
+        it "should return apple or banana" do
+            word = @wordlist.get_word
+            expect(@words).to include word
+        end
+    end
 end
