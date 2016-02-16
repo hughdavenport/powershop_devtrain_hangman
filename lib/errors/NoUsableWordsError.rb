@@ -1,0 +1,3 @@
+class NoUsableWordsError < HangmanError
+
+end

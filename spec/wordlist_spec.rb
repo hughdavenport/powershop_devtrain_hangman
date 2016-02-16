@@ -1,4 +1,5 @@
 require 'wordlist'
+Dir[File.dirname(__FILE__) + "/../lib/errors/*.rb"].each {|file| require file }
 
 RSpec.describe Wordlist do
     context "default wordlist" do
@@ -27,12 +28,12 @@ RSpec.describe Wordlist do
     end
     context "empty wordlist" do
         it "should fail on empty wordlist" do
-            expect { Wordlist.new("/dev/null") }.to raise_error(StandardError)
+            expect { Wordlist.new("/dev/null") }.to raise_error(NoUsableWordsError)
         end
     end
     context "invalid wordlist" do
         it "should fail on an invalid path" do
-            expect { Wordlist.new("/nonexistantpath") }.to raise_error(StandardError)
+            expect { Wordlist.new("/nonexistantpath") }.to raise_error(NoUsableWordsError)
         end
     end
 end

@@ -1,0 +1,3 @@
+class HangmanError < StandardError
+
+end
