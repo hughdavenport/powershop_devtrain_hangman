@@ -1,5 +1,5 @@
-require 'ConsoleIO'
-require 'Language'
+require_relative 'ConsoleIO'
+require_relative 'Language'
 class ConsolePresenter
 
     def initialize(params)

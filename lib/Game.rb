@@ -1,7 +1,7 @@
-require 'Hangman'
-require 'Wordlist'
-require 'ConsolePresenter'
-Dir[File.dirname(__FILE__) + "/errors/*.rb"].each {|file| require file }
+require_relative 'Hangman'
+require_relative 'Wordlist'
+require_relative 'ConsolePresenter'
+Dir[File.dirname(__FILE__) + "/errors/*.rb"].each {|file| require_relative file }
 class Game
 
     def initialize()
