@@ -1,7 +1,6 @@
-require 'hangman'
-require 'wordlist'
+require 'Hangman'
+require 'Wordlist'
 require 'ConsolePresenter'
-require 'language'
 Dir[File.dirname(__FILE__) + "/errors/*.rb"].each {|file| require file }
 class Game
 
