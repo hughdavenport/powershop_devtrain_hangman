@@ -6,7 +6,10 @@ STRINGS = {
     :gameover                   => "¡JUEGA TERMINADO!",
     :youwon                     => "¡Ganaste!",
     :youlost                    => "¡Perdiste!",
-    :youhavelivesleft           => "Ha :lives vidas izquierda",
+    :youhavelivesleft           => "Usted tiene :lives vidas izquierda",
+    :youhadlivesleft            => "Usted tenía :lives vidas izquierda",
     :currentguessis             => "Conjectura actual es: :guess",
-    :youhaveguessed             => "Ha adivinado: :guesses",
+    :finalguesswas              => "Conjectura final fue: :guess",
+    :youhaveguessed             => "Usted tiene adivinado: :guesses",
+    :youhadguessed              => "Usted ha adivinado: :guesses",
 }

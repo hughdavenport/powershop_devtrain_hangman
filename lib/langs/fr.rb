@@ -7,6 +7,9 @@ STRINGS = {
     :youwon                     => "Vous avez gagné!",
     :youlost                    => "Vous avez perdu!",
     :youhavelivesleft           => "Vous avez :lives vies gauche",
+    :youhadlivesleft            => "Vous aviez :lives vies gauche",
     :currentguessis             => "Conjecture actualle est: :guess",
+    :finalguesswas              => "Conjecture finale était: :guess",
     :youhaveguessed             => "Vous avez deviné: :guesses",
+    :youhadguessed              => "Vous aviez deviné: :guesses",
 }
