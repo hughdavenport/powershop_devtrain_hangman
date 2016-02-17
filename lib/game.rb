@@ -73,14 +73,14 @@ class Game
             text += "\n"
             text += @language.get_string(@game.won? ? :youwon : :youlost)
             text += "\n"
-            text += @language.get_string(:youhadlivesleft, {:lives => @game.score})
+            text += @language.get_string(:youhadlivesremaining, {:lives => @game.score})
             text += "\n"
             text += @language.get_string(:finalguesswas, {:guess => @game.guessed_word})
             text += "\n"
             text += @language.get_string(:youhadguessed, {:guesses => @game.guesses.join(" ")})
             text += "\n"
         else
-            text += @language.get_string(:youhavelivesleft, {:lives => @game.score})
+            text += @language.get_string(:youhavelivesremaining, {:lives => @game.score})
             text += "\n"
             text += @language.get_string(:currentguessis, {:guess => @game.guessed_word})
             text += "\n"
