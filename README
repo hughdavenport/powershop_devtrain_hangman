@@ -1,5 +1,7 @@
 This is a ruby project implementing a game of hangman
 
+To run, simply run `./hangman`
+
 ### Copyright
 
 ©2015 Powershop New Zealand Limited 
