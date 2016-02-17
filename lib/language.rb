@@ -5,7 +5,7 @@ class Language
     def initialize(lang="en")
         @lang = lang
         begin
-            load File.dirname(__FILE__) + '/langs/' + @lang + ".rb"
+            require_relative 'langs/' + @lang
         rescue LoadError
             raise NoSuchLanguageError
         end
