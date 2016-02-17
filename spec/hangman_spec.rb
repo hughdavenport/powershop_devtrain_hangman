@@ -13,6 +13,18 @@ RSpec.describe Hangman do
             it "has a default word of hangman" do
                 expect(@game.word).to eq "hangman"
             end
+            it "should not have win" do
+                expect(@game).not_to be_won
+            end
+            it "should not have lost" do
+                expect(@game).not_to be_lost
+            end
+            it "should not be finished" do
+                expect(@game).not_to be_finished
+            end
+            it "should have a guessed_word of _______ (hangman)" do
+                expect(@game.guessed_word).to eq ([nil]*"hangman".length)
+            end
         end
         context "with an argument of default score of 6" do
             before do
@@ -34,25 +46,8 @@ RSpec.describe Hangman do
         end
     end
 
-    describe "won/lost" do
-        context "new game" do
-            before do
-                @game = Hangman.new
-            end
-            it "should not win on new game" do
-                expect(@game).not_to be_won
-            end
-            it "should not lose on new game" do
-                expect(@game).not_to be_lost
-            end
-            it "should not be finished" do
-                expect(@game).not_to be_finished
-            end
-            it "should have a guessed_word of _______ (hangman)" do
-                expect(@game.guessed_word).to eq ([nil]*"hangman".length)
-            end
-        end
-        context "almost lost game" do
+    describe "Finishing a game" do
+        context "when I have a word of testing, and guess 6 random characters" do
             before do
                 @game = Hangman.new( {:score => 7, :word => "testing"} )
                 @guesses = (('a'..'z').to_a - "testing".chars).sample(7)
@@ -95,7 +90,7 @@ RSpec.describe Hangman do
                 expect(@game.guesses).to eq (@guesses[1..6] + [@guesses[0]])
             end
         end
-        context "almost winning game" do
+        context "When I have a word of megaprosopous, then I make the guesses e, a, o, u, i, m, r, s, and g" do
             before do
                 @game = Hangman.new( {:score => 7, :word => "megaprosopous"} )
                 @guesses = ['e', 'a', 'o', 'u', 'i', 'm', 'r', 's', 'g']
@@ -173,7 +168,7 @@ RSpec.describe Hangman do
             end
         end
     end
-    describe "#guess" do
+    describe "Invalid guesses" do
         before do
             @game = Hangman.new
         end
