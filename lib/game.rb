@@ -12,15 +12,15 @@ class Game
     def initialize()
         # TODO get a word based on language
         word = Wordlist.new.get_word
-        @game = Hangman.new( {:word => word} )
+        @hangman = Hangman.new( {:word => word} )
         @io = IO.new
         @language = Language.new ENV.fetch("LANGUAGE", "en")
     end
 
     def run()
         lambda do
-            # Loop until @game.won or @game.lost
-            while not @game.finished?
+            # Loop until @hangman.won or @hangman.lost
+            while not @hangman.finished?
                 validity = nil
                 begin
                     # Clear screen
@@ -41,12 +41,12 @@ class Game
                         raise Interrupt
                     end
                     if guess == "\u0004" # ctrl-d, EOF
-                        # @game.lost 
+                        # @hangman.lost
                         return
                     end
                 end while not (validity = validate(guess)).nil?
                 # Process input
-                @game.guess guess
+                @hangman.guess guess
             end
         end.call
         # Clear screen, print final gamestate
@@ -56,7 +56,7 @@ class Game
 
     def validate(guess)
         begin
-            @game.validate_letter guess
+            @hangman.validate_letter guess
         rescue NotLowerCaseLetterError
             :inputisnotlowercase
         rescue AlreadyGuessedError
@@ -68,26 +68,26 @@ class Game
 
     def get_gamestate
         text = ""
-        if @game.finished?
+        if @hangman.finished?
             text += @language.get_string :gameover
             text += "\n"
-            text += @language.get_string(@game.won? ? :youwon : :youlost)
+            text += @language.get_string(@hangman.won? ? :youwon : :youlost)
             text += "\n"
-            text += @language.get_string(:youhadlivesremaining, {:lives => @game.score})
+            text += @language.get_string(:youhadlivesremaining, {:lives => @hangman.score})
             text += "\n"
-            text += @language.get_string(:finalguesswas, {:guess => @game.guessed_word})
+            text += @language.get_string(:finalguesswas, {:guess => @hangman.guessed_word})
             text += "\n"
-            text += @language.get_string(:youhadguessed, {:guesses => @game.guesses.join(" ")})
+            text += @language.get_string(:youhadguessed, {:guesses => @hangman.guesses.join(" ")})
             text += "\n"
         else
-            text += @language.get_string(:youhavelivesremaining, {:lives => @game.score})
+            text += @language.get_string(:youhavelivesremaining, {:lives => @hangman.score})
             text += "\n"
-            text += @language.get_string(:currentguessis, {:guess => @game.guessed_word})
+            text += @language.get_string(:currentguessis, {:guess => @hangman.guessed_word})
             text += "\n"
-            text += @language.get_string(:youhaveguessed, {:guesses => @game.guesses.join(" ")})
+            text += @language.get_string(:youhaveguessed, {:guesses => @hangman.guesses.join(" ")})
             text += "\n"
         end
-        text += @game.inspect + "\n"
+        text += @hangman.inspect + "\n"
         text
     end
 
