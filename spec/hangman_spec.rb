@@ -2,8 +2,8 @@ require 'hangman'
 Dir[File.dirname(__FILE__) + "/../lib/errors/*.rb"].each {|file| require file }
 
 RSpec.describe Hangman do
-    describe "#initilize" do
-        context "with a new game" do
+    describe "When I start a new game" do
+        context "with no arguments" do
             before do
                 @game = Hangman.new
             end
@@ -14,16 +14,22 @@ RSpec.describe Hangman do
                 expect(@game.word).to eq "hangman"
             end
         end
-        context "with arguments" do
-            it "can have a score of 6" do
-                score = 6
-                game = Hangman.new({:score => score})
-                expect(game.score).to eq score
+        context "with an argument of default score of 6" do
+            before do
+                @score = 6
+                @game = Hangman.new({:score => score})
             end
-            it "can have a word of powershop" do
-                word = "powershop"
-                game = Hangman.new({:word => word})
-                expect(game.word).to eq word
+            it "should have the correct score" do
+                expect(@game.score).to eq @score
+            end
+        end
+        context "with an argument for a word of powershop" do
+            before do
+                @word = "powershop"
+                @game = Hangman.new({:word => word})
+            end
+            it "should have the correct word" do
+                expect(@game.word).to eq @word
             end
         end
     end
