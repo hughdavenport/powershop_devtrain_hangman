@@ -1,0 +1,3 @@
+class NotLowerCaseLetterError < ValidateError
+
+end

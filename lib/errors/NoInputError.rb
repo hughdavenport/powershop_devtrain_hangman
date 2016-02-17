@@ -1,0 +1,3 @@
+class NoInputError < ValidateError
+
+end

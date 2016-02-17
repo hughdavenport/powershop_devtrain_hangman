@@ -26,9 +26,11 @@ class Hangman
 
     def validate_letter(letter)
         raise ValidateError if not letter.is_a? String
-        raise ValidateError if letter.length != 1
-        raise ValidateError if not ('a'..'z').include? letter
-        raise ValidateError if guesses.include? letter
+        raise NoInputError if letter.empty?
+        raise InputTooLongError if letter.length > 1
+        raise InvalidCharacterError if not /[ -~]/ =~ letter
+        raise NotLowerCaseLetterError if not ('a'..'z').include? letter
+        raise AlreadyGuessedError if guesses.include? letter
     end
 
     def guess(letter)

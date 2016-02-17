@@ -1,0 +1,3 @@
+class InputTooLongError < ValidateError
+
+end

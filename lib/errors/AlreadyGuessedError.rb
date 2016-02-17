@@ -1,0 +1,3 @@
+class AlreadyGuessedError < ValidateError
+
+end
