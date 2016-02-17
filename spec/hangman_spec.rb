@@ -49,7 +49,7 @@ RSpec.describe Hangman do
                 expect(@game).not_to be_finished
             end
             it "should have a guessed_word of _______ (hangman)" do
-                expect(@game.guessed_word).to eq ("_"*"hangman".length)
+                expect(@game.guessed_word).to eq ([nil]*"hangman".length)
             end
         end
         context "almost lost game" do
@@ -73,7 +73,7 @@ RSpec.describe Hangman do
                 expect(@game.score).to eq 1
             end
             it "should still have a guessed_word of _______ (testing)" do
-                expect(@game.guessed_word).to eq ("_"*"testing".length)
+                expect(@game.guessed_word).to eq ([nil]*"testing".length)
             end
             it "should have the correct guesses" do
                 expect(@game.guesses).to eq @guesses[1..6]
@@ -116,7 +116,7 @@ RSpec.describe Hangman do
                 expect(@game.score).to eq 6
             end
             it "should have a guessed_word of mega_roso_ous (megaprosopous)" do
-                expect(@game.guessed_word).to eq ("megaprosopous".gsub("p", "_"))
+                expect(@game.guessed_word).to eq ("megaprosopous".chars.map{|c| c == 'p' ? nil : c})
             end
             it "should have the correct guesses" do
                 expect(@game.guesses).to eq @guesses
@@ -165,7 +165,7 @@ RSpec.describe Hangman do
             end
             it "should have a guessed word of megaprosopous after a p" do
                 @game.guess 'p'
-                expect(@game.guessed_word).to eq "megaprosopous"
+                expect(@game.guessed_word).to eq "megaprosopous".chars
             end
             it "should have the correct guesses after a p" do
                 @game.guess 'p'

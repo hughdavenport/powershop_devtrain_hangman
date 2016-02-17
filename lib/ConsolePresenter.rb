@@ -31,20 +31,24 @@ class ConsolePresenter
             text += "\n"
             text += @language.get_string(:youhadlivesremaining, {:lives => hangman.score})
             text += "\n"
-            text += @language.get_string(:finalguesswas, {:guess => hangman.guessed_word})
+            text += @language.get_string(:finalguesswas, {:guess => get_guess_word(hangman)})
             text += "\n"
             text += @language.get_string(:youhadguessed, {:guesses => hangman.guesses.join(" ")})
             text += "\n"
         else
             text += @language.get_string(:youhavelivesremaining, {:lives => hangman.score})
             text += "\n"
-            text += @language.get_string(:currentguessis, {:guess => hangman.guessed_word})
+            text += @language.get_string(:currentguessis, {:guess => get_guess_word(hangman)})
             text += "\n"
             text += @language.get_string(:youhaveguessed, {:guesses => hangman.guesses.join(" ")})
             text += "\n"
         end
         text += hangman.inspect + "\n"
         text
+    end
+
+    def get_guess_word(hangman)
+        hangman.guessed_word.map{|letter| letter.nil? ? "_" : letter}.join()
     end
 
 end

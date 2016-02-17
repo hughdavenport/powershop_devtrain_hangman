@@ -10,7 +10,7 @@ class Hangman
     end
 
     def won?
-        score > 0 and guessed_word.eql? @word
+        score > 0 and guessed_word.join().eql? @word
     end
 
     def lost?
@@ -22,20 +22,11 @@ class Hangman
     end
 
     def score
-        @starting_score - (guesses - guessed_word.chars).length
+        @starting_score - (guesses - guessed_word).length
     end
 
     def guessed_word
-        ret = "_"*@word.length
-        guesses.each do |letter|
-            next if not @word.include? letter
-            index = @word.index(letter)
-            while not index.nil?
-                ret[index] = @word[index]
-                index = @word.index(letter, index + 1)
-            end
-        end
-        ret
+        @word.chars.map { |letter| guesses.include?(letter) ? letter : nil }
     end
 
     def validate_letter(letter)
