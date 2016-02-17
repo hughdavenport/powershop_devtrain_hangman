@@ -11,11 +11,15 @@ class Language
         end
     end
 
-    def get_string(string)
+    def get_string(string, args={})
         if STRINGS.include? string
-            STRINGS[string]
+            ret = STRINGS[string]
+            args.each do |key,value|
+                ret = ret.gsub(":" + key.to_s, value.to_s)
+            end
+            ret
         else
-            "[[" + string.to_s + "]]"
+            "[[" + string.to_s + (args.empty? ? "" : "||" + args.to_s) + "]]"
         end
     end
 
