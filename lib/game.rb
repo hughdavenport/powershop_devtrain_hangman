@@ -49,6 +49,8 @@ class Game
                 @game.guess guess
             end
         end.call
+        # Clear screen, print final gamestate
+        @io.clear_screen
         @io.print_text_with_newline get_gamestate
     end
 
