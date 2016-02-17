@@ -2,6 +2,8 @@ This is a ruby project implementing a game of hangman
 
 To run, simply run `./hangman`
 
+To run the tests, simply run `rspec`
+
 ### Copyright
 
 ©2015 Powershop New Zealand Limited 
