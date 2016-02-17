@@ -1,5 +1,5 @@
 require 'io/console'
-class IO
+class ConsoleIO
 
     attr_reader :input
     attr_reader :output
