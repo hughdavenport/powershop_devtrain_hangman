@@ -78,6 +78,8 @@ class Game
         text += "\n"
         text += @language.get_string(:currentguessis, {:guess => @game.guessed_word})
         text += "\n"
+        text += @language.get_string(:youhaveguessed, {:guesses => @game.guesses.join(" ")})
+        text += "\n"
         text += @game.inspect + "\n"
         text
     end
