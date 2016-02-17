@@ -24,6 +24,7 @@ class Game
                 validity = nil
                 begin
                     # Clear screen
+                    @io.clear_screen
                     # Display game
                     @io.print_text_with_newline get_gamestate
                     # Read input

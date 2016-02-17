@@ -9,6 +9,13 @@ class IO
         @output = params.fetch(:output, STDOUT)
     end
 
+    def clear_screen
+        # ANSI control sequences, see http://www.termsys.demon.co.uk/vtansi.htm
+        beginning_of_line = "\e[H"
+        erase_screen      = "\e[2J"
+        print_text beginning_of_line + erase_screen
+    end
+
     def get_char
         @input.getch
     end
