@@ -18,7 +18,7 @@ class Hangman
     end
 
     def finished?
-        won? or lost?
+        won? || lost?
     end
 
     def score
@@ -26,7 +26,7 @@ class Hangman
     end
 
     def guessed_word
-        @word.chars.map { |letter| guesses.include?(letter) ? letter : nil }
+        @word.chars.map { |letter| letter if guesses.include?(letter) }
     end
 
     def validate_letter(letter)
