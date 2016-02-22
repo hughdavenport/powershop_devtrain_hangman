@@ -1,6 +1,6 @@
-require_relative 'Hangman'
-require_relative 'Wordlist'
-require_relative 'ConsolePresenter'
+require_relative 'hangman'
+require_relative 'wordlist'
+require_relative 'consolePresenter'
 Dir[File.dirname(__FILE__) + "/errors/*.rb"].each {|file| require_relative file }
 class Game
 

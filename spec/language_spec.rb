@@ -1,4 +1,4 @@
-require 'Language'
+require 'language'
 Dir[File.dirname(__FILE__) + "/../lib/errors/*.rb"].each {|file| require file }
 
 RSpec.describe Language do

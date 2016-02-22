@@ -1,4 +1,4 @@
-require 'Hangman'
+require 'hangman'
 Dir[File.dirname(__FILE__) + "/../lib/errors/*.rb"].each {|file| require file }
 
 RSpec.describe Hangman do

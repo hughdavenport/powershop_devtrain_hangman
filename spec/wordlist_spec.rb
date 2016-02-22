@@ -1,4 +1,4 @@
-require 'Wordlist'
+require 'wordlist'
 Dir[File.dirname(__FILE__) + "/../lib/errors/*.rb"].each {|file| require file }
 
 RSpec.describe Wordlist do
