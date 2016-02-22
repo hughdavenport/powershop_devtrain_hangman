@@ -12,4 +12,5 @@ STRINGS = {
     :finalguesswas              => "Final guess was: :guess",
     :youhaveguessed             => "You have guessed: :guesses",
     :youhadguessed              => "You had guessed: :guesses",
+    :thewordwas                 => "The word was: :word",
 }

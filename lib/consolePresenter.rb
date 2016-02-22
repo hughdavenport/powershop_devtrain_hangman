@@ -35,6 +35,8 @@ class ConsolePresenter
             text += "\n"
             text += @language.get_string(:youhadguessed, {:guesses => hangman.guesses.join(" ")})
             text += "\n"
+            text += @language.get_string(:thewordwas, {:word => hangman.word})
+            text += "\n"
         else
             text += @language.get_string(:youhavelivesremaining, {:lives => hangman.score})
             text += "\n"
