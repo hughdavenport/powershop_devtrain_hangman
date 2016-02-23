@@ -8,8 +8,7 @@ class Game
         # TODO get a word based on language
         word = Wordlist.new.get_word
         @hangman = Hangman.new( {:word => word} )
-        language = ENV.fetch("LANGUAGE", "en")
-        @presenter = ConsolePresenter.new( {:language => language} )
+        @presenter = ConsolePresenter.new
     end
 
     def run()

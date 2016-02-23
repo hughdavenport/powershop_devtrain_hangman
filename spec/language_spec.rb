@@ -1,10 +1,10 @@
-require 'language'
+require 'languageLoader'
 Dir[File.dirname(__FILE__) + "/../lib/errors/*.rb"].each {|file| require file }
 
 RSpec.describe Language do
     context "default" do
         before do
-            @language = Language.new
+            @language = LanguageLoader.load
         end
         it "should default to english" do
             expect(@language.lang).to eq "en"
@@ -12,7 +12,7 @@ RSpec.describe Language do
     end
     context "English" do
         before do
-            @language = Language.new "en"
+            @language = LanguageLoader.load "en"
         end
         it "should return the correct phrase for entering a letter" do
             expect(@language.get_string(:pleaseenteraletter)).to eq "Please enter a letter: "
@@ -56,7 +56,7 @@ RSpec.describe Language do
     end
     context "Spanish" do
         before do
-            @language = Language.new "es"
+            @language = LanguageLoader.load "es"
         end
         it "should return the correct phrase for entering a letter" do
             expect(@language.get_string(:pleaseenteraletter)).to eq "Por favor, introduzca una letra: "
@@ -100,7 +100,7 @@ RSpec.describe Language do
     end
     context "French" do
         before do
-            @language = Language.new "fr"
+            @language = LanguageLoader.load "fr"
         end
         it "should return the correct phrase for entering a letter" do
             expect(@language.get_string(:pleaseenteraletter)).to eq "S'il vous plaît entrer une lettre: "

@@ -1,19 +1,12 @@
 class Language
 
-    attr_reader :lang
-
-    def initialize(lang="en")
-        @lang = lang
-        begin
-            require_relative 'langs/' + @lang
-        rescue LoadError
-            raise NoSuchLanguageError
-        end
+    def lang
+        self.class.to_s.split("Language_")[1]
     end
 
     def get_string(string, args={})
-        if STRINGS.include? string
-            ret = STRINGS[string]
+        if @STRINGS && @STRINGS.include?(string)
+            ret = @STRINGS[string]
             args.each do |key,value|
                 ret = ret.gsub(":" + key.to_s, value.to_s)
             end

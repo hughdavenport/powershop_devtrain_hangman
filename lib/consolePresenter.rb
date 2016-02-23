@@ -1,10 +1,10 @@
 require_relative 'consoleIO'
-require_relative 'language'
+require_relative 'languageLoader'
 class ConsolePresenter
 
-    def initialize(params)
+    def initialize(params={})
         @io = ConsoleIO.new
-        @language = Language.new params.fetch(:language, "en")
+        @language = LanguageLoader.load(ENV.fetch("LANGUAGE", "en"))
     end
 
     def display_game(hangman)
