@@ -12,29 +12,29 @@ class Game
   end
 
   def run()
+    # Loop until @hangman.won or @hangman.lost, guessing, or potentially quitting
     until @hangman.finished?
       guess = get_guess
       break unless guess
-      @hangman.guess guess
+      @hangman.guess(guess)
     end
     # Clear screen, print final gamestate
-    @presenter.display_game @hangman
+    @presenter.display_game(@hangman)
   end
 
   def get_guess()
-    # Loop until @hangman.won or @hangman.lost
     begin
       # Display game
-      @presenter.display_game @hangman
+      @presenter.display_game(@hangman)
       # Read input
-      @presenter.display_error @error
+      @presenter.display_error(@error)
       guess = @presenter.ask_for_letter
       # Validate input
       if guess == "\u0003" # ctrl-c, SIGINT
         raise Interrupt
       end
       if guess == "\u0004" # ctrl-d, EOF
-        # @hangman.lost
+        # Quit the game
         return
       end
     end while @error = validate(guess)
@@ -43,7 +43,7 @@ class Game
 
   def validate(guess)
     begin
-      @hangman.validate_letter guess
+      @hangman.validate_letter(guess)
     rescue NotLowerCaseLetterError
       :inputisnotlowercase
     rescue AlreadyGuessedError
