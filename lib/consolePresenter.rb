@@ -2,9 +2,9 @@ require_relative 'consoleIO'
 require_relative 'languageLoader'
 class ConsolePresenter
 
-  def initialize()
-    @io = ConsoleIO.new
-    @language = LanguageLoader.load(ENV.fetch("LANGUAGE", "en"))
+  def initialize(io: ConsoleIO.new, language: LanguageLoader.load("en"))
+    @io = io
+    @language = language
   end
 
   def display_game(hangman)
