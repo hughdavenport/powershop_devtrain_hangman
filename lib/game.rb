@@ -30,13 +30,6 @@ class Game
       @presenter.display_error(@error)
       guess = @presenter.ask_for_letter
       # Validate input
-      if guess == "\u0003" # ctrl-c, SIGINT
-        raise Interrupt
-      end
-      if guess == "\u0004" # ctrl-d, EOF
-        # Quit the game
-        return
-      end
     end while @error = validate(guess)
     guess
   end
