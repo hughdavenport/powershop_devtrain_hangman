@@ -1,5 +1,5 @@
 require 'languageLoader'
-Dir[File.dirname(__FILE__) + "/../lib/errors/*.rb"].each {|file| require file }
+require 'errors'
 
 RSpec.describe Language do
   context "default" do

@@ -1,5 +1,5 @@
 require 'hangman'
-Dir[File.dirname(__FILE__) + "/../lib/errors/*.rb"].each {|file| require file }
+require 'errors'
 
 RSpec.describe Hangman do
   describe "When I start a new game" do

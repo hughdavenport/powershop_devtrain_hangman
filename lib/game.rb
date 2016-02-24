@@ -1,7 +1,7 @@
 require_relative 'hangman'
 require_relative 'wordlist'
 require_relative 'consolePresenter'
-Dir[File.dirname(__FILE__) + "/errors/*.rb"].each {|file| require_relative file }
+require_relative 'errors'
 class Game
 
   def initialize()
