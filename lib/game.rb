@@ -7,7 +7,7 @@ class Game
   def initialize()
     # TODO get a word based on language
     word = Wordlist.new.get_word
-    @hangman = Hangman.new( {:word => word} )
+    @hangman = Hangman.new(word: word)
     @presenter = ConsolePresenter.new
   end
 

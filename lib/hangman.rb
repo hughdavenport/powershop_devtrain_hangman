@@ -3,9 +3,9 @@ class Hangman
   attr_reader :word
   attr_reader :guesses
 
-  def initialize(params={})
-    @starting_score = params.fetch(:score, 7)
-    @word = params.fetch(:word, "hangman")
+  def initialize(score: 7, word: "hangman")
+    @starting_score = score
+    @word = word
     @guesses = []
   end
 

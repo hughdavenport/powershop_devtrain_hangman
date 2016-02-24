@@ -29,7 +29,7 @@ RSpec.describe Hangman do
     context "with an argument of default score of 6" do
       before do
         @score = 6
-        @game = Hangman.new({:score => @score})
+        @game = Hangman.new(score: @score)
       end
       it "should have the correct score" do
         expect(@game.score).to eq @score
@@ -38,7 +38,7 @@ RSpec.describe Hangman do
     context "with an argument for a word of powershop" do
       before do
         @word = "powershop"
-        @game = Hangman.new({:word => @word})
+        @game = Hangman.new(word: @word)
       end
       it "should have the correct word" do
         expect(@game.word).to eq @word
