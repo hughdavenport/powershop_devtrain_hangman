@@ -2,9 +2,10 @@ require_relative 'consoleIO'
 require_relative 'languageLoader'
 class ConsolePresenter
 
-  def initialize(io: ConsoleIO.new, language: LanguageLoader.load("en"))
+  def initialize(debug: nil, io: ConsoleIO.new, language: LanguageLoader.load("en"))
     @io = io
     @language = language
+    @debug = debug
   end
 
   def display_game(hangman)
@@ -51,7 +52,7 @@ class ConsolePresenter
       text += get_string(:youhaveguessed, {:guesses => hangman.guesses.join(" ")})
       text += "\n"
     end
-    text += hangman.inspect + "\n"
+    text += hangman.inspect + "\n" if @debug
     text
   end
 
