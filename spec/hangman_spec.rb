@@ -171,34 +171,31 @@ RSpec.describe Hangman do
     end
   end
   describe "Invalid guesses" do
-    before do
-      @game = Hangman.new
-    end
     it "should not allow nil letter" do
-      expect { @game.guess nil }.to raise_error(ArgumentError)
+      expect { subject.guess nil }.to raise_error(ArgumentError)
     end
     it "should not allow non strings" do
-      expect { @game.guess [] }.to raise_error(ArgumentError)
+      expect { subject.guess [] }.to raise_error(ArgumentError)
     end
     it "should not allow empty letters" do
-      expect { @game.guess '' }.to raise_error(NoInputError)
+      expect { subject.guess '' }.to raise_error(NoInputError)
     end
     it "should not allow multiple letters" do
-      expect { @game.guess 'aa' }.to raise_error(InputTooLongError)
+      expect { subject.guess 'aa' }.to raise_error(InputTooLongError)
     end
     it "should not allow upper case letters" do
-      expect { @game.guess 'A' }.to raise_error(NotLowerCaseLetterError)
+      expect { subject.guess 'A' }.to raise_error(NotLowerCaseLetterError)
     end
     it "should not allow non alphabet letters" do
-      expect { @game.guess '~' }.to raise_error(InvalidCharacterError)
+      expect { subject.guess '~' }.to raise_error(InvalidCharacterError)
     end
     it "should not allow repeat wrong guesses" do
-      @game.guess 'z' # default word is hangman
-      expect { @game.guess 'z' }.to raise_error(AlreadyGuessedError)
+      subject.guess 'z' # default word is hangman
+      expect { subject.guess 'z' }.to raise_error(AlreadyGuessedError)
     end
     it "should not allow repeat correct guesses" do
-      @game.guess 'a' # default word is hangman
-      expect { @game.guess 'a' }.to raise_error(AlreadyGuessedError)
+      subject.guess 'a' # default word is hangman
+      expect { subject.guess 'a' }.to raise_error(AlreadyGuessedError)
     end
   end
 end
