@@ -43,46 +43,50 @@ RSpec.describe Hangman do
 
   describe "Finishing a game" do
     context "when I have a word of testing, and guess 6 random characters" do
-      before do
-        @game = Hangman.new( {:score => 7, :word => "testing"} )
-        @guesses = (('a'..'z').to_a - "testing".chars).sample(7)
+      let(:score)   { 7 }
+      let(:word)    { "testing" }
+      let(:guesses) { (('a'..'z').to_a - word.chars).sample(7) }
+      subject {
+        game = Hangman.new(score: score, word: word)
         (1..6).each do |i|
-          @game.guess @guesses[i]
+          game.guess(guesses[i])
         end
-      end
+        game
+      }
+
       it "should not have won the game" do
-        expect(@game).not_to be_won
+        expect(subject).not_to be_won
       end
       it "should not have lost .. yet" do
-        expect(@game).not_to be_lost
+        expect(subject).not_to be_lost
       end
       it "should not be finished .. yet" do
-        expect(@game).not_to be_finished
+        expect(subject).not_to be_finished
       end
       it "should have a score of 1" do
-        expect(@game.score).to eq 1
+        expect(subject.score).to eq 1
       end
       it "should still have a guessed_word of _______ (testing)" do
-        expect(@game.guessed_word).to eq ([nil]*"testing".length)
+        expect(subject.guessed_word).to eq ([nil]*word.length)
       end
       it "should have the correct guesses" do
-        expect(@game.guesses).to eq @guesses[1..6]
+        expect(subject.guesses).to eq guesses[1..6]
       end
       it "should lose next bad guess" do
-        @game.guess @guesses[0]
-        expect(@game).to be_lost
+        subject.guess guesses[0]
+        expect(subject).to be_lost
       end
       it "should not win next bad guess" do
-        @game.guess @guesses[0]
-        expect(@game).not_to be_won
+        subject.guess guesses[0]
+        expect(subject).not_to be_won
       end
       it "should be finished with next bad guess" do
-        @game.guess @guesses[0]
-        expect(@game).to be_finished
+        subject.guess guesses[0]
+        expect(subject).to be_finished
       end
       it "should have the correct guesses after the last bad guess" do
-        @game.guess @guesses[0]
-        expect(@game.guesses).to eq (@guesses[1..6] + [@guesses[0]])
+        subject.guess guesses[0]
+        expect(subject.guesses).to eq (guesses[1..6] + [guesses[0]])
       end
     end
     context "When I have a word of megaprosopous, then I make the guesses e, a, o, u, i, m, r, s, and g" do
