@@ -18,12 +18,12 @@ class ConsolePresenter
   end
 
   def display_error()
-    @io.print_text_with_newline @language.get_string(@error)
+    @io.print_text_with_newline get_string(@error)
     @error = nil
   end
 
   def ask_for_letter
-    message = @language.get_string :pleaseenteraletter
+    message = get_string :pleaseenteraletter
     @io.print_text message
     @io.get_char
   end
@@ -31,24 +31,24 @@ class ConsolePresenter
   def get_gamestate(hangman)
     text = ""
     if hangman.finished?
-      text += @language.get_string :gameover
+      text += get_string :gameover
       text += "\n"
-      text += @language.get_string(hangman.won? ? :youwon : :youlost)
+      text += get_string(hangman.won? ? :youwon : :youlost)
       text += "\n"
-      text += @language.get_string(:youhadlivesremaining, {:lives => hangman.score})
+      text += get_string(:youhadlivesremaining, {:lives => hangman.score})
       text += "\n"
-      text += @language.get_string(:finalguesswas, {:guess => get_guess_word(hangman)})
+      text += get_string(:finalguesswas, {:guess => get_guess_word(hangman)})
       text += "\n"
-      text += @language.get_string(:youhadguessed, {:guesses => hangman.guesses.join(" ")})
+      text += get_string(:youhadguessed, {:guesses => hangman.guesses.join(" ")})
       text += "\n"
-      text += @language.get_string(:thewordwas, {:word => hangman.word})
+      text += get_string(:thewordwas, {:word => hangman.word})
       text += "\n"
     else
-      text += @language.get_string(:youhavelivesremaining, {:lives => hangman.score})
+      text += get_string(:youhavelivesremaining, {:lives => hangman.score})
       text += "\n"
-      text += @language.get_string(:currentguessis, {:guess => get_guess_word(hangman)})
+      text += get_string(:currentguessis, {:guess => get_guess_word(hangman)})
       text += "\n"
-      text += @language.get_string(:youhaveguessed, {:guesses => hangman.guesses.join(" ")})
+      text += get_string(:youhaveguessed, {:guesses => hangman.guesses.join(" ")})
       text += "\n"
     end
     text += hangman.inspect + "\n"
@@ -57,6 +57,10 @@ class ConsolePresenter
 
   def get_guess_word(hangman)
     hangman.guessed_word.map{|letter| letter.nil? ? "_" : letter}.join()
+  end
+
+  def get_string(string, args={})
+    @language.get_string(string, args)
   end
 
 end
