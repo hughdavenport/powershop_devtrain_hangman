@@ -47,11 +47,11 @@ RSpec.describe Hangman do
       let(:word)    { "testing" }
       let(:guesses) { (('a'..'z').to_a - word.chars).sample(7) }
       subject {
-        game = Hangman.new(score: score, word: word)
+        hangman = Hangman.new(score: score, word: word)
         (1..6).each do |i|
-          game.guess(guesses[i])
+          hangman.guess(guesses[i])
         end
-        game
+        hangman
       }
 
       it "should not have won the game" do
