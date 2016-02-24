@@ -173,10 +173,10 @@ RSpec.describe Hangman do
       @game = Hangman.new
     end
     it "should not allow nil letter" do
-      expect { @game.guess nil }.to raise_error(InvalidTypeError)
+      expect { @game.guess nil }.to raise_error(ArgumentError)
     end
     it "should not allow non strings" do
-      expect { @game.guess [] }.to raise_error(InvalidTypeError)
+      expect { @game.guess [] }.to raise_error(ArgumentError)
     end
     it "should not allow empty letters" do
       expect { @game.guess '' }.to raise_error(NoInputError)
