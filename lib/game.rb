@@ -27,14 +27,16 @@ class Game
       # Display game
       @presenter.display_game(@hangman)
       # Read input
-      @presenter.display_error(@error)
       guess = @presenter.ask_for_letter
       # Validate input
-    end while @error = validate(guess)
+      error = get_error(guess)
+      break unless error
+      @presenter.add_error(error)
+    end while true
     guess
   end
 
-  def validate(guess)
+  def get_error(guess)
     begin
       @hangman.validate_letter(guess)
     rescue NotLowerCaseLetterError
