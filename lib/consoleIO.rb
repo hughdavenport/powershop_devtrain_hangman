@@ -4,9 +4,9 @@ class ConsoleIO
   attr_reader :input
   attr_reader :output
 
-  def initialize(params = {})
-    @input = params.fetch(:input, STDIN)
-    @output = params.fetch(:output, STDOUT)
+  def initialize(input: STDIN, output: STDOUT)
+    @input = input
+    @output = output
   end
 
   def clear_screen
