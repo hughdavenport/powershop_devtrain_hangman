@@ -4,26 +4,23 @@ require 'errors'
 RSpec.describe Hangman do
   describe "When I start a new game" do
     context "with no arguments" do
-      before do
-        @game = Hangman.new
-      end
       it "has a default score of 7" do
-        expect(@game.score).to eq 7
+        expect(subject.score).to eq 7
       end
       it "has a default word of hangman" do
-        expect(@game.word).to eq "hangman"
+        expect(subject.word).to eq "hangman"
       end
       it "should not have win" do
-        expect(@game).not_to be_won
+        expect(subject).not_to be_won
       end
       it "should not have lost" do
-        expect(@game).not_to be_lost
+        expect(subject).not_to be_lost
       end
       it "should not be finished" do
-        expect(@game).not_to be_finished
+        expect(subject).not_to be_finished
       end
       it "should have a guessed_word of _______ (hangman)" do
-        expect(@game.guessed_word).to eq ([nil]*"hangman".length)
+        expect(subject.guessed_word).to eq ([nil]*"hangman".length)
       end
     end
     context "with an argument of default score of 6" do
