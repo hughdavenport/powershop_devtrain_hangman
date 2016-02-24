@@ -90,80 +90,83 @@ RSpec.describe Hangman do
       end
     end
     context "When I have a word of megaprosopous, then I make the guesses e, a, o, u, i, m, r, s, and g" do
-      before do
-        @game = Hangman.new( {:score => 7, :word => "megaprosopous"} )
-        @guesses = ['e', 'a', 'o', 'u', 'i', 'm', 'r', 's', 'g']
-                      # i is wrong, should make score 6
-        @guesses.each {|guess| @game.guess guess }
+      let(:score)   { 7 }
+      let(:word)    { "megaprosopous" }
+      let(:guesses) { ['e', 'a', 'o', 'u', 'i', 'm', 'r', 's', 'g'] }
+      subject {
+        game = Hangman.new(score: score, word: word)
+        guesses.each {|guess| game.guess(guess) }
         # Just missing a p, score should be 6
-      end
+        game
+      }
+
       it "should not have won .. yet" do
-        expect(@game).not_to be_won
+        expect(subject).not_to be_won
       end
       it "should not have lost" do
-        expect(@game).not_to be_lost
+        expect(subject).not_to be_lost
       end
       it "should be finished .. yet" do
-        expect(@game).not_to be_finished
+        expect(subject).not_to be_finished
       end
       it "should have a score of 6 (one less than 7)" do
-        expect(@game.score).to eq 6
+        expect(subject.score).to eq 6
       end
       it "should have a guessed_word of mega_roso_ous (megaprosopous)" do
-        expect(@game.guessed_word).to eq ("megaprosopous".chars.map{|c| c == 'p' ? nil : c})
+        expect(subject.guessed_word).to eq (word.chars.map{|c| c == 'p' ? nil : c})
       end
       it "should have the correct guesses" do
-        expect(@game.guesses).to eq @guesses
+        expect(subject.guesses).to eq guesses
       end
       it "should not win on a wrong letter" do
-        @game.guess 'z'
-        expect(@game).not_to be_won
+        subject.guess 'z'
+        expect(subject).not_to be_won
       end
       it "should have the correct guesses after wrong letter" do
-        @game.guess 'z'
-        expect(@game.guesses).to eq (@guesses + ['z'])
+        subject.guess 'z'
+        expect(subject.guesses).to eq (guesses + ['z'])
       end
       it "should not win on a repeat letter" do
         begin
-          @game.guess 'g'
+          subject.guess 'g'
         rescue ValidateError # Ignore this, tested later
         end
-        expect(@game).not_to be_won
+        expect(subject).not_to be_won
       end
       it "should not lose on a wrong letter" do
-        @game.guess 'z'
-        expect(@game).not_to be_lost
+        subject.guess 'z'
+        expect(subject).not_to be_lost
       end
       it "should not lose on a repeat letter" do
         begin
-          @game.guess 'g'
+          subject.guess 'g'
         rescue ValidateError # Ignore this, tested later
         end
-        expect(@game).not_to be_lost
+        expect(subject).not_to be_lost
       end
       it "should win on a p" do
-        @game.guess 'p'
-        expect(@game).to be_won
+        subject.guess 'p'
+        expect(subject).to be_won
       end
       it "should not lose on a p" do
-        @game.guess 'p'
-        expect(@game).not_to be_lost
+        subject.guess 'p'
+        expect(subject).not_to be_lost
       end
       it "should be finished after a p" do
-        @game.guess 'p'
-        expect(@game).to be_finished
+        subject.guess 'p'
+        expect(subject).to be_finished
       end
       it "should have a score of 6 after a p still" do
-        @game.guess 'p'
-        expect(@game.score).to eq 6
+        subject.guess 'p'
+        expect(subject.score).to eq 6
       end
       it "should have a guessed word of megaprosopous after a p" do
-        @game.guess 'p'
-        expect(@game.guessed_word).to eq "megaprosopous".chars
+        subject.guess 'p'
+        expect(subject.guessed_word).to eq word.chars
       end
       it "should have the correct guesses after a p" do
-        @game.guess 'p'
-        expect(@game.guesses).to eq (@guesses + ['p'])
+        subject.guess 'p'
+        expect(subject.guesses).to eq (guesses + ['p'])
       end
     end
   end
