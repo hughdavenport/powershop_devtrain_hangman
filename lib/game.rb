@@ -4,11 +4,10 @@ require_relative 'consolePresenter'
 require_relative 'errors'
 class Game
 
-  def initialize()
+  def initialize(word: Wordlist.new.get_word, hangman: Hangman.new(word: word), language: LanguageLoader.load(ENV.fetch("LANGUAGE", "en")), presenter: ConsolePresenter.new(language: language))
     # TODO get a word based on language
-    word = Wordlist.new.get_word
-    @hangman = Hangman.new(word: word)
-    @presenter = ConsolePresenter.new(language: LanguageLoader.load(ENV.fetch("LANGUAGE", "en")))
+    @hangman = hangman
+    @presenter = presenter
   end
 
   def run()
