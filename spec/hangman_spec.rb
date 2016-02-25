@@ -45,7 +45,7 @@ RSpec.describe Hangman do
     context "when I have a word of testing, and guess 6 random characters" do
       let(:score)   { 7 }
       let(:word)    { "testing" }
-      let(:guesses) { (('a'..'z').to_a - word.chars).sample(7) }
+      let(:guesses) { (('a'..'z').to_a - word.chars.to_a).sample(7) }
       subject do
         hangman = Hangman.new(score: score, word: word)
         (1..6).each do |i|
@@ -113,7 +113,7 @@ RSpec.describe Hangman do
         expect(subject.score).to eq 6
       end
       it "should have a guessed_word of mega_roso_ous (megaprosopous)" do
-        expect(subject.guessed_word).to eq (word.chars.map{|c| c == 'p' ? nil : c})
+        expect(subject.guessed_word).to eq (word.chars.to_a.map{|c| c == 'p' ? nil : c})
       end
       it "should have the correct guesses" do
         expect(subject.guesses).to eq guesses
@@ -162,7 +162,7 @@ RSpec.describe Hangman do
       end
       it "should have a guessed word of megaprosopous after a p" do
         subject.guess 'p'
-        expect(subject.guessed_word).to eq word.chars
+        expect(subject.guessed_word).to eq word.chars.to_a
       end
       it "should have the correct guesses after a p" do
         subject.guess 'p'
