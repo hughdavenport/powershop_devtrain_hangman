@@ -59,5 +59,20 @@ RSpec.describe ConsolePresenter do
         expect(subject.ask_for_letter).to eq letter
       end
     end
+    describe "get_string" do
+      let(:string)       { :teststring }
+      let(:singlearg)    { {:arg1 => "arg1", :arg2 => "arg2"} }
+      let(:multipleargs) { {:arg1 => "arg1", :arg2 => "arg2"} }
+
+      it "should call the language get_string" do
+        expect(subject.get_string(string)).to eq language.get_string(string)
+      end
+      it "should call the language get_string with a single arg" do
+        expect(subject.get_string(string, singlearg)).to eq language.get_string(string, singlearg)
+      end
+      it "should call the language get_string with multiple args" do
+        expect(subject.get_string(string, multipleargs)).to eq language.get_string(string, multipleargs)
+      end
+    end
   end
 end
