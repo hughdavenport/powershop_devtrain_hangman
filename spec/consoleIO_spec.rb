@@ -1,9 +1,6 @@
 require 'consoleIO'
 
 RSpec.describe ConsoleIO do
-  # Need to stub out IO to do what we want
-  # also need to do same for language?
-  # and then for gamestate, pass in out own hangman object
   context "With stubbed input and output" do
     let(:input)  { double("STDIN") }
     let(:output) {
