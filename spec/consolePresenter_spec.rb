@@ -20,16 +20,29 @@ RSpec.describe ConsolePresenter do
     }
     let (:io)       { ConsoleIO.new(input: input, output: output) }
     let (:word)     { "pneumatic" }
-    let (:language) { Language.new } # Will always just do [[:langstringhere||:argshere]] syntax
+    let (:language) { Language.new } # Will always just do [[:langstringhere||:argshere]] syntax, test langs seperately
     let (:hangman)  { Hangman.new(word: word) }
 
     subject { ConsolePresenter.new(io: io) }
 
     describe "Error handling" do
+      let(:error) { :testingerror}
+
       it "should displaying nothing when no error happend" do
         subject.display_error
         expect(output.printed).to be_empty
         expect(output.flushed).to be_empty
+      end
+      it "should not display the error after adding" do
+        subject.add_error(error)
+        expect(output.printed).to be_empty
+        expect(output.flushed).to be_empty
+      end
+      it "should display the error we add with a new line" do
+        subject.add_error(error)
+        subject.display_error
+        expect(output.printed).to be_empty
+        expect(output.flushed).to eq "[["+error.to_s+"]]\n"
       end
     end
   end
