@@ -87,5 +87,53 @@ RSpec.describe ConsolePresenter do
         expect(subject.get_guess_word(hangman)).to eq "_"*word.length
       end
     end
+    describe "get_gamestate" do
+      context "Not finished" do
+        before          { allow(hangman).to receive(:finished?) { false } }
+        let(:gamestate) { subject.get_gamestate(hangman) }
+
+        it "should not have game over" do
+          expect(gamestate).not_to include("[[gameover]]")
+        end
+        it "should not have you won" do
+          expect(gamestate).not_to include("[[youwon]]")
+        end
+        it "should not have you lost" do
+          expect(gamestate).not_to include("[[youlost]]")
+        end
+      end
+      context "Finished" do
+        before          { allow(hangman).to receive(:finished?) { true } }
+        before          { allow(hangman).to receive(:won?) { true } } # Not tested, required for get_gamestate call to happen
+        let(:gamestate) { subject.get_gamestate(hangman) }
+
+        it "should have game over" do
+          expect(gamestate).to include("[[gameover]]")
+        end
+
+        context "Won" do
+          before          { allow(hangman).to receive(:won?) { true } }
+          let(:gamestate) { subject.get_gamestate(hangman) }
+
+          it "should have you won" do
+            expect(gamestate).to include("[[youwon]]")
+          end
+          it "should not have you lost" do
+            expect(gamestate).not_to include("[[youlost]]")
+          end
+        end
+        context "Lost" do
+          before          { allow(hangman).to receive(:won?) { false } }
+          let(:gamestate) { subject.get_gamestate(hangman) }
+
+          it "should not have you won" do
+            expect(gamestate).not_to include("[[youwon]]")
+          end
+          it "should have you lost" do
+            expect(gamestate).to include("[[youlost]]")
+          end
+        end
+      end
+    end
   end
 end
