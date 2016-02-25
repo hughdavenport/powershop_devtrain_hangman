@@ -45,5 +45,19 @@ RSpec.describe ConsolePresenter do
         expect(output.flushed).to eq "[["+error.to_s+"]]\n"
       end
     end
+    describe "Asking for letters" do
+      let(:letter)  { "a" }
+      let(:message) { :pleaseenteraletter}
+      before        { allow(input).to receive(:getch) { letter } }
+
+      it "Should print a message asking for a letter" do
+        subject.ask_for_letter
+        expect(output.printed).to be_empty
+        expect(output.flushed).to eq "[["+message.to_s+"]]"
+      end
+      it "Should return the letter we give" do
+        expect(subject.ask_for_letter).to eq letter
+      end
+    end
   end
 end
