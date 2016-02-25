@@ -19,7 +19,7 @@ class ConsolePresenter
   end
 
   def display_error()
-    @io.print_text_with_newline get_string(@error)
+    @io.print_text_with_newline get_string(@error) if @error
     @error = nil
   end
 
