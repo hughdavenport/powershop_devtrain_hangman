@@ -21,6 +21,8 @@ RSpec.describe ConsolePresenter do
     let (:io)       { ConsoleIO.new(input: input, output: output) }
     let (:language) { Language.new } # Will always just do [[:langstringhere||:argshere]] syntax, test langs seperately
 
+    let(:error) { :testingerror }
+
     let(:word) { "pneumatic" }
     let(:hangman) {
       hangman = double("Hangman")
@@ -28,14 +30,13 @@ RSpec.describe ConsolePresenter do
       allow(hangman).to receive(:score)        { 7 }
       allow(hangman).to receive(:guesses)      { [] }
       allow(hangman).to receive(:word)         { word }
+      allow(hangman).to receive(:finished?)    { false }
       hangman
     }
 
     subject { ConsolePresenter.new(io: io, language: language) }
 
     describe "Error handling" do
-      let(:error) { :testingerror}
-
       it "should displaying nothing when no error happend" do
         subject.display_error
         expect(output.printed).to be_empty
@@ -51,6 +52,30 @@ RSpec.describe ConsolePresenter do
         subject.display_error
         expect(output.printed).to be_empty
         expect(output.flushed).to eq "[["+error.to_s+"]]\n"
+      end
+      it "should only display the error once" do
+        subject.add_error(error)
+        subject.display_error
+        subject.display_error
+        expect(output.printed).to be_empty
+        expect(output.flushed).to eq "[["+error.to_s+"]]\n"
+      end
+    end
+    describe "Displaying game" do
+      context "with no errors" do
+        it "should have cleared screen, then print the gamestate" do
+          subject.display_game(hangman)
+          expect(output.printed).to be_empty
+          expect(output.flushed).to eq "\e[H\e[2J" + subject.get_gamestate(hangman) + "\n"
+        end
+      end
+      context "with an error" do
+        it "should have cleared screen, then print the error, then print the gamestate" do
+          subject.add_error(error)
+          subject.display_game(hangman)
+          expect(output.printed).to be_empty
+          expect(output.flushed).to eq "\e[H\e[2J" + "[["+error.to_s+"]]\n" + subject.get_gamestate(hangman) + "\n"
+        end
       end
     end
     describe "Asking for letters" do
