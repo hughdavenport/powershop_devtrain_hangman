@@ -21,6 +21,16 @@ RSpec.describe ConsolePresenter do
     let (:io)       { ConsoleIO.new(input: input, output: output) }
     let (:language) { Language.new } # Will always just do [[:langstringhere||:argshere]] syntax, test langs seperately
 
+    let(:word) { "pneumatic" }
+    let(:hangman) {
+      hangman = double("Hangman")
+      allow(hangman).to receive(:guessed_word) { [nil]*word.length }
+      allow(hangman).to receive(:score)        { 7 }
+      allow(hangman).to receive(:guesses)      { [] }
+      allow(hangman).to receive(:word)         { word }
+      hangman
+    }
+
     subject { ConsolePresenter.new(io: io, language: language) }
 
     describe "Error handling" do
@@ -72,14 +82,9 @@ RSpec.describe ConsolePresenter do
         expect(subject.get_string(string, multipleargs)).to eq language.get_string(string, multipleargs)
       end
     end
-    context "In a new game" do
-      let (:word)     { "pneumatic" }
-      let (:hangman)  { Hangman.new(word: word) }
-
-      describe "get_guess_word" do
-        it "should be _________ (pneumatic)" do
-          expect(subject.get_guess_word(hangman)).to eq "_"*word.length
-        end
+    describe "get_guess_word" do
+      it "should be _________ (pneumatic)" do
+        expect(subject.get_guess_word(hangman)).to eq "_"*word.length
       end
     end
   end
