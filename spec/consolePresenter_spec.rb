@@ -3,28 +3,28 @@ require 'consolePresenter'
 RSpec.describe ConsolePresenter do
   context "With stubbed input and output" do
     let(:input)  { double("STDIN") }
-    let(:output) {
+    let(:output) do
       output = double("STDOUT")
       printed = ""
-      allow(output).to receive(:print) { |text|
+      allow(output).to receive(:print) do |text|
         printed += text
-      }
+      end
       flushed = ""
-      allow(output).to receive(:flush) {
+      allow(output).to receive(:flush) do
         flushed += printed
         printed = ""
-      }
+      end
       allow(output).to receive(:printed) { printed }
       allow(output).to receive(:flushed) { flushed }
       output
-    }
+    end
     let (:io)       { ConsoleIO.new(input: input, output: output) }
     let (:language) { Language.new } # Will always just do [[:langstringhere||:argshere]] syntax, test langs seperately
 
     let(:error) { :testingerror }
 
     let(:word) { "pneumatic" }
-    let(:hangman) {
+    let(:hangman) do
       hangman = double("Hangman")
       allow(hangman).to receive(:guessed_word) { [nil]*word.length }
       allow(hangman).to receive(:score)        { 7 }
@@ -32,7 +32,7 @@ RSpec.describe ConsolePresenter do
       allow(hangman).to receive(:word)         { word }
       allow(hangman).to receive(:finished?)    { false }
       hangman
-    }
+    end
 
     subject { ConsolePresenter.new(io: io, language: language) }
 

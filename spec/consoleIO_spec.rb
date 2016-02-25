@@ -3,22 +3,23 @@ require 'consoleIO'
 RSpec.describe ConsoleIO do
   context "With stubbed input and output" do
     let(:input)  { double("STDIN") }
-    let(:output) {
+    let(:output) do
       output = double("STDOUT")
       printed = ""
-      allow(output).to receive(:print) { |text|
+      allow(output).to receive(:print) do |text|
         printed += text
-      }
+      end
       flushed = ""
-      allow(output).to receive(:flush) {
+      allow(output).to receive(:flush) do
         flushed += printed
         printed = ""
-      }
+      end
       allow(output).to receive(:printed) { printed }
       allow(output).to receive(:flushed) { flushed }
       output
-    }
-    subject      { ConsoleIO.new(input: input, output: output) }
+    end
+
+    subject { ConsoleIO.new(input: input, output: output) }
 
     describe "get_char" do
       it "Should raise interrupt with ctrl-c" do

@@ -46,13 +46,13 @@ RSpec.describe Hangman do
       let(:score)   { 7 }
       let(:word)    { "testing" }
       let(:guesses) { (('a'..'z').to_a - word.chars).sample(7) }
-      subject {
+      subject do
         hangman = Hangman.new(score: score, word: word)
         (1..6).each do |i|
           hangman.guess(guesses[i])
         end
         hangman
-      }
+      end
 
       it "should not have won the game" do
         expect(subject).not_to be_won
@@ -93,12 +93,12 @@ RSpec.describe Hangman do
       let(:score)   { 7 }
       let(:word)    { "megaprosopous" }
       let(:guesses) { ['e', 'a', 'o', 'u', 'i', 'm', 'r', 's', 'g'] }
-      subject {
+      subject do
         game = Hangman.new(score: score, word: word)
         guesses.each {|guess| game.guess(guess) }
         # Just missing a p, score should be 6
         game
-      }
+      end
 
       it "should not have won .. yet" do
         expect(subject).not_to be_won
