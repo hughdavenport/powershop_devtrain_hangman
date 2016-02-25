@@ -126,6 +126,16 @@ RSpec.describe ConsolePresenter do
         it "should not have you lost" do
           expect(gamestate).not_to include("[[youlost]]")
         end
+
+        it "should have lives remaining" do
+          expect(gamestate).to include("[[youhavelivesremaining") # Don't include the string args, tested elsewhere
+        end
+        it "should have current guess" do
+          expect(gamestate).to include("[[currentguessis")        # Don't include the string args, tested elsewhere
+        end
+        it "should have letters guessed" do
+          expect(gamestate).to include("[[youhaveguessed")        # Don't include the string args, tested elsewhere
+        end
       end
       context "Finished" do
         before          { allow(hangman).to receive(:finished?) { true } }
@@ -134,6 +144,20 @@ RSpec.describe ConsolePresenter do
 
         it "should have game over" do
           expect(gamestate).to include("[[gameover]]")
+        end
+
+        it "should have final score (lifes remaining)" do
+          expect(gamestate).to include("[[youhadlivesremaining") # Don't include the string args, tested elsewhere
+        end
+        it "should have final guess" do
+          expect(gamestate).to include("[[finalguesswas")        # Don't include the string args, tested elsewhere
+        end
+        it "should have letters guessed" do
+          expect(gamestate).to include("[[youhadguessed")        # don't include the string args, tested elsewhere
+        end
+
+        it "should have actual word" do
+          expect(gamestate).to include("[[thewordwas")        # don't include the string args, tested elsewhere
         end
 
         context "Won" do
