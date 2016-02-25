@@ -23,7 +23,7 @@ RSpec.describe ConsolePresenter do
     let (:language) { Language.new } # Will always just do [[:langstringhere||:argshere]] syntax, test langs seperately
     let (:hangman)  { Hangman.new(word: word) }
 
-    subject { ConsolePresenter.new(io: io) }
+    subject { ConsolePresenter.new(io: io, language: language) }
 
     describe "Error handling" do
       let(:error) { :testingerror}
