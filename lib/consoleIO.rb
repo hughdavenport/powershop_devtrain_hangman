@@ -4,10 +4,7 @@ class ConsoleIO
   attr_reader :input
   attr_reader :output
 
-  def initialize(input: STDIN, output: STDOUT)
-    @input = input
-    @output = output
-  end
+  include ConsoleIOInitializer
 
   def clear_screen
     # ANSI control sequences, see http://www.termsys.demon.co.uk/vtansi.htm

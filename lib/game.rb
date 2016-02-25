@@ -4,15 +4,7 @@ require_relative 'consolePresenter'
 require_relative 'errors'
 class Game
 
-  def initialize(debug: ENV.fetch("HANGMAN_DEBUG", nil),
-                 word: Wordlist.new.get_word,
-                 hangman: Hangman.new(word: word),
-                 language: LanguageLoader.load(ENV.fetch("LANGUAGE", "en")),
-                 presenter: ConsolePresenter.new(debug: debug, language: language))
-    # TODO get a word based on language
-    @hangman = hangman
-    @presenter = presenter
-  end
+  include GameInitializer
 
   def run()
     # Loop until @hangman.won or @hangman.lost, guessing, or potentially quitting
