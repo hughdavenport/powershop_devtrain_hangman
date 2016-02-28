@@ -4,7 +4,6 @@ module GameInitializer
                  hangman: Hangman.new(word: word),
                  language: LanguageLoader.load(ENV.fetch("LANGUAGE", "en")),
                  presenter: ConsolePresenter.new(debug: debug, language: language))
-puts "INIT"
     # TODO get a word based on language
     @hangman = hangman
     @presenter = presenter
