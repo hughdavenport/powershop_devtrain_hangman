@@ -16,6 +16,8 @@
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'simplecov'
+SimpleCov.start
 if Gem::Version.new(RUBY_VERSION) < Gem::Version.new("2.0.0")
   require 'noNamedArgs'
 else
