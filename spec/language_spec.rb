@@ -12,6 +12,9 @@ RSpec.describe Language do
   context "English" do
     subject { LanguageLoader.load("en") }
 
+    it "should be set to english" do
+      expect(subject.lang).to eq "en"
+    end
     it "should return the correct phrase for entering a letter" do
       expect(subject.get_string(:pleaseenteraletter)).to eq "Please enter a letter: "
     end
@@ -55,6 +58,9 @@ RSpec.describe Language do
   context "Spanish" do
     subject { LanguageLoader.load("es") }
 
+    it "should be set to spanish" do
+      expect(subject.lang).to eq "es"
+    end
     it "should return the correct phrase for entering a letter" do
       expect(subject.get_string(:pleaseenteraletter)).to eq "Por favor, introduzca una letra: "
     end
@@ -98,6 +104,9 @@ RSpec.describe Language do
   context "French" do
     subject { LanguageLoader.load("fr") }
 
+    it "should be set to french" do
+      expect(subject.lang).to eq "fr"
+    end
     it "should return the correct phrase for entering a letter" do
       expect(subject.get_string(:pleaseenteraletter)).to eq "S'il vous plaît entrer une lettre: "
     end
@@ -136,6 +145,13 @@ RSpec.describe Language do
     end
     it "should return the correct phrase for final guessed letters, with a b c z x y" do
       expect(subject.get_string(:youhadguessed, {:guesses => "a b c z x y"})).to eq "Vous aviez deviné: a b c z x y"
+    end
+  end
+  context "Invalid language" do
+    subject { LanguageLoader.load("invalid") }
+
+    it "should be set to nothing" do
+      expect(subject.lang).to be_nil
     end
   end
 end
