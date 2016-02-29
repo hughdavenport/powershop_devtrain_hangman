@@ -30,16 +30,16 @@ RSpec.describe Game do
     allow(hangman).to receive(:finished?) { false }
     allow(hangman).to receive(:validate_letter) do |letter|
       # just some testing data
-      if letter == 'a'
+      if ('a'..'m').include?(letter)
         # good, always (not in real hangman object, but thats tested elsewhere
         nil
-      elsif letter == 'A'
+      elsif ('A'..'Z').include?(letter)
         # Obviously capital
         raise NotLowerCaseLetterError
-      elsif letter == 'z'
+      elsif ('n'..'z').include?(letter)
         # Pretend we've already tested this before
         raise AlreadyGuessedError
-      elsif letter == '~' || letter == '1'
+      elsif not /[a-zA-Z]/ =~ letter
         # Obviously not a letter
         raise ValidateError
       end
