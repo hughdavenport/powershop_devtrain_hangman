@@ -3,7 +3,7 @@ module GameInitializer
                  word: Wordlist.new.get_word,
                  hangman: Hangman.new(word: word),
                  language: LanguageLoader.load(ENV.fetch("LANGUAGE", "en")),
-                 presenter: ConsolePresenter.new(debug: debug, language: language))
+                 presenter: GraphicalConsolePresenter.new(debug: debug, language: language))
     # TODO get a word based on language
     @hangman = hangman
     @presenter = presenter
