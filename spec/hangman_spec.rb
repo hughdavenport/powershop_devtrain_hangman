@@ -4,8 +4,8 @@ require 'errors'
 RSpec.describe Hangman do
   describe "When I start a new game" do
     context "with no arguments" do
-      it "has a default score of 7" do
-        expect(subject.score).to eq 7
+      it "has a default score of 10" do
+        expect(subject.score).to eq 10
       end
       it "has a default word of hangman" do
         expect(subject.word).to eq "hangman"

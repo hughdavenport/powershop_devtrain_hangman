@@ -13,7 +13,7 @@ module GameInitializer
 end
 module HangmanInitializer
   def initialize(params={})
-    score = params.fetch(:score, 7)
+    score = params.fetch(:score, 10)
     word = params.fetch(:word, "hangman")
     @starting_score = score
     @word = word

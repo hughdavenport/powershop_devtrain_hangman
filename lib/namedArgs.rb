@@ -10,7 +10,7 @@ module GameInitializer
   end
 end
 module HangmanInitializer
-  def initialize(score: 7, word: "hangman")
+  def initialize(score: 10, word: "hangman")
     @starting_score = score
     @word = word
     @guesses = []
