@@ -10,7 +10,6 @@ class Game
     # Loop until @hangman.won or @hangman.lost, guessing, or potentially quitting
     until @hangman.finished?
       guess = get_guess
-      break unless guess
       @hangman.guess(guess)
     end
     # Clear screen, print final gamestate
