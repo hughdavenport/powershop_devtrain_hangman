@@ -75,6 +75,7 @@ RSpec.describe Game do
         expect(subject.get_guess).to eq 'a'
         expect(presenter.has_error?).to be true
         expect(presenter).to be_asked
+        expect(presenter).to be_displayed
       end
     end
     context "contains no error letter" do
@@ -83,6 +84,7 @@ RSpec.describe Game do
         expect(subject.get_guess).to eq 'a'
         expect(presenter.has_error?).to be false
         expect(presenter).to be_asked
+        expect(presenter).to be_displayed
       end
     end
   end
