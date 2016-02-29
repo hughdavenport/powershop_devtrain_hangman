@@ -27,7 +27,10 @@ RSpec.describe Game do
   let(:hangman) do
     hangman = double("Hangman")
 
-    allow(hangman).to receive(:finished?) { false }
+    guesses = 0
+    allow(hangman).to receive(:guess) {|letter| guesses += 1 }
+    allow(hangman).to receive(:finished?) { guesses >= 7 } # Just a testing number, real end game tested elsewhere
+    allow(hangman).to receive(:guesses) { guesses }
     allow(hangman).to receive(:validate_letter) do |letter|
       # just some testing data
       if ('a'..'m').include?(letter)
@@ -89,6 +92,28 @@ RSpec.describe Game do
     end
   end
 
+  describe "#run" do
+    context "No errors" do
+      let(:guesses) { 0.upto(10).map { ('a'..'m').to_a.sample } }
+
+      it "should loop until finished" do
+        subject.run
+        expect(hangman.guesses).to eq 7
+        expect(presenter.asked).to eq 7
+        expect(presenter.has_error?).to be false
+      end
+    end
+    context "Has errors" do
+      let(:guesses) { 0.upto(4).map { ('n'..'z').to_a.sample } + 0.upto(10).map { ('a'..'m').to_a.sample } }
+
+      it "should loop until finished, and have asked some errors" do
+        subject.run
+        expect(hangman.guesses).to eq 7
+        expect(presenter.asked).to eq 12 # 5 errors
+        expect(presenter.has_error?).to be true
+      end
+    end
+  end
 # run
 
 end
