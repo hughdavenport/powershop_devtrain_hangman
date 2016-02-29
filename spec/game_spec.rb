@@ -10,7 +10,11 @@ RSpec.describe Game do
     allow(presenter).to receive(:displayed?) { displayed }
 
     asked = false
-    allow(presenter).to receive(:ask_for_letter) { asked = true }
+    allow(presenter).to receive(:ask_for_letter) {
+      # guesses should be let'd later on
+      asked = true
+      guesses.shift
+    }
     allow(presenter).to receive(:asked?) { asked }
 
     has_error = false
@@ -64,7 +68,25 @@ RSpec.describe Game do
     end
   end
 
-# get_guess
+  describe "#get_guess" do
+    context "contains error letter" do
+      let(:guesses) { ['A', 'a'] }
+      it "should get an error, loop again, then return the valid input" do
+        expect(subject.get_guess).to eq 'a'
+        expect(presenter.has_error?).to be true
+        expect(presenter).to be_asked
+      end
+    end
+    context "contains no error letter" do
+      let(:guesses) { ['a'] }
+      it "should return correct input, and not have an error" do
+        expect(subject.get_guess).to eq 'a'
+        expect(presenter.has_error?).to be false
+        expect(presenter).to be_asked
+      end
+    end
+  end
+
 # run
 
 end
