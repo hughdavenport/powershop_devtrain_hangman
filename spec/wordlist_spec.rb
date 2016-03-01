@@ -39,7 +39,7 @@ RSpec.describe Wordlist do
     subject { Wordlist.new("/nonexistantpath") }
 
     it "should fail on an invalid path" do
-      expect { subject }.to raise_error(NoUsableWordsError)
+      expect { subject }.to raise_error(Exception)
     end
   end
 
