@@ -8,19 +8,14 @@ class ConsolePresenter
     @debug = debug
   end
 
-  def display_game(hangman)
+  def display_game(hangman, error=nil)
     @io.clear_screen
-    display_error if @error
+    display_error(error) if error
     @io.puts(get_gamestate(hangman))
   end
 
-  def add_error(error)
-    @error = error
-  end
-
-  def display_error
-    @io.puts(get_string(@error)) if @error
-    @error = nil
+  def display_error(error)
+    @io.puts(get_string(error))
   end
 
   def ask_for_letter

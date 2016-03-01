@@ -26,15 +26,12 @@ class Game
   end
 
   def get_guess
+    @presenter.display_game(@hangman)
     begin
-      # Display game
-      @presenter.display_game(@hangman)
-      # Read input
       guess = @presenter.ask_for_letter
-      # Validate input
       error = get_error(guess)
       break unless error
-      @presenter.add_error(error)
+      @presenter.display_game(@hangman, error)
     end while true
     guess
   end
