@@ -147,6 +147,13 @@ RSpec.describe Language do
       expect(subject.get_string(:youhadguessed, {:guesses => "a b c z x y"})).to eq "Vous aviez deviné: a b c z x y"
     end
   end
+  context "Maori" do
+    subject { LanguageLoader.load("mi") }
+
+    it "should be set to maori" do
+      expect(subject.lang).to eq "mi"
+    end
+  end
   context "Invalid language" do
     subject { LanguageLoader.load("invalid") }
 
