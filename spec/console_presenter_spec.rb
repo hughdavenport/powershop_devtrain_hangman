@@ -42,17 +42,20 @@ RSpec.describe ConsolePresenter do
         expect(output.printed).to be_empty
         expect(output.flushed).to be_empty
       end
+
       it "should not display the error after adding" do
         subject.add_error(error)
         expect(output.printed).to be_empty
         expect(output.flushed).to be_empty
       end
+
       it "should display the error we add with a new line" do
         subject.add_error(error)
         subject.display_error
         expect(output.printed).to be_empty
         expect(output.flushed).to eq "[["+error.to_s+"]]\n"
       end
+
       it "should only display the error once" do
         subject.add_error(error)
         subject.display_error
@@ -61,6 +64,7 @@ RSpec.describe ConsolePresenter do
         expect(output.flushed).to eq "[["+error.to_s+"]]\n"
       end
     end
+
     describe "Displaying game" do
       context "with no errors" do
         it "should have cleared screen, then print the gamestate" do
@@ -69,6 +73,7 @@ RSpec.describe ConsolePresenter do
           expect(output.flushed).to eq "\e[H\e[2J" + subject.get_gamestate(hangman) + "\n"
         end
       end
+
       context "with an error" do
         it "should have cleared screen, then print the error, then print the gamestate" do
           subject.add_error(error)
@@ -78,6 +83,7 @@ RSpec.describe ConsolePresenter do
         end
       end
     end
+
     describe "Asking for letters" do
       let(:letter)  { "a" }
       let(:message) { :pleaseenteraletter}
@@ -88,10 +94,12 @@ RSpec.describe ConsolePresenter do
         expect(output.printed).to be_empty
         expect(output.flushed).to eq "[["+message.to_s+"]]"
       end
+
       it "Should return the letter we give" do
         expect(subject.ask_for_letter).to eq letter
       end
     end
+
     describe "get_string" do
       let(:string)       { :teststring }
       let(:singlearg)    { {:arg1 => "arg1", :arg2 => "arg2"} }
@@ -100,18 +108,22 @@ RSpec.describe ConsolePresenter do
       it "should call the language get_string" do
         expect(subject.get_string(string)).to eq language.get_string(string)
       end
+
       it "should call the language get_string with a single arg" do
         expect(subject.get_string(string, singlearg)).to eq language.get_string(string, singlearg)
       end
+
       it "should call the language get_string with multiple args" do
         expect(subject.get_string(string, multipleargs)).to eq language.get_string(string, multipleargs)
       end
     end
+
     describe "get_guess_word" do
       it "should be _________ (pneumatic)" do
         expect(subject.get_guess_word(hangman)).to eq "_"*word.length
       end
     end
+
     describe "get_gamestate" do
       context "Not finished" do
         before          { allow(hangman).to receive(:finished?) { false } }
@@ -120,9 +132,11 @@ RSpec.describe ConsolePresenter do
         it "should not have game over" do
           expect(gamestate).not_to include("[[gameover]]")
         end
+
         it "should not have you won" do
           expect(gamestate).not_to include("[[youwon]]")
         end
+
         it "should not have you lost" do
           expect(gamestate).not_to include("[[youlost]]")
         end
@@ -130,13 +144,16 @@ RSpec.describe ConsolePresenter do
         it "should have lives remaining" do
           expect(gamestate).to include("[[youhavelivesremaining") # Don't include the string args, tested elsewhere
         end
+
         it "should have current guess" do
           expect(gamestate).to include("[[currentguessis")        # Don't include the string args, tested elsewhere
         end
+
         it "should have letters guessed" do
           expect(gamestate).to include("[[youhaveguessed")        # Don't include the string args, tested elsewhere
         end
       end
+
       context "Finished" do
         before          { allow(hangman).to receive(:finished?) { true } }
         before          { allow(hangman).to receive(:won?) { true } } # Not tested, required for get_gamestate call to happen
@@ -149,9 +166,11 @@ RSpec.describe ConsolePresenter do
         it "should have final score (lifes remaining)" do
           expect(gamestate).to include("[[youhadlivesremaining") # Don't include the string args, tested elsewhere
         end
+
         it "should have final guess" do
           expect(gamestate).to include("[[finalguesswas")        # Don't include the string args, tested elsewhere
         end
+
         it "should have letters guessed" do
           expect(gamestate).to include("[[youhadguessed")        # don't include the string args, tested elsewhere
         end
@@ -167,10 +186,12 @@ RSpec.describe ConsolePresenter do
           it "should have you won" do
             expect(gamestate).to include("[[youwon]]")
           end
+
           it "should not have you lost" do
             expect(gamestate).not_to include("[[youlost]]")
           end
         end
+
         context "Lost" do
           before          { allow(hangman).to receive(:won?) { false } }
           let(:gamestate) { subject.get_gamestate(hangman) }
@@ -178,6 +199,7 @@ RSpec.describe ConsolePresenter do
           it "should not have you won" do
             expect(gamestate).not_to include("[[youwon]]")
           end
+
           it "should have you lost" do
             expect(gamestate).to include("[[youlost]]")
           end

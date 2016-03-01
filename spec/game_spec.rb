@@ -1,7 +1,6 @@
 require 'game'
 
 RSpec.describe Game do
-
   let(:presenter) do
     presenter = double("ConsolePresenter")
 
@@ -57,15 +56,19 @@ RSpec.describe Game do
     it "should fail on a capital letter" do
       expect(subject.get_error('A')).to eq :inputisnotlowercase
     end
+
     it "should fail on an already guessed letter" do
       expect(subject.get_error('z')).to eq :inputhasalreadybeenguessed
     end
+
     it "should fail on a tilde as invalid" do
       expect(subject.get_error('~')).to eq :inputisinvalid
     end
+
     it "should fail on a digit as invalid" do
       expect(subject.get_error('1')).to eq :inputisinvalid
     end
+
     it "should accept a 'valid' letter" do
       expect(subject.get_error('a')).to be_nil
     end
@@ -74,6 +77,7 @@ RSpec.describe Game do
   describe "#get_guess" do
     context "contains error letter" do
       let(:guesses) { ['A', 'a'] }
+
       it "should get an error, loop again, then return the valid input" do
         expect(subject.get_guess).to eq 'a'
         expect(presenter.has_error?).to be true
@@ -81,8 +85,10 @@ RSpec.describe Game do
         expect(presenter).to be_displayed
       end
     end
+
     context "contains no error letter" do
       let(:guesses) { ['a'] }
+
       it "should return correct input, and not have an error" do
         expect(subject.get_guess).to eq 'a'
         expect(presenter.has_error?).to be false
@@ -103,6 +109,7 @@ RSpec.describe Game do
         expect(presenter.has_error?).to be false
       end
     end
+
     context "Has errors" do
       let(:guesses) { 0.upto(4).map { ('n'..'z').to_a.sample } + 0.upto(10).map { ('a'..'m').to_a.sample } }
 
@@ -114,6 +121,4 @@ RSpec.describe Game do
       end
     end
   end
-# run
-
 end

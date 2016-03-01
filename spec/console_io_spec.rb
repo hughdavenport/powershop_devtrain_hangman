@@ -26,14 +26,17 @@ RSpec.describe ConsoleIO do
         allow(input).to receive(:getch) { "\u0003" }
         expect { subject.get_char }.to raise_error(Interrupt)
       end
+
       it "Should raise EOF with ctrl-d" do
         allow(input).to receive(:getch) { "\u0004" }
         expect { subject.get_char }.to raise_error(EOFError)
       end
+
       it "Should return the input" do
         allow(input).to receive(:getch) { "a" }
         expect(subject.get_char).to eq "a"
       end
+
       it "Should return input in order" do
         i = 0;
         chars = ('a'..'z').to_a.sample(5)
@@ -45,6 +48,7 @@ RSpec.describe ConsoleIO do
         expect(subject.get_char).to eq chars[4]
       end
     end
+
     describe "print_test" do
       it "should print and flush test" do
         subject.print_text("test")
@@ -52,6 +56,7 @@ RSpec.describe ConsoleIO do
         expect(output.flushed).to eq "test"
       end
     end
+
     describe "print_newline" do
       it "should print and flush a newline" do
         subject.print_newline
@@ -59,6 +64,7 @@ RSpec.describe ConsoleIO do
         expect(output.flushed).to eq "\n"
       end
     end
+
     describe "print_text_with_newline" do
       it "should print test with a newline and flush" do
         subject.print_text_with_newline("test")
@@ -66,6 +72,7 @@ RSpec.describe ConsoleIO do
         expect(output.flushed).to eq "test\n"
       end
     end
+
     describe "clear_screen" do
       it "should have the beginning of line then erase screen ANSI sequences flushed" do
         subject.clear_screen
