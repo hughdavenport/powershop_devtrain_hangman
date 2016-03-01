@@ -10,25 +10,24 @@ class GraphicalConsolePresenter < ConsolePresenter
   end
 
   def draw_hangman(score)
-    init_pictures unless @pictures
-    score = @pictures.length - 1 if score >= @pictures.length
-    @pictures[score]
+    score = pictures.length - 1 if score >= pictures.length
+    pictures[score]
   end
 
-  def init_pictures
-    return if @pictures
-    @pictures = []
-    @pictures << game_over_picture
-    @pictures << missing_right_leg_picture
-    @pictures << missing_both_legs_picture
-    @pictures << missing_both_arms_picture
-    @pictures << missing_torso_picture
-    @pictures << missing_head_picture
-    @pictures << missing_rope_picture
-    @pictures << missing_support_picture
-    @pictures << missing_beam_picture
-    @pictures << missing_pole_picture
-    @pictures << empty_picture
+  def pictures
+    @pictures ||= [
+      game_over_picture,
+      missing_right_leg_picture,
+      missing_both_legs_picture,
+      missing_both_arms_picture,
+      missing_torso_picture,
+      missing_head_picture,
+      missing_rope_picture,
+      missing_support_picture,
+      missing_beam_picture,
+      missing_pole_picture,
+      empty_picture,
+    ]
   end
 
   # Some helper methods to compute the drawings

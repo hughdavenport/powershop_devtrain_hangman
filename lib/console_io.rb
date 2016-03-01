@@ -17,10 +17,10 @@ class ConsoleIO
   end
 
   def get_char
-    c = @input.getch
-    raise Interrupt if c == "\u0003"
-    raise EOFError if c == "\u0004"
-    c
+    @input.getch.tap do |character|
+      raise Interrupt if character == "\u0003"
+      raise EOFError if character == "\u0004"
+    end
   end
 
   def print_text(text)
