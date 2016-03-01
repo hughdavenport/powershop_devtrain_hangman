@@ -52,19 +52,19 @@ RSpec.describe Game do
 
   describe "#get_error" do
     it "should fail on a capital letter" do
-      expect(subject.get_error('A')).to eq :inputisnotlowercase
+      expect(subject.get_error('A')).to eq :input_is_not_lower_case
     end
 
     it "should fail on an already guessed letter" do
-      expect(subject.get_error('z')).to eq :inputhasalreadybeenguessed
+      expect(subject.get_error('z')).to eq :input_has_already_been_guessed
     end
 
     it "should fail on a tilde as invalid" do
-      expect(subject.get_error('~')).to eq :inputisinvalid
+      expect(subject.get_error('~')).to eq :input_is_invalid
     end
 
     it "should fail on a digit as invalid" do
-      expect(subject.get_error('1')).to eq :inputisinvalid
+      expect(subject.get_error('1')).to eq :input_is_invalid
     end
 
     it "should accept a 'valid' letter" do

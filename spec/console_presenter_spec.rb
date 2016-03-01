@@ -70,7 +70,7 @@ RSpec.describe ConsolePresenter do
 
     describe "Asking for letters" do
       let(:letter)  { "a" }
-      let(:message) { :pleaseenteraletter}
+      let(:message) { :please_enter_a_letter}
       before        { allow(input).to receive(:getch) { letter } }
 
       it "Should print a message asking for a letter" do
@@ -114,27 +114,27 @@ RSpec.describe ConsolePresenter do
         let(:gamestate) { subject.get_gamestate(hangman) }
 
         it "should not have game over" do
-          expect(gamestate).not_to include("[[gameover]]")
+          expect(gamestate).not_to include("[[game_over]]")
         end
 
         it "should not have you won" do
-          expect(gamestate).not_to include("[[youwon]]")
+          expect(gamestate).not_to include("[[you_won]]")
         end
 
         it "should not have you lost" do
-          expect(gamestate).not_to include("[[youlost]]")
+          expect(gamestate).not_to include("[[you_lost]]")
         end
 
         it "should have lives remaining" do
-          expect(gamestate).to include("[[youhavelivesremaining") # Don't include the string args, tested elsewhere
+          expect(gamestate).to include("[[you_have_lives_remaining") # Don't include the string args, tested elsewhere
         end
 
         it "should have current guess" do
-          expect(gamestate).to include("[[currentguessis")        # Don't include the string args, tested elsewhere
+          expect(gamestate).to include("[[current_guess_is")         # Don't include the string args, tested elsewhere
         end
 
         it "should have letters guessed" do
-          expect(gamestate).to include("[[youhaveguessed")        # Don't include the string args, tested elsewhere
+          expect(gamestate).to include("[[you_have_guessed")         # Don't include the string args, tested elsewhere
         end
       end
 
@@ -144,23 +144,23 @@ RSpec.describe ConsolePresenter do
         let(:gamestate) { subject.get_gamestate(hangman) }
 
         it "should have game over" do
-          expect(gamestate).to include("[[gameover]]")
+          expect(gamestate).to include("[[game_over]]")
         end
 
         it "should have final score (lifes remaining)" do
-          expect(gamestate).to include("[[youhadlivesremaining") # Don't include the string args, tested elsewhere
+          expect(gamestate).to include("[[you_had_lives_remaining") # Don't include the string args, tested elsewhere
         end
 
         it "should have final guess" do
-          expect(gamestate).to include("[[finalguesswas")        # Don't include the string args, tested elsewhere
+          expect(gamestate).to include("[[final_guess_was")         # Don't include the string args, tested elsewhere
         end
 
         it "should have letters guessed" do
-          expect(gamestate).to include("[[youhadguessed")        # don't include the string args, tested elsewhere
+          expect(gamestate).to include("[[you_had_guessed")         # Don't include the string args, tested elsewhere
         end
 
         it "should have actual word" do
-          expect(gamestate).to include("[[thewordwas")        # don't include the string args, tested elsewhere
+          expect(gamestate).to include("[[the_word_was")            # Don't include the string args, tested elsewhere
         end
 
         context "Won" do
@@ -168,11 +168,11 @@ RSpec.describe ConsolePresenter do
           let(:gamestate) { subject.get_gamestate(hangman) }
 
           it "should have you won" do
-            expect(gamestate).to include("[[youwon]]")
+            expect(gamestate).to include("[[you_won]]")
           end
 
           it "should not have you lost" do
-            expect(gamestate).not_to include("[[youlost]]")
+            expect(gamestate).not_to include("[[you_lost]]")
           end
         end
 
@@ -181,11 +181,11 @@ RSpec.describe ConsolePresenter do
           let(:gamestate) { subject.get_gamestate(hangman) }
 
           it "should not have you won" do
-            expect(gamestate).not_to include("[[youwon]]")
+            expect(gamestate).not_to include("[[you_won]]")
           end
 
           it "should have you lost" do
-            expect(gamestate).to include("[[youlost]]")
+            expect(gamestate).to include("[[you_lost]]")
           end
         end
       end

@@ -40,11 +40,11 @@ class Game
     begin
       @hangman.validate_letter(guess)
     rescue NotLowerCaseLetterError
-      :inputisnotlowercase
+      :input_is_not_lower_case
     rescue AlreadyGuessedError
-      :inputhasalreadybeenguessed
+      :input_has_already_been_guessed
     rescue ValidateError
-      :inputisinvalid
+      :input_is_invalid
     end
   end
 end

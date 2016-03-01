@@ -3,20 +3,20 @@
 class Language_fr < Language
   def initialize
     @STRINGS = {
-      :pleaseenteraletter         => "S'il vous plaît entrer une lettre: ",
-      :inputisnotlowercase        => "Entrée ne sont pas minuscules",
-      :inputhasalreadybeenguessed => "Entrée a déjà été deviné",
-      :inputisinvalid             => "Entrée est invalide",
-      :gameover                   => "JEU TERMINÉ!",
-      :youwon                     => "Vous avez gagné!",
-      :youlost                    => "Vous avez perdu!",
-      :youhavelivesremaining      => "Vous avez :lives vies restant",
-      :youhadlivesremaining       => "Vous aviez :lives vies restant",
-      :currentguessis             => "Conjecture actualle est: :guess",
-      :finalguesswas              => "Conjecture finale était: :guess",
-      :youhaveguessed             => "Vous avez deviné: :guesses",
-      :youhadguessed              => "Vous aviez deviné: :guesses",
-      :thewordwas                 => "Le mot était: :word",
+      :please_enter_a_letter          => "S'il vous plaît entrer une lettre: ",
+      :input_is_not_lower_case        => "Entrée ne sont pas minuscules",
+      :input_has_already_been_guessed => "Entrée a déjà été deviné",
+      :input_is_invalid               => "Entrée est invalide",
+      :game_over                      => "JEU TERMINÉ!",
+      :you_won                        => "Vous avez gagné!",
+      :you_lost                       => "Vous avez perdu!",
+      :you_have_lives_remaining       => "Vous avez :lives vies restant",
+      :you_had_lives_remaining        => "Vous aviez :lives vies restant",
+      :current_guess_is               => "Conjecture actualle est: :guess",
+      :final_guess_was                => "Conjecture finale était: :guess",
+      :you_have_guessed               => "Vous avez deviné: :guesses",
+      :you_had_guessed                => "Vous aviez deviné: :guesses",
+      :the_word_was                   => "Le mot était: :word",
     }
   end
 end

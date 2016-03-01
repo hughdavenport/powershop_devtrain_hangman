@@ -19,7 +19,7 @@ class ConsolePresenter
   end
 
   def ask_for_letter
-    message = get_string :pleaseenteraletter
+    message = get_string :please_enter_a_letter
     @io.print(message)
     @io.getch
   end
@@ -27,24 +27,24 @@ class ConsolePresenter
   def get_gamestate(hangman)
     text = ""
     if hangman.finished?
-      text += get_string(:gameover)
+      text += get_string(:game_over)
       text += "\n"
-      text += get_string(hangman.won? ? :youwon : :youlost)
+      text += get_string(hangman.won? ? :you_won : :you_lost)
       text += "\n"
-      text += get_string(:youhadlivesremaining, {:lives => hangman.score})
+      text += get_string(:you_had_lives_remaining, {:lives => hangman.score})
       text += "\n"
-      text += get_string(:finalguesswas, {:guess => get_guess_word(hangman)})
+      text += get_string(:final_guess_was, {:guess => get_guess_word(hangman)})
       text += "\n"
-      text += get_string(:youhadguessed, {:guesses => hangman.guesses.join(" ")})
+      text += get_string(:you_had_guessed, {:guesses => hangman.guesses.join(" ")})
       text += "\n"
-      text += get_string(:thewordwas, {:word => hangman.word})
+      text += get_string(:the_word_was, {:word => hangman.word})
       text += "\n"
     else
-      text += get_string(:youhavelivesremaining, {:lives => hangman.score})
+      text += get_string(:you_have_lives_remaining, {:lives => hangman.score})
       text += "\n"
-      text += get_string(:currentguessis, {:guess => get_guess_word(hangman)})
+      text += get_string(:current_guess_is, {:guess => get_guess_word(hangman)})
       text += "\n"
-      text += get_string(:youhaveguessed, {:guesses => hangman.guesses.join(" ")})
+      text += get_string(:you_have_guessed, {:guesses => hangman.guesses.join(" ")})
       text += "\n"
     end
     text += hangman.inspect + "\n" if @debug
