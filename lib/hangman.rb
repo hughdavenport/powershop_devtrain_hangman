@@ -3,7 +3,11 @@ class Hangman
   attr_reader :word
   attr_reader :guesses
 
-  include HangmanInitializer
+  def initialize(score: 10, word: "hangman")
+    @starting_score = score
+    @word = word
+    @guesses = []
+  end
 
   def won?
     score > 0 and guessed_word.join().eql? @word

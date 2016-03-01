@@ -3,11 +3,6 @@ if ENV.fetch("HANGMAN_DEBUG", nil)
   require 'simplecov'
   SimpleCov.start
 end
-if Gem::Version.new(RUBY_VERSION) < Gem::Version.new("2.0.0")
-  require_relative 'lib/noNamedArgs'
-else
-  require_relative 'lib/namedArgs'
-end
 require_relative 'lib/game'
 g = Game.new
 g.run
