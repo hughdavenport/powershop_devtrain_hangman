@@ -37,29 +37,14 @@ RSpec.describe ConsolePresenter do
     subject { ConsolePresenter.new(io: io, language: language) }
 
     describe "Error handling" do
-      it "should displaying nothing when no error happend" do
+      it "should not display anything when no error" do
         subject.display_error
-        expect(output.printed).to be_empty
-        expect(output.flushed).to be_empty
-      end
-
-      it "should not display the error after adding" do
-        subject.add_error(error)
         expect(output.printed).to be_empty
         expect(output.flushed).to be_empty
       end
 
       it "should display the error we add with a new line" do
-        subject.add_error(error)
-        subject.display_error
-        expect(output.printed).to be_empty
-        expect(output.flushed).to eq "[["+error.to_s+"]]\n"
-      end
-
-      it "should only display the error once" do
-        subject.add_error(error)
-        subject.display_error
-        subject.display_error
+        subject.display_error(error)
         expect(output.printed).to be_empty
         expect(output.flushed).to eq "[["+error.to_s+"]]\n"
       end
@@ -76,8 +61,7 @@ RSpec.describe ConsolePresenter do
 
       context "with an error" do
         it "should have cleared screen, then print the error, then print the gamestate" do
-          subject.add_error(error)
-          subject.display_game(hangman)
+          subject.display_game(hangman, error)
           expect(output.printed).to be_empty
           expect(output.flushed).to eq "\e[H\e[2J" + "[["+error.to_s+"]]\n" + subject.get_gamestate(hangman) + "\n"
         end

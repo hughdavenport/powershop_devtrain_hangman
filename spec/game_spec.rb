@@ -5,8 +5,10 @@ RSpec.describe Game do
     presenter = double("ConsolePresenter")
 
     displayed = false
-    allow(presenter).to receive(:display_game) { displayed = true }
+    has_error = false
+    allow(presenter).to receive(:display_game) { |hangman, error| displayed = true; has_error = true if error }
     allow(presenter).to receive(:displayed?) { displayed }
+    allow(presenter).to receive(:has_error?) { has_error }
 
     asked = 0
     allow(presenter).to receive(:ask_for_letter) {
@@ -15,10 +17,6 @@ RSpec.describe Game do
       guesses.shift
     }
     allow(presenter).to receive(:asked) { asked }
-
-    has_error = false
-    allow(presenter).to receive(:add_error) { has_error = true }
-    allow(presenter).to receive(:has_error?) { has_error }
 
     presenter
   end

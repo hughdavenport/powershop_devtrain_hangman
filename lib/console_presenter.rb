@@ -14,8 +14,8 @@ class ConsolePresenter
     @io.puts(get_gamestate(hangman))
   end
 
-  def display_error(error)
-    @io.puts(get_string(error))
+  def display_error(error=nil)
+    @io.puts(get_string(error)) if error
   end
 
   def ask_for_letter
