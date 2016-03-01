@@ -57,7 +57,7 @@ class ConsolePresenter
   end
 
   def get_guess_word(hangman)
-    hangman.guessed_word.map{|letter| letter.nil? ? "_" : letter}.join()
+    hangman.guessed_word.map { |letter| letter.nil? ? "_" : letter }.join
   end
 
   def get_string(string, args={})
