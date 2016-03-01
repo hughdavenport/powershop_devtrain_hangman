@@ -29,15 +29,15 @@ class ConsoleIO
   end
 
   def print_text(text)
-    @output.print text
+    @output.print(text)
     @output.flush
   end
 
   def print_newline
-    print_text "\n"
+    print_text("\n")
   end
 
   def print_text_with_newline(text)
-    print_text text + "\n"
+    print_text("#{text}\n")
   end
 end

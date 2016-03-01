@@ -15,7 +15,7 @@ class Game
     @presenter = presenter
   end
 
-  def run()
+  def run
     # Loop until @hangman.won or @hangman.lost, guessing, or potentially quitting
     until @hangman.finished?
       guess = get_guess
@@ -25,7 +25,7 @@ class Game
     @presenter.display_game(@hangman)
   end
 
-  def get_guess()
+  def get_guess
     begin
       # Display game
       @presenter.display_game(@hangman)

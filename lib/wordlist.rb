@@ -8,7 +8,7 @@ class Wordlist
     raise NoUsableWordsError if @words.nil? || @words.empty?
   end
 
-  def get_word()
+  def get_word
     @words.sample
   end
 end

@@ -9,7 +9,7 @@ class Hangman
   end
 
   def won?
-    score > 0 and guessed_word.join().eql? @word
+    score > 0 and guessed_word.join().eql?(@word)
   end
 
   def lost?
@@ -38,7 +38,7 @@ class Hangman
   end
 
   def guess(letter)
-    validate_letter letter
+    validate_letter(letter)
     guesses << letter
   end
 end
