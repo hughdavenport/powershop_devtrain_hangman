@@ -1,7 +1,7 @@
 require_relative 'hangman'
 require_relative 'wordlist'
-require_relative 'consolePresenter'
-require_relative 'graphicalConsolePresenter'
+require_relative 'console_presenter'
+require_relative 'graphical_console_presenter'
 require_relative 'errors'
 class Game
 

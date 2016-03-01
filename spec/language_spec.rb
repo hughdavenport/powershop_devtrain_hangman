@@ -1,5 +1,5 @@
 # encoding: utf-8
-require 'languageLoader'
+require 'language_loader'
 require 'errors'
 
 RSpec.describe Language do

@@ -1,4 +1,4 @@
-require_relative 'HangmanError'
+require_relative 'hangman_error'
 class NoUsableWordsError < HangmanError
 
 end

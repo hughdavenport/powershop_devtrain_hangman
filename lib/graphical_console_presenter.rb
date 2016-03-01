@@ -1,4 +1,4 @@
-require_relative 'consolePresenter'
+require_relative 'console_presenter'
 class GraphicalConsolePresenter < ConsolePresenter
   # Actually has a graphical representation of the hanging man
 

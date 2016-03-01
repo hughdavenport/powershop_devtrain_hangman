@@ -1,4 +1,4 @@
-require 'consoleIO'
+require 'console_io'
 
 RSpec.describe ConsoleIO do
   context "With stubbed input and output" do

@@ -1,5 +1,5 @@
-require_relative 'consoleIO'
-require_relative 'languageLoader'
+require_relative 'console_io'
+require_relative 'language_loader'
 class ConsolePresenter
 
   def initialize(debug: nil, io: ConsoleIO.new, language: LanguageLoader.load("en"))

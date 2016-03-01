@@ -1,4 +1,4 @@
-require 'consolePresenter'
+require 'console_presenter'
 
 RSpec.describe ConsolePresenter do
   context "With stubbed input and output" do
