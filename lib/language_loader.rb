@@ -1,6 +1,6 @@
 require_relative 'language'
-class LanguageLoader
 
+class LanguageLoader
   def self.load(lang="en")
     begin
       require_relative 'langs/' + lang
@@ -9,5 +9,4 @@ class LanguageLoader
       Language.new
     end
   end
-
 end

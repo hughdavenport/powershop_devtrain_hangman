@@ -1,5 +1,4 @@
 class Wordlist
-
   attr_reader :words
 
   def initialize(filename="/usr/share/dict/words")
@@ -22,5 +21,4 @@ class Wordlist
   def get_word()
     @words.sample
   end
-
 end

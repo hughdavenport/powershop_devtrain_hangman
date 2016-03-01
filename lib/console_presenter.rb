@@ -1,7 +1,7 @@
 require_relative 'console_io'
 require_relative 'language_loader'
-class ConsolePresenter
 
+class ConsolePresenter
   def initialize(debug: nil, io: ConsoleIO.new, language: LanguageLoader.load("en"))
     @io = io
     @language = language
@@ -63,5 +63,4 @@ class ConsolePresenter
   def get_string(string, args={})
     @language.get_string(string, args)
   end
-
 end

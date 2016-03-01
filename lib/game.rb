@@ -3,8 +3,8 @@ require_relative 'wordlist'
 require_relative 'console_presenter'
 require_relative 'graphical_console_presenter'
 require_relative 'errors'
-class Game
 
+class Game
   def initialize(debug: ENV.fetch("HANGMAN_DEBUG", nil),
                  word: Wordlist.new.get_word,
                  hangman: Hangman.new(word: word),
@@ -50,5 +50,4 @@ class Game
       :inputisinvalid
     end
   end
-
 end

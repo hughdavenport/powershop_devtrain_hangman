@@ -1,5 +1,4 @@
 class Hangman
-
   attr_reader :word
   attr_reader :guesses
 
@@ -42,5 +41,4 @@ class Hangman
     validate_letter letter
     guesses << letter
   end
-
 end

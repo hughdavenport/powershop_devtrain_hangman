@@ -1,6 +1,6 @@
 require 'io/console'
-class ConsoleIO
 
+class ConsoleIO
   attr_reader :input
   attr_reader :output
 
@@ -35,5 +35,4 @@ class ConsoleIO
   def print_text_with_newline(text)
     print_text text + "\n"
   end
-
 end

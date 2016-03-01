@@ -1,6 +1,6 @@
 # encoding: utf-8
-class Language_fr < Language
 
+class Language_fr < Language
   def initialize
     @STRINGS = {
       :pleaseenteraletter         => "S'il vous plaît entrer une lettre: ",
@@ -19,5 +19,4 @@ class Language_fr < Language
       :thewordwas                 => "Le mot était: :word",
     }
   end
-
 end

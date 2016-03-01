@@ -1,5 +1,4 @@
 class Language
-
   def lang
     self.class.to_s.split("Language_")[1]
   end
@@ -15,5 +14,4 @@ class Language
       "[[" + string.to_s + (args.empty? ? "" : "||" + args.to_s) + "]]"
     end
   end
-
 end

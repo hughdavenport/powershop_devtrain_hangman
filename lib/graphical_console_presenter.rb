@@ -1,7 +1,7 @@
 require_relative 'console_presenter'
+
 class GraphicalConsolePresenter < ConsolePresenter
   # Actually has a graphical representation of the hanging man
-
   def get_gamestate(hangman)
     text = super(hangman)
     text += "\n"
@@ -210,5 +210,4 @@ EOF
 -----+-----
 EOF
 =end
-
 end

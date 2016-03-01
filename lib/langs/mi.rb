@@ -1,6 +1,6 @@
 # encoding: utf-8
-class Language_mi < Language
 
+class Language_mi < Language
   def initialize
     @STRINGS = {
       :pleaseenteraletter         => "Tēnā tomo hetahi rata: ",                       # Please enter one letter:
@@ -19,5 +19,4 @@ class Language_mi < Language
       :thewordwas                 => "Ko te kupu a: :word",                           # The word: :word
     }
   end
-
 end

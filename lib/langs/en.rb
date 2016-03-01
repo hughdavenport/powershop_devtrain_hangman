@@ -1,5 +1,4 @@
 class Language_en < Language
-
   def initialize
     @STRINGS = {
       :pleaseenteraletter         => "Please enter a letter: ",
@@ -18,5 +17,4 @@ class Language_en < Language
       :thewordwas                 => "The word was: :word",
     }
   end
-
 end
