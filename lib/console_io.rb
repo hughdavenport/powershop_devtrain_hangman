@@ -18,26 +18,22 @@ class ConsoleIO
   end
 
   def clear_screen
-    print_text("#{ANSI_BEGINNING_OF_LINE}#{ANSI_ERASE_SCREEN}")
+    print("#{ANSI_BEGINNING_OF_LINE}#{ANSI_ERASE_SCREEN}")
   end
 
-  def get_char
+  def getch
     @input.getch.tap do |character|
       raise Interrupt if character == END_OF_TEXT
       raise EOFError if character == END_OF_TRANSMISSION
     end
   end
 
-  def print_text(text)
+  def print(text)
     @output.print(text)
     @output.flush
   end
 
-  def print_newline
-    print_text("\n")
-  end
-
-  def print_text_with_newline(text)
-    print_text("#{text}\n")
+  def puts(text="")
+    print("#{text}\n")
   end
 end

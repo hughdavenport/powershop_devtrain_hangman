@@ -11,7 +11,7 @@ class ConsolePresenter
   def display_game(hangman)
     @io.clear_screen
     display_error if @error
-    @io.print_text_with_newline(get_gamestate(hangman))
+    @io.puts(get_gamestate(hangman))
   end
 
   def add_error(error)
@@ -19,14 +19,14 @@ class ConsolePresenter
   end
 
   def display_error
-    @io.print_text_with_newline(get_string(@error)) if @error
+    @io.puts(get_string(@error)) if @error
     @error = nil
   end
 
   def ask_for_letter
     message = get_string :pleaseenteraletter
-    @io.print_text(message)
-    @io.get_char
+    @io.print(message)
+    @io.getch
   end
 
   def get_gamestate(hangman)

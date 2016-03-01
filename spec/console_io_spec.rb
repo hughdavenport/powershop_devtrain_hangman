@@ -21,55 +21,57 @@ RSpec.describe ConsoleIO do
 
     subject { ConsoleIO.new(input: input, output: output) }
 
-    describe "get_char" do
+    describe "getch" do
       it "Should raise interrupt with ctrl-c" do
         allow(input).to receive(:getch) { "\u0003" }
-        expect { subject.get_char }.to raise_error(Interrupt)
+        expect { subject.getch }.to raise_error(Interrupt)
       end
 
       it "Should raise EOF with ctrl-d" do
         allow(input).to receive(:getch) { "\u0004" }
-        expect { subject.get_char }.to raise_error(EOFError)
+        expect { subject.getch }.to raise_error(EOFError)
       end
 
       it "Should return the input" do
         allow(input).to receive(:getch) { "a" }
-        expect(subject.get_char).to eq "a"
+        expect(subject.getch).to eq "a"
       end
 
       it "Should return input in order" do
         i = 0;
         chars = ('a'..'z').to_a.sample(5)
         allow(input).to receive(:getch) { i+=1 if i < 5; chars[i-1]; }
-        expect(subject.get_char).to eq chars[0]
-        expect(subject.get_char).to eq chars[1]
-        expect(subject.get_char).to eq chars[2]
-        expect(subject.get_char).to eq chars[3]
-        expect(subject.get_char).to eq chars[4]
+        expect(subject.getch).to eq chars[0]
+        expect(subject.getch).to eq chars[1]
+        expect(subject.getch).to eq chars[2]
+        expect(subject.getch).to eq chars[3]
+        expect(subject.getch).to eq chars[4]
       end
     end
 
-    describe "print_test" do
+    describe "print" do
       it "should print and flush test" do
-        subject.print_text("test")
+        subject.print("test")
         expect(output.printed).to be_empty
         expect(output.flushed).to eq "test"
       end
     end
 
-    describe "print_newline" do
-      it "should print and flush a newline" do
-        subject.print_newline
-        expect(output.printed).to be_empty
-        expect(output.flushed).to eq "\n"
+    describe "puts" do
+      context "with no arguments" do
+        it "should print and flush a newline" do
+          subject.puts
+          expect(output.printed).to be_empty
+          expect(output.flushed).to eq "\n"
+        end
       end
-    end
 
-    describe "print_text_with_newline" do
-      it "should print test with a newline and flush" do
-        subject.print_text_with_newline("test")
-        expect(output.printed).to be_empty
-        expect(output.flushed).to eq "test\n"
+      context "with argument of test" do
+        it "should print test with a newline and flush" do
+          subject.puts("test")
+          expect(output.printed).to be_empty
+          expect(output.flushed).to eq "test\n"
+        end
       end
     end
 
