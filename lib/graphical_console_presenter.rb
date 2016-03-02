@@ -5,6 +5,7 @@ class GraphicalConsolePresenter < ConsolePresenter
   def gamestate(hangman)
     text = [
       super(hangman),
+      '',
       picture(hangman.score),
     ].join("\n")
   end
