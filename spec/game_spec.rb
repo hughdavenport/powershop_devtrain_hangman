@@ -12,11 +12,10 @@ RSpec.describe Game do
 
     asked = 0
     allow(presenter).to receive(:ask_for_letter) {
-      # guesses should be let'd later on
       asked += 1
-      guesses.shift
     }
     allow(presenter).to receive(:asked) { asked }
+    allow(presenter).to receive(:getch) { guesses.shift } # guesses should be let'd later
 
     presenter
   end

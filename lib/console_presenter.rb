@@ -21,6 +21,9 @@ class ConsolePresenter
   def ask_for_letter
     message = get_string(:please_enter_a_letter)
     @io.print(message)
+  end
+
+  def getch
     @io.getch
   end
 

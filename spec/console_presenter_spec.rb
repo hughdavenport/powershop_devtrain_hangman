@@ -80,7 +80,7 @@ RSpec.describe ConsolePresenter do
       end
 
       it "Should return the letter we give" do
-        expect(subject.ask_for_letter).to eq letter
+        expect(subject.getch).to eq letter
       end
     end
 

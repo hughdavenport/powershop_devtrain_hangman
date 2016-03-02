@@ -25,7 +25,8 @@ class Game
   def guess
     @presenter.display_game(@hangman)
     begin
-      letter = @presenter.ask_for_letter
+      @presenter.ask_for_letter
+      letter = @presenter.getch
       break unless error(letter)
       @presenter.display_game(@hangman, error(letter))
     end while true
