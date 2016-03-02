@@ -1,18 +1,18 @@
 class Hangman
   attr_reader :guesses
 
-  def initialize(starting_score: 10, word: "hangman")
-    @starting_score = starting_score
+  def initialize(starting_lives: 10, word: "hangman")
+    @starting_lives = starting_lives
     @word = word
     @guesses = []
   end
 
   def won?
-    score > 0 && guessed_word.join() == @word
+    lives > 0 && guessed_word.join() == @word
   end
 
   def lost?
-    score == 0
+    lives == 0
   end
 
   def finished?
@@ -20,11 +20,11 @@ class Hangman
   end
 
   def quit!
-    @starting_score = wrong_guesses.length
+    @starting_lives = wrong_guesses.length
   end
 
-  def score
-    @starting_score - wrong_guesses.length
+  def lives
+    @starting_lives - wrong_guesses.length
   end
 
   def wrong_guesses

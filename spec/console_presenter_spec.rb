@@ -27,7 +27,7 @@ RSpec.describe ConsolePresenter do
     let(:hangman) do
       hangman = double("Hangman")
       allow(hangman).to receive(:guessed_word) { ['p'] + [nil]*(word.length-1) }
-      allow(hangman).to receive(:score)        { 7 }
+      allow(hangman).to receive(:lives)        { 7 }
       allow(hangman).to receive(:guesses)      { ['p'] }
       allow(hangman).to receive(:word)         { word }
       allow(hangman).to receive(:finished?)    { false }
@@ -147,7 +147,7 @@ RSpec.describe ConsolePresenter do
           expect(gamestate).to include("[[game_over]]")
         end
 
-        it "should have final score (lifes remaining)" do
+        it "should have final lives remaining" do
           expect(gamestate).to include("[[you_had_lives_remaining") # Don't include the string args, tested elsewhere
         end
 

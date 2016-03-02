@@ -4,8 +4,8 @@ require 'errors'
 RSpec.describe Hangman do
   describe "When I start a new game" do
     context "with no arguments" do
-      it "has a default score of 10" do
-        expect(subject.score).to eq 10
+      it "has a default lives of 10" do
+        expect(subject.lives).to eq 10
       end
 
       it "has a default word of hangman" do
@@ -34,12 +34,12 @@ RSpec.describe Hangman do
       end
     end
 
-    context "with an argument of default score of 6" do
-      let(:score) { 6 }
-      subject     { Hangman.new(starting_score: score) }
+    context "with an argument of default lives of 6" do
+      let(:lives) { 6 }
+      subject     { Hangman.new(starting_lives: lives) }
 
-      it "should have the correct score" do
-        expect(subject.score).to eq score
+      it "should have the correct lives" do
+        expect(subject.lives).to eq lives
       end
     end
 
@@ -56,11 +56,11 @@ RSpec.describe Hangman do
 
   describe "Finishing a game" do
     context "when I have a word of testing, and guess 6 random characters" do
-      let(:score)   { 7 }
+      let(:lives)   { 7 }
       let(:word)    { "testing" }
       let(:guesses) { (('a'..'z').to_a - word.chars.to_a).sample(7) }
       subject do
-        hangman = Hangman.new(starting_score: score, word: word)
+        hangman = Hangman.new(starting_lives: lives, word: word)
         (1..6).each do |i|
           hangman.guess(guesses[i])
         end
@@ -83,8 +83,8 @@ RSpec.describe Hangman do
         expect(subject.word).to be_nil
       end
 
-      it "should have a score of 1" do
-        expect(subject.score).to eq 1
+      it "should have 1 life left" do
+        expect(subject.lives).to eq 1
       end
 
       it "should still have a guessed_word of _______ (testing)" do
@@ -115,9 +115,9 @@ RSpec.describe Hangman do
         expect(subject.word).to eq word
       end
 
-      it "should have a score of 0 with next bad guess" do
+      it "should have 0 lives left with next bad guess" do
         subject.guess guesses[0]
-        expect(subject.score).to eq 0
+        expect(subject.lives).to eq 0
       end
 
       it "should have the correct guesses after the last bad guess" do
@@ -127,13 +127,13 @@ RSpec.describe Hangman do
     end
 
     context "When I have a word of megaprosopous, then I make the guesses e, a, o, u, i, m, r, s, and g" do
-      let(:score)   { 7 }
+      let(:lives)   { 7 }
       let(:word)    { "megaprosopous" }
       let(:guesses) { ['e', 'a', 'o', 'u', 'i', 'm', 'r', 's', 'g'] }
       subject do
-        game = Hangman.new(starting_score: score, word: word)
+        game = Hangman.new(starting_lives: lives, word: word)
         guesses.each {|guess| game.guess(guess) }
-        # Just missing a p, score should be 6
+        # Just missing a p, lives should be 6
         game
       end
 
@@ -153,8 +153,8 @@ RSpec.describe Hangman do
         expect(subject.word).to be_nil
       end
 
-      it "should have a score of 6 (one less than 7)" do
-        expect(subject.score).to eq 6
+      it "should have 6 lives (one less than 7)" do
+        expect(subject.lives).to eq 6
       end
 
       it "should have a guessed_word of mega_roso_ous (megaprosopous)" do
@@ -211,9 +211,9 @@ RSpec.describe Hangman do
         expect(subject).to be_finished
       end
 
-      it "should have a score of 6 after a p still" do
+      it "should have 6 lives left after a p still" do
         subject.guess 'p'
-        expect(subject.score).to eq 6
+        expect(subject.lives).to eq 6
       end
 
       it "should have a guessed word of megaprosopous after a p" do

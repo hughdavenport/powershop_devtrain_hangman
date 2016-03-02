@@ -41,7 +41,7 @@ class ConsolePresenter
     [
       translate(:game_over),
       translate(hangman.won? ? :you_won : :you_lost),
-      translate(:you_had_lives_remaining, {:lives => hangman.score}),
+      translate(:you_had_lives_remaining, {:lives => hangman.lives}),
       translate(:final_guess_was, {:guess => guessed_word(hangman)}),
       translate(:you_had_guessed, {:guesses => hangman.guesses.join(" ")}),
       translate(:the_word_was, {:word => hangman.word}),
@@ -50,7 +50,7 @@ class ConsolePresenter
 
   def in_progress_gamestate(hangman)
     [
-      translate(:you_have_lives_remaining, {:lives => hangman.score}),
+      translate(:you_have_lives_remaining, {:lives => hangman.lives}),
       translate(:current_guess_is, {:guess => guessed_word(hangman)}),
       translate(:you_have_guessed, {:guesses => hangman.guesses.join(" ")}),
     ].join("\n")

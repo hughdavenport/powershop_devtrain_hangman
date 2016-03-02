@@ -6,13 +6,13 @@ class GraphicalConsolePresenter < ConsolePresenter
     text = [
       super(hangman),
       '',
-      picture(hangman.score),
+      picture(hangman.lives),
     ].join("\n")
   end
 
-  def picture(score)
-    score = pictures.length - 1 if score >= pictures.length
-    pictures[score]
+  def picture(lives)
+    lives = pictures.length - 1 if lives >= pictures.length
+    pictures[lives]
   end
 
   def pictures
