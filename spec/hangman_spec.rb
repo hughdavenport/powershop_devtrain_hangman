@@ -100,6 +100,11 @@ RSpec.describe Hangman do
         expect(subject).to be_finished
       end
 
+      it "should have a score of 0 with next bad guess" do
+        subject.guess guesses[0]
+        expect(subject.score).to eq 0
+      end
+
       it "should have the correct guesses after the last bad guess" do
         subject.guess guesses[0]
         expect(subject.guesses).to eq (guesses[1..6] + [guesses[0]])

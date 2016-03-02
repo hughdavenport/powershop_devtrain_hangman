@@ -25,7 +25,7 @@ class Hangman
   end
 
   def wrong_guesses
-    guesses.reject { |letter| letter if @word.include?(letter) }
+    guesses.reject { |letter| @word.include?(letter) }
   end
 
   def guessed_word
