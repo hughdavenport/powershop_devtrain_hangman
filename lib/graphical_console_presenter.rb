@@ -2,14 +2,14 @@ require_relative 'console_presenter'
 
 class GraphicalConsolePresenter < ConsolePresenter
   # Actually has a graphical representation of the hanging man
-  def get_gamestate(hangman)
+  def gamestate(hangman)
     text = super(hangman)
     text += "\n"
-    text += draw_hangman(hangman.score)
+    text += picture(hangman.score)
     text
   end
 
-  def draw_hangman(score)
+  def picture(score)
     score = pictures.length - 1 if score >= pictures.length
     pictures[score]
   end

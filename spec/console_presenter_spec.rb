@@ -55,7 +55,7 @@ RSpec.describe ConsolePresenter do
         it "should have cleared screen, then print the gamestate" do
           subject.display_game(hangman)
           expect(output.printed).to be_empty
-          expect(output.flushed).to eq "\e[H\e[2J" + subject.get_gamestate(hangman) + "\n"
+          expect(output.flushed).to eq "\e[H\e[2J" + subject.gamestate(hangman) + "\n"
         end
       end
 
@@ -63,7 +63,7 @@ RSpec.describe ConsolePresenter do
         it "should have cleared screen, then print the error, then print the gamestate" do
           subject.display_game(hangman, error)
           expect(output.printed).to be_empty
-          expect(output.flushed).to eq "\e[H\e[2J" + "[["+error.to_s+"]]\n" + subject.get_gamestate(hangman) + "\n"
+          expect(output.flushed).to eq "\e[H\e[2J" + "[["+error.to_s+"]]\n" + subject.gamestate(hangman) + "\n"
         end
       end
     end
@@ -108,10 +108,10 @@ RSpec.describe ConsolePresenter do
       end
     end
 
-    describe "get_gamestate" do
+    describe "gamestate" do
       context "Not finished" do
         before          { allow(hangman).to receive(:finished?) { false } }
-        let(:gamestate) { subject.get_gamestate(hangman) }
+        let(:gamestate) { subject.gamestate(hangman) }
 
         it "should not have game over" do
           expect(gamestate).not_to include("[[game_over]]")
@@ -140,8 +140,8 @@ RSpec.describe ConsolePresenter do
 
       context "Finished" do
         before          { allow(hangman).to receive(:finished?) { true } }
-        before          { allow(hangman).to receive(:won?) { true } } # Not tested, required for get_gamestate call to happen
-        let(:gamestate) { subject.get_gamestate(hangman) }
+        before          { allow(hangman).to receive(:won?) { true } } # Not tested, required for gamestate call to happen
+        let(:gamestate) { subject.gamestate(hangman) }
 
         it "should have game over" do
           expect(gamestate).to include("[[game_over]]")
@@ -165,7 +165,7 @@ RSpec.describe ConsolePresenter do
 
         context "Won" do
           before          { allow(hangman).to receive(:won?) { true } }
-          let(:gamestate) { subject.get_gamestate(hangman) }
+          let(:gamestate) { subject.gamestate(hangman) }
 
           it "should have you won" do
             expect(gamestate).to include("[[you_won]]")
@@ -178,7 +178,7 @@ RSpec.describe ConsolePresenter do
 
         context "Lost" do
           before          { allow(hangman).to receive(:won?) { false } }
-          let(:gamestate) { subject.get_gamestate(hangman) }
+          let(:gamestate) { subject.gamestate(hangman) }
 
           it "should not have you won" do
             expect(gamestate).not_to include("[[you_won]]")

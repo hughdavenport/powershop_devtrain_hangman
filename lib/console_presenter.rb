@@ -11,7 +11,7 @@ class ConsolePresenter
   def display_game(hangman, error=nil)
     @io.clear_screen
     display_error(error) if error
-    @io.puts(get_gamestate(hangman))
+    @io.puts(gamestate(hangman))
   end
 
   def display_error(error=nil)
@@ -27,31 +27,33 @@ class ConsolePresenter
     @io.getch
   end
 
-  def get_gamestate(hangman)
-    text = ""
-    if hangman.finished?
-      text += get_string(:game_over)
-      text += "\n"
-      text += get_string(hangman.won? ? :you_won : :you_lost)
-      text += "\n"
-      text += get_string(:you_had_lives_remaining, {:lives => hangman.score})
-      text += "\n"
-      text += get_string(:final_guess_was, {:guess => get_guess_word(hangman)})
-      text += "\n"
-      text += get_string(:you_had_guessed, {:guesses => hangman.guesses.join(" ")})
-      text += "\n"
-      text += get_string(:the_word_was, {:word => hangman.word})
-      text += "\n"
+  def gamestate(hangman)
+    gamestate = if hangman.finished?
+      finished_gamestate(hangman)
     else
-      text += get_string(:you_have_lives_remaining, {:lives => hangman.score})
-      text += "\n"
-      text += get_string(:current_guess_is, {:guess => get_guess_word(hangman)})
-      text += "\n"
-      text += get_string(:you_have_guessed, {:guesses => hangman.guesses.join(" ")})
-      text += "\n"
+      in_progress_gamestate(hangman)
     end
-    text += hangman.inspect + "\n" if @debug
-    text
+    gamestate += hangman.inspect if @debug
+    gamestate
+  end
+
+  def finished_gamestate(hangman)
+    [
+      get_string(:game_over),
+      get_string(hangman.won? ? :you_won : :you_lost),
+      get_string(:you_had_lives_remaining, {:lives => hangman.score}),
+      get_string(:final_guess_was, {:guess => get_guess_word(hangman)}),
+      get_string(:you_had_guessed, {:guesses => hangman.guesses.join(" ")}),
+      get_string(:the_word_was, {:word => hangman.word}),
+    ].join("\n")
+  end
+
+  def in_progress_gamestate(hangman)
+    [
+      get_string(:you_have_lives_remaining, {:lives => hangman.score}),
+      get_string(:current_guess_is, {:guess => get_guess_word(hangman)}),
+      get_string(:you_have_guessed, {:guesses => hangman.guesses.join(" ")}),
+    ].join("\n")
   end
 
   def get_guess_word(hangman)
