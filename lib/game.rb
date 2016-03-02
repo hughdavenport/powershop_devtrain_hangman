@@ -6,7 +6,7 @@ require_relative 'errors'
 
 class Game
   def initialize(debug: ENV.fetch("HANGMAN_DEBUG", nil),
-                 word: Wordlist.new.get_word,
+                 word: Wordlist.new.word,
                  hangman: Hangman.new(word: word),
                  language: LanguageLoader.load(ENV.fetch("LANGUAGE", "en")),
                  presenter: GraphicalConsolePresenter.new(debug: debug, language: language))

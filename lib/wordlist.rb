@@ -6,7 +6,7 @@ class Wordlist
     raise NoUsableWordsError if words.empty?
   end
 
-  def get_word
+  def word
     @words.sample
   end
 end
