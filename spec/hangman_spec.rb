@@ -36,7 +36,7 @@ RSpec.describe Hangman do
 
     context "with an argument of default score of 6" do
       let(:score) { 6 }
-      subject     { Hangman.new(score: score) }
+      subject     { Hangman.new(starting_score: score) }
 
       it "should have the correct score" do
         expect(subject.score).to eq score
@@ -60,7 +60,7 @@ RSpec.describe Hangman do
       let(:word)    { "testing" }
       let(:guesses) { (('a'..'z').to_a - word.chars.to_a).sample(7) }
       subject do
-        hangman = Hangman.new(score: score, word: word)
+        hangman = Hangman.new(starting_score: score, word: word)
         (1..6).each do |i|
           hangman.guess(guesses[i])
         end
@@ -131,7 +131,7 @@ RSpec.describe Hangman do
       let(:word)    { "megaprosopous" }
       let(:guesses) { ['e', 'a', 'o', 'u', 'i', 'm', 'r', 's', 'g'] }
       subject do
-        game = Hangman.new(score: score, word: word)
+        game = Hangman.new(starting_score: score, word: word)
         guesses.each {|guess| game.guess(guess) }
         # Just missing a p, score should be 6
         game

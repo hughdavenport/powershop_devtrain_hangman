@@ -1,8 +1,8 @@
 class Hangman
   attr_reader :guesses
 
-  def initialize(score: 10, word: "hangman")
-    @starting_score = score
+  def initialize(starting_score: 10, word: "hangman")
+    @starting_score = starting_score
     @word = word
     @guesses = []
   end
