@@ -18,8 +18,8 @@ RSpec.describe ConsolePresenter do
       allow(output).to receive(:flushed) { flushed }
       output
     end
-    let (:io)       { ConsoleIO.new(input: input, output: output) }
-    let (:language) { Language.new } # Will always just do [[:langstringhere||:argshere]] syntax, test langs seperately
+    let(:io)       { ConsoleIO.new(input: input, output: output) }
+    let(:language) { Language.new } # Will always just do [[:langstringhere||:argshere]] syntax, test langs seperately
 
     let(:error) { :testingerror }
 
@@ -34,7 +34,13 @@ RSpec.describe ConsolePresenter do
       hangman
     end
 
-    subject { ConsolePresenter.new(io: io, language: language) }
+    let(:gamestate) do
+      gamestate = double("Gamestate")
+      allow(gamestate).to receive(:state) { "__gamestate__" }
+      gamestate
+    end
+
+    subject { ConsolePresenter.new(io: io, language: language, gamestate: gamestate) }
 
     describe "Error handling" do
       it "should not display anything when no error" do
@@ -55,7 +61,7 @@ RSpec.describe ConsolePresenter do
         it "should have cleared screen, then print the gamestate" do
           subject.display_game(hangman)
           expect(output.printed).to be_empty
-          expect(output.flushed).to eq "\e[H\e[2J" + subject.gamestate(hangman) + "\n"
+          expect(output.flushed).to eq "\e[H\e[2J" + gamestate.state(hangman, language) + "\n"
         end
       end
 
@@ -63,7 +69,7 @@ RSpec.describe ConsolePresenter do
         it "should have cleared screen, then print the error, then print the gamestate" do
           subject.display_game(hangman, error)
           expect(output.printed).to be_empty
-          expect(output.flushed).to eq "\e[H\e[2J" + "[["+error.to_s+"]]\n" + subject.gamestate(hangman) + "\n"
+          expect(output.flushed).to eq "\e[H\e[2J" + "[["+error.to_s+"]]\n" + gamestate.state(hangman, language) + "\n"
         end
       end
     end
@@ -99,95 +105,6 @@ RSpec.describe ConsolePresenter do
 
       it "should call the language translate with multiple args" do
         expect(subject.translate(string, multipleargs)).to eq language.translate(string, multipleargs)
-      end
-    end
-
-    describe "guessed_word" do
-      it "should be p________ (pneumatic)" do
-        expect(subject.guessed_word(hangman)).to eq "p"+"_"*(word.length-1)
-      end
-    end
-
-    describe "gamestate" do
-      context "Not finished" do
-        before          { allow(hangman).to receive(:finished?) { false } }
-        let(:gamestate) { subject.gamestate(hangman) }
-
-        it "should not have game over" do
-          expect(gamestate).not_to include("[[game_over]]")
-        end
-
-        it "should not have you won" do
-          expect(gamestate).not_to include("[[you_won]]")
-        end
-
-        it "should not have you lost" do
-          expect(gamestate).not_to include("[[you_lost]]")
-        end
-
-        it "should have lives remaining" do
-          expect(gamestate).to include("[[you_have_lives_remaining") # Don't include the string args, tested elsewhere
-        end
-
-        it "should have current guess" do
-          expect(gamestate).to include("[[current_guess_is")         # Don't include the string args, tested elsewhere
-        end
-
-        it "should have letters guessed" do
-          expect(gamestate).to include("[[you_have_guessed")         # Don't include the string args, tested elsewhere
-        end
-      end
-
-      context "Finished" do
-        before          { allow(hangman).to receive(:finished?) { true } }
-        before          { allow(hangman).to receive(:won?) { true } } # Not tested, required for gamestate call to happen
-        let(:gamestate) { subject.gamestate(hangman) }
-
-        it "should have game over" do
-          expect(gamestate).to include("[[game_over]]")
-        end
-
-        it "should have final lives remaining" do
-          expect(gamestate).to include("[[you_had_lives_remaining") # Don't include the string args, tested elsewhere
-        end
-
-        it "should have final guess" do
-          expect(gamestate).to include("[[final_guess_was")         # Don't include the string args, tested elsewhere
-        end
-
-        it "should have letters guessed" do
-          expect(gamestate).to include("[[you_had_guessed")         # Don't include the string args, tested elsewhere
-        end
-
-        it "should have actual word" do
-          expect(gamestate).to include("[[the_word_was")            # Don't include the string args, tested elsewhere
-        end
-
-        context "Won" do
-          before          { allow(hangman).to receive(:won?) { true } }
-          let(:gamestate) { subject.gamestate(hangman) }
-
-          it "should have you won" do
-            expect(gamestate).to include("[[you_won]]")
-          end
-
-          it "should not have you lost" do
-            expect(gamestate).not_to include("[[you_lost]]")
-          end
-        end
-
-        context "Lost" do
-          before          { allow(hangman).to receive(:won?) { false } }
-          let(:gamestate) { subject.gamestate(hangman) }
-
-          it "should not have you won" do
-            expect(gamestate).not_to include("[[you_won]]")
-          end
-
-          it "should have you lost" do
-            expect(gamestate).to include("[[you_lost]]")
-          end
-        end
       end
     end
   end
