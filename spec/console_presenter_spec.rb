@@ -26,9 +26,9 @@ RSpec.describe ConsolePresenter do
     let(:word) { "pneumatic" }
     let(:hangman) do
       hangman = double("Hangman")
-      allow(hangman).to receive(:guessed_word) { [nil]*word.length }
+      allow(hangman).to receive(:guessed_word) { ['p'] + [nil]*(word.length-1) }
       allow(hangman).to receive(:score)        { 7 }
-      allow(hangman).to receive(:guesses)      { [] }
+      allow(hangman).to receive(:guesses)      { ['p'] }
       allow(hangman).to receive(:word)         { word }
       allow(hangman).to receive(:finished?)    { false }
       hangman
@@ -103,8 +103,8 @@ RSpec.describe ConsolePresenter do
     end
 
     describe "get_guess_word" do
-      it "should be _________ (pneumatic)" do
-        expect(subject.get_guess_word(hangman)).to eq "_"*word.length
+      it "should be p________ (pneumatic)" do
+        expect(subject.get_guess_word(hangman)).to eq "p"+"_"*(word.length-1)
       end
     end
 
