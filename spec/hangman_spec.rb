@@ -28,6 +28,10 @@ RSpec.describe Hangman do
       it "should have a guessed_word of _______ (hangman)" do
         expect(subject.guessed_word).to eq ([nil]*"hangman".length)
       end
+
+      it "should not be able to view the word while not finished" do
+        expect(subject.word).to be_nil
+      end
     end
 
     context "with an argument of default score of 6" do
@@ -41,10 +45,10 @@ RSpec.describe Hangman do
 
     context "with an argument for a word of powershop" do
       let(:word) { "powershop" }
-      let(:score) { 0 } # Used to allow visibility of the word
-      subject    { Hangman.new(word: word, score: score) }
+      subject    { Hangman.new(word: word) }
 
       it "should have the correct word" do
+        subject.quit! # Used to allow visibility of word
         expect(subject.word).to eq word
       end
     end
@@ -75,6 +79,10 @@ RSpec.describe Hangman do
         expect(subject).not_to be_finished
       end
 
+      it "should not be able to see the word .. yet" do
+        expect(subject.word).to be_nil
+      end
+
       it "should have a score of 1" do
         expect(subject.score).to eq 1
       end
@@ -100,6 +108,11 @@ RSpec.describe Hangman do
       it "should be finished with next bad guess" do
         subject.guess guesses[0]
         expect(subject).to be_finished
+      end
+
+      it "should be able to see the word with next bad guess" do
+        subject.guess guesses[0]
+        expect(subject.word).to eq word
       end
 
       it "should have a score of 0 with next bad guess" do
@@ -134,6 +147,10 @@ RSpec.describe Hangman do
 
       it "should be finished .. yet" do
         expect(subject).not_to be_finished
+      end
+
+      it "should not be able to see the word .. yet" do
+        expect(subject.word).to be_nil
       end
 
       it "should have a score of 6 (one less than 7)" do
@@ -207,6 +224,11 @@ RSpec.describe Hangman do
       it "should have the correct guesses after a p" do
         subject.guess 'p'
         expect(subject.guesses).to eq (guesses + ['p'])
+      end
+
+      it "should be able to see the word after a p" do
+        subject.guess 'p'
+        expect(subject.word).to eq word
       end
     end
   end
