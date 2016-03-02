@@ -3,7 +3,7 @@ class Wordlist
 
   def initialize(filename="/usr/share/dict/words")
     @words = File.readlines(filename).map { |line| line.chomp }.select { |line| line =~ /^[a-z]{4,15}$/ }
-    raise NoUsableWordsError if @words.nil? || @words.empty?
+    raise NoUsableWordsError if words.empty?
   end
 
   def get_word
