@@ -4,7 +4,7 @@ class Language_mi < Language
   private
 
   def strings
-    {
+    super.merge({
       :please_enter_a_letter          => "Tēnā tomo hetahi rata: ",                       # Please enter one letter:
       :input_is_not_lower_case        => "e kore te tāuru pūriki",                        # Input (is) not lowercase
       :input_has_already_been_guessed => "Tāuru mea kua kētia fifili ki",                 # Input has already (been) gussed
@@ -19,6 +19,6 @@ class Language_mi < Language
       :you_have_guessed               => "Koe kua fifili: :guesses",                      # You have guessed: :guesses
       :you_had_guessed                => "I kua koe fifili:  :guesses",                   # You have guessed: :guesses (no had tense?)
       :the_word_was                   => "Ko te kupu a: :word",                           # The word: :word
-    }
+    })
   end
 end

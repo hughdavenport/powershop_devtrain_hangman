@@ -4,7 +4,7 @@ class Language_fr < Language
   private
 
   def strings
-    {
+    super.merge({
       :please_enter_a_letter          => "S'il vous plaît entrer une lettre: ",
       :input_is_not_lower_case        => "Entrée ne sont pas minuscules",
       :input_has_already_been_guessed => "Entrée a déjà été deviné",
@@ -19,6 +19,6 @@ class Language_fr < Language
       :you_have_guessed               => "Vous avez deviné: :guesses",
       :you_had_guessed                => "Vous aviez deviné: :guesses",
       :the_word_was                   => "Le mot était: :word",
-    }
+    })
   end
 end
