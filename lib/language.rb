@@ -3,7 +3,7 @@ class Language
     self.class.to_s.split("Language_")[1]
   end
 
-  def get_string(string, args={})
+  def translate(string, args={})
     if @STRINGS && @STRINGS.include?(string)
       ret = @STRINGS[string]
       args.each do |key,value|

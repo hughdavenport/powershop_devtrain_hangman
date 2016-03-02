@@ -15,11 +15,11 @@ class ConsolePresenter
   end
 
   def display_error(error=nil)
-    @io.puts(get_string(error)) if error
+    @io.puts(translate(error)) if error
   end
 
   def ask_for_letter
-    message = get_string(:please_enter_a_letter)
+    message = translate(:please_enter_a_letter)
     @io.print(message)
   end
 
@@ -39,28 +39,28 @@ class ConsolePresenter
 
   def finished_gamestate(hangman)
     [
-      get_string(:game_over),
-      get_string(hangman.won? ? :you_won : :you_lost),
-      get_string(:you_had_lives_remaining, {:lives => hangman.score}),
-      get_string(:final_guess_was, {:guess => get_guess_word(hangman)}),
-      get_string(:you_had_guessed, {:guesses => hangman.guesses.join(" ")}),
-      get_string(:the_word_was, {:word => hangman.word}),
+      translate(:game_over),
+      translate(hangman.won? ? :you_won : :you_lost),
+      translate(:you_had_lives_remaining, {:lives => hangman.score}),
+      translate(:final_guess_was, {:guess => guessed_word(hangman)}),
+      translate(:you_had_guessed, {:guesses => hangman.guesses.join(" ")}),
+      translate(:the_word_was, {:word => hangman.word}),
     ].join("\n")
   end
 
   def in_progress_gamestate(hangman)
     [
-      get_string(:you_have_lives_remaining, {:lives => hangman.score}),
-      get_string(:current_guess_is, {:guess => get_guess_word(hangman)}),
-      get_string(:you_have_guessed, {:guesses => hangman.guesses.join(" ")}),
+      translate(:you_have_lives_remaining, {:lives => hangman.score}),
+      translate(:current_guess_is, {:guess => guessed_word(hangman)}),
+      translate(:you_have_guessed, {:guesses => hangman.guesses.join(" ")}),
     ].join("\n")
   end
 
-  def get_guess_word(hangman)
+  def guessed_word(hangman)
     hangman.guessed_word.map { |letter| letter.nil? ? "_" : letter }.join
   end
 
-  def get_string(string, args={})
-    @language.get_string(string, args)
+  def translate(string, args={})
+    @language.translate(string, args)
   end
 end

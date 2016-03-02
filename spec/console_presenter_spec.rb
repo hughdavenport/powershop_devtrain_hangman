@@ -84,27 +84,27 @@ RSpec.describe ConsolePresenter do
       end
     end
 
-    describe "get_string" do
+    describe "translate" do
       let(:string)       { :teststring }
       let(:singlearg)    { {:arg1 => "arg1", :arg2 => "arg2"} }
       let(:multipleargs) { {:arg1 => "arg1", :arg2 => "arg2"} }
 
-      it "should call the language get_string" do
-        expect(subject.get_string(string)).to eq language.get_string(string)
+      it "should call the language translate" do
+        expect(subject.translate(string)).to eq language.translate(string)
       end
 
-      it "should call the language get_string with a single arg" do
-        expect(subject.get_string(string, singlearg)).to eq language.get_string(string, singlearg)
+      it "should call the language translate with a single arg" do
+        expect(subject.translate(string, singlearg)).to eq language.translate(string, singlearg)
       end
 
-      it "should call the language get_string with multiple args" do
-        expect(subject.get_string(string, multipleargs)).to eq language.get_string(string, multipleargs)
+      it "should call the language translate with multiple args" do
+        expect(subject.translate(string, multipleargs)).to eq language.translate(string, multipleargs)
       end
     end
 
-    describe "get_guess_word" do
+    describe "guessed_word" do
       it "should be p________ (pneumatic)" do
-        expect(subject.get_guess_word(hangman)).to eq "p"+"_"*(word.length-1)
+        expect(subject.guessed_word(hangman)).to eq "p"+"_"*(word.length-1)
       end
     end
 
