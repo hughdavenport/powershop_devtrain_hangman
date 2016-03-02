@@ -17,26 +17,24 @@ class Game
 
   def run
     until @hangman.finished?
-      guess = get_guess
       @hangman.guess(guess)
     end
     @presenter.display_game(@hangman)
   end
 
-  def get_guess
+  def guess
     @presenter.display_game(@hangman)
     begin
-      guess = @presenter.ask_for_letter
-      error = get_error(guess)
-      break unless error
-      @presenter.display_game(@hangman, error)
+      letter = @presenter.ask_for_letter
+      break unless error(letter)
+      @presenter.display_game(@hangman, error(letter))
     end while true
-    guess
+    letter
   end
 
-  def get_error(guess)
+  def error(letter)
     begin
-      @hangman.validate_letter(guess)
+      @hangman.validate_letter(letter)
     rescue NotLowerCaseLetterError
       :input_is_not_lower_case
     rescue AlreadyGuessedError

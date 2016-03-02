@@ -50,34 +50,34 @@ RSpec.describe Game do
 
   subject { Game.new(hangman: hangman, presenter: presenter) }
 
-  describe "#get_error" do
+  describe "#error" do
     it "should fail on a capital letter" do
-      expect(subject.get_error('A')).to eq :input_is_not_lower_case
+      expect(subject.error('A')).to eq :input_is_not_lower_case
     end
 
     it "should fail on an already guessed letter" do
-      expect(subject.get_error('z')).to eq :input_has_already_been_guessed
+      expect(subject.error('z')).to eq :input_has_already_been_guessed
     end
 
     it "should fail on a tilde as invalid" do
-      expect(subject.get_error('~')).to eq :input_is_invalid
+      expect(subject.error('~')).to eq :input_is_invalid
     end
 
     it "should fail on a digit as invalid" do
-      expect(subject.get_error('1')).to eq :input_is_invalid
+      expect(subject.error('1')).to eq :input_is_invalid
     end
 
     it "should accept a 'valid' letter" do
-      expect(subject.get_error('a')).to be_nil
+      expect(subject.error('a')).to be_nil
     end
   end
 
-  describe "#get_guess" do
+  describe "#guess" do
     context "contains error letter" do
       let(:guesses) { ['A', 'a'] }
 
       it "should get an error, loop again, then return the valid input" do
-        expect(subject.get_guess).to eq 'a'
+        expect(subject.guess).to eq 'a'
         expect(presenter.has_error?).to be true
         expect(presenter.asked).to eq 2
         expect(presenter).to be_displayed
@@ -88,7 +88,7 @@ RSpec.describe Game do
       let(:guesses) { ['a'] }
 
       it "should return correct input, and not have an error" do
-        expect(subject.get_guess).to eq 'a'
+        expect(subject.guess).to eq 'a'
         expect(presenter.has_error?).to be false
         expect(presenter.asked).to eq 1
         expect(presenter).to be_displayed
