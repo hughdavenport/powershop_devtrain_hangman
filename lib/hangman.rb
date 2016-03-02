@@ -9,7 +9,7 @@ class Hangman
   end
 
   def won?
-    score > 0 and guessed_word.join().eql?(@word)
+    score > 0 && guessed_word.join() == @word
   end
 
   def lost?
