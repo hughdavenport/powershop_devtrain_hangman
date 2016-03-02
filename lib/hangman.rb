@@ -1,5 +1,4 @@
 class Hangman
-  attr_reader :word
   attr_reader :guesses
 
   def initialize(score: 10, word: "hangman")
@@ -25,11 +24,15 @@ class Hangman
   end
 
   def wrong_guesses
-    guesses.reject { |letter| @word.include?(letter) }
+    @guesses.reject { |letter| @word.include?(letter) }
   end
 
   def guessed_word
-    @word.chars.map { |letter| letter if guesses.include?(letter) }
+    @word.chars.map { |letter| letter if @guesses.include?(letter) }
+  end
+
+  def word
+    @word if finished?
   end
 
   def validate_letter(letter)
