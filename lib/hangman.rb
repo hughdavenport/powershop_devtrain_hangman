@@ -21,7 +21,11 @@ class Hangman
   end
 
   def score
-    @starting_score - (guesses - guessed_word).length
+    @starting_score - wrong_guesses.length
+  end
+
+  def wrong_guesses
+    guesses.reject { |letter| letter if @word.include?(letter) }
   end
 
   def guessed_word
