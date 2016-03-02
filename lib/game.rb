@@ -16,12 +16,10 @@ class Game
   end
 
   def run
-    # Loop until @hangman.won or @hangman.lost, guessing, or potentially quitting
     until @hangman.finished?
       guess = get_guess
       @hangman.guess(guess)
     end
-    # Clear screen, print final gamestate
     @presenter.display_game(@hangman)
   end
 
