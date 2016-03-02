@@ -214,8 +214,8 @@ RSpec.describe Language do
   context "Invalid language" do
     subject { LanguageLoader.load("invalid") }
 
-    it "should be set to nothing" do
-      expect(subject.lang).to be_nil
+    it "should raise an error" do
+      expect { subject }.to raise_error(NoSuchLanguageError)
     end
   end
 end

@@ -6,7 +6,7 @@ class LanguageLoader
       require_relative 'langs/' + lang
       Object.const_get('Language_' + lang).new
     rescue NameError, LoadError
-      Language.new
+      raise NoSuchLanguageError
     end
   end
 end
