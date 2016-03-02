@@ -69,6 +69,10 @@ RSpec.describe Language do
     it "should return the correct phrase for final guessed letters, with a b c z x y" do
       expect(subject.get_string(:you_had_guessed, {:guesses => "a b c z x y"})).to eq "You had guessed: a b c z x y"
     end
+
+    it "should return the correct phrase for the displayed word, with a word of powershop" do
+      expect(subject.get_string(:the_word_was, {:word => "powershop"})).to eq "The word was: powershop"
+    end
   end
 
   context "Spanish" do
@@ -129,6 +133,10 @@ RSpec.describe Language do
     it "should return the correct phrase for final guessed letters, with a b c z x y" do
       expect(subject.get_string(:you_had_guessed, {:guesses => "a b c z x y"})).to eq "Usted ha adivinado: a b c z x y"
     end
+
+    it "should return the correct phrase for the displayed word, with a word of powershop" do
+      expect(subject.get_string(:the_word_was, {:word => "powershop"})).to eq "La palabra fue: powershop"
+    end
   end
 
   context "French" do
@@ -188,6 +196,10 @@ RSpec.describe Language do
 
     it "should return the correct phrase for final guessed letters, with a b c z x y" do
       expect(subject.get_string(:you_had_guessed, {:guesses => "a b c z x y"})).to eq "Vous aviez deviné: a b c z x y"
+    end
+
+    it "should return the correct phrase for the displayed word, with a word of powershop" do
+      expect(subject.get_string(:the_word_was, {:word => "powershop"})).to eq "Le mot était: powershop"
     end
   end
 
