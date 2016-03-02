@@ -9,6 +9,7 @@ RSpec.describe Hangman do
       end
 
       it "has a default word of hangman" do
+        subject.quit! # Used to allow visibility of word
         expect(subject.word).to eq "hangman"
       end
 
@@ -40,7 +41,8 @@ RSpec.describe Hangman do
 
     context "with an argument for a word of powershop" do
       let(:word) { "powershop" }
-      subject    { Hangman.new(word: word) }
+      let(:score) { 0 } # Used to allow visibility of the word
+      subject    { Hangman.new(word: word, score: score) }
 
       it "should have the correct word" do
         expect(subject.word).to eq word

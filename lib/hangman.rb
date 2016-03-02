@@ -19,6 +19,10 @@ class Hangman
     won? || lost?
   end
 
+  def quit!
+    @starting_score = wrong_guesses.length
+  end
+
   def score
     @starting_score - wrong_guesses.length
   end
