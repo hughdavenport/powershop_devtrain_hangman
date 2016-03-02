@@ -4,8 +4,8 @@ class Language
   end
 
   def translate(string, args={})
-    if @STRINGS && @STRINGS.include?(string)
-      ret = @STRINGS[string]
+    if strings && strings.include?(string)
+      ret = strings[string]
       args.each do |key,value|
         ret = ret.gsub(":" + key.to_s, value.to_s)
       end
@@ -13,5 +13,11 @@ class Language
     else
       "[[" + string.to_s + (args.empty? ? "" : "||" + args.to_s) + "]]"
     end
+  end
+
+  private
+
+  def strings
+    {}
   end
 end

@@ -1,8 +1,10 @@
 # encoding: utf-8
 
 class Language_fr < Language
-  def initialize
-    @STRINGS = {
+  private
+
+  def strings
+    {
       :please_enter_a_letter          => "S'il vous plaît entrer une lettre: ",
       :input_is_not_lower_case        => "Entrée ne sont pas minuscules",
       :input_has_already_been_guessed => "Entrée a déjà été deviné",

@@ -1,8 +1,10 @@
 # encoding: utf-8
 
 class Language_mi < Language
-  def initialize
-    @STRINGS = {
+  private
+
+  def strings
+    {
       :please_enter_a_letter          => "Tēnā tomo hetahi rata: ",                       # Please enter one letter:
       :input_is_not_lower_case        => "e kore te tāuru pūriki",                        # Input (is) not lowercase
       :input_has_already_been_guessed => "Tāuru mea kua kētia fifili ki",                 # Input has already (been) gussed

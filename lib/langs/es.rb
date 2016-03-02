@@ -1,8 +1,10 @@
 # encoding: utf-8
 
 class Language_es < Language
-  def initialize
-    @STRINGS = {
+  private
+
+  def strings
+    {
       :please_enter_a_letter          => "Por favor, introduzca una letra: ",
       :input_is_not_lower_case        => "La entrada no es minúscula",
       :input_has_already_been_guessed => "De entrada ya se ha conjecturado",

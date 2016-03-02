@@ -1,6 +1,8 @@
 class Language_en < Language
-  def initialize
-    @STRINGS = {
+  private
+
+  def strings
+    {
       :please_enter_a_letter          => "Please enter a letter: ",
       :input_is_not_lower_case        => "Input is not lower case",
       :input_has_already_been_guessed => "Input has already been guessed",
