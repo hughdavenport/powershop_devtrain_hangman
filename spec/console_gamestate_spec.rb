@@ -51,31 +51,34 @@ RSpec.describe ConsoleGamestate do
 
   context "when the game is finished" do
     before { allow(hangman).to receive(:finished?) { true } }
-    before { allow(hangman).to receive(:won?) { true } } # Not tested, required for gamestate call to happen
 
-    describe "#state" do
-      it "should include game over" do
-        expect(subject).to include("[[game_over]]")
-      end
+    context "regardless of win/lose status" do
+      before { allow(hangman).to receive(:won?) { true } } # Not tested, required for gamestate call to happen
 
-      it "should include the final lives remaining" do
-        expect(subject).to include("[[you_had_lives_remaining||{:lives=>#{lives}}]]")
-      end
+      describe "#state" do
+        it "should include game over" do
+          expect(subject).to include("[[game_over]]")
+        end
 
-      it "should include the final guess" do
-        expect(subject).to include("[[final_guess_was||{:guess=>\"#{guess_word}\"}]]")
-      end
+        it "should include the final lives remaining" do
+          expect(subject).to include("[[you_had_lives_remaining||{:lives=>#{lives}}]]")
+        end
 
-      it "should include the letters guessed" do
-        expect(subject).to include("[[you_had_guessed||{:guesses=>\"#{guesses.join(" ")}\"}]]")
-      end
+        it "should include the final guess" do
+          expect(subject).to include("[[final_guess_was||{:guess=>\"#{guess_word}\"}]]")
+        end
 
-      it "should include the game word" do
-        expect(subject).to include("[[the_word_was||{:word=>\"#{word}\"}]]")            # Don't include the string args, tested elsewhere
+        it "should include the letters guessed" do
+          expect(subject).to include("[[you_had_guessed||{:guesses=>\"#{guesses.join(" ")}\"}]]")
+        end
+
+        it "should include the game word" do
+          expect(subject).to include("[[the_word_was||{:word=>\"#{word}\"}]]")            # Don't include the string args, tested elsewhere
+        end
       end
     end
 
-    context "and the game is won" do
+    context "if the game is won" do
       before { allow(hangman).to receive(:won?) { true } }
 
       describe "#state" do
@@ -89,7 +92,7 @@ RSpec.describe ConsoleGamestate do
       end
     end
 
-    context "and the game is lost" do
+    context "if the game is lost" do
       before { allow(hangman).to receive(:won?) { false } }
 
       describe "#state" do
