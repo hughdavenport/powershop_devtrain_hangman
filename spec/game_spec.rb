@@ -27,20 +27,20 @@ RSpec.describe Game do
     allow(hangman).to receive(:guess) {|letter| guesses += 1 }
     allow(hangman).to receive(:finished?) { guesses >= 7 } # Just a testing number, real end game tested elsewhere
     allow(hangman).to receive(:guesses) { guesses }
-    allow(hangman).to receive(:validate_letter) do |letter|
+    allow(hangman).to receive(:error) do |letter|
       # just some testing data
       if ('a'..'m').include?(letter)
         # good, always (not in real hangman object, but thats tested elsewhere
         nil
       elsif ('A'..'Z').include?(letter)
         # Obviously capital
-        raise NotLowerCaseLetterError
+        :not_lower_case_letter
       elsif ('n'..'z').include?(letter)
         # Pretend we've already tested this before
-        raise AlreadyGuessedError
+        :already_guessed
       elsif not /[a-zA-Z]/ =~ letter
         # Obviously not a letter
-        raise ValidateError
+        :invalid_character
       end
     end
 

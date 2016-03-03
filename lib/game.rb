@@ -32,14 +32,10 @@ class Game
   end
 
   def error(letter)
-    begin
-      @hangman.validate_letter(letter)
-    rescue NotLowerCaseLetterError
-      :input_is_not_lower_case
-    rescue AlreadyGuessedError
-      :input_has_already_been_guessed
-    rescue ValidateError
-      :input_is_invalid
-    end
+    {
+      :already_guessed       => :input_has_already_been_guessed,
+      :invalid_character     => :input_is_invalid,
+      :not_lower_case_letter => :input_is_not_lower_case,
+    }[@hangman.error(letter)]
   end
 end

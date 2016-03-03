@@ -233,39 +233,77 @@ RSpec.describe Hangman do
     end
   end
 
-  describe "Invalid guesses" do
-    it "should not allow nil letter" do
-      expect { subject.guess nil }.to raise_error(ArgumentError)
+  context "Invalid guesses" do
+    describe "#error" do
+      it "should not allow nil letter" do
+        expect { subject.error nil }.to raise_error(ArgumentError)
+      end
+
+      it "should not allow non strings" do
+        expect { subject.error [] }.to raise_error(ArgumentError)
+      end
+
+      it "should not allow empty letters" do
+        expect { subject.error '' }.to raise_error(ArgumentError)
+      end
+
+      it "should not allow multiple letters" do
+        expect { subject.error 'aa' }.to raise_error(ArgumentError)
+      end
+
+      it "should not allow upper case letters" do
+        expect(subject.error 'A').not_to be_nil
+      end
+
+      it "should not allow non alphabet letters" do
+        expect(subject.error '~').not_to be_nil
+      end
+
+      it "should not allow repeat wrong guesses" do
+        subject.guess 'z' # default word is hangman
+        expect(subject.error 'z').not_to be_nil
+      end
+
+      it "should not allow repeat correct guesses" do
+        subject.guess 'a' # default word is hangman
+        expect(subject.error 'a').not_to be_nil
+      end
     end
 
-    it "should not allow non strings" do
-      expect { subject.guess [] }.to raise_error(ArgumentError)
-    end
+    describe "#guess" do
+      it "should not allow nil letter" do
+        expect { subject.guess nil }.to raise_error(ArgumentError)
+      end
 
-    it "should not allow empty letters" do
-      expect { subject.guess '' }.to raise_error(NoInputError)
-    end
+      it "should not allow non strings" do
+        expect { subject.guess [] }.to raise_error(ArgumentError)
+      end
 
-    it "should not allow multiple letters" do
-      expect { subject.guess 'aa' }.to raise_error(InputTooLongError)
-    end
+      it "should not allow empty letters" do
+        expect { subject.guess '' }.to raise_error(ArgumentError)
+      end
 
-    it "should not allow upper case letters" do
-      expect { subject.guess 'A' }.to raise_error(NotLowerCaseLetterError)
-    end
+      it "should not allow multiple letters" do
+        expect { subject.guess 'aa' }.to raise_error(ArgumentError)
+      end
 
-    it "should not allow non alphabet letters" do
-      expect { subject.guess '~' }.to raise_error(InvalidCharacterError)
-    end
+      it "should not allow upper case letters" do
+        expect { subject.guess 'A' }.to raise_error(ValidateError)
+      end
 
-    it "should not allow repeat wrong guesses" do
-      subject.guess 'z' # default word is hangman
-      expect { subject.guess 'z' }.to raise_error(AlreadyGuessedError)
-    end
+      it "should not allow non alphabet letters" do
+        expect { subject.guess '~' }.to raise_error(ValidateError)
+      end
 
-    it "should not allow repeat correct guesses" do
-      subject.guess 'a' # default word is hangman
-      expect { subject.guess 'a' }.to raise_error(AlreadyGuessedError)
+      it "should not allow repeat wrong guesses" do
+        subject.guess 'z' # default word is hangman
+        expect { subject.guess 'z' }.to raise_error(ValidateError)
+      end
+
+      it "should not allow repeat correct guesses" do
+        subject.guess 'a' # default word is hangman
+        expect { subject.guess 'a' }.to raise_error(ValidateError)
+      end
     end
   end
 end

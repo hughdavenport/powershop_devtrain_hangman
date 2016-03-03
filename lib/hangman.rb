@@ -39,17 +39,19 @@ class Hangman
     @word if finished?
   end
 
-  def validate_letter(letter)
-    raise ArgumentError if not letter.is_a? String
-    raise NoInputError if letter.empty?
-    raise InputTooLongError if letter.length > 1
-    raise InvalidCharacterError if not /[a-zA-Z]/ =~ letter
-    raise NotLowerCaseLetterError if not ('a'..'z').include? letter
-    raise AlreadyGuessedError if guesses.include? letter
+  def error(letter)
+    raise ArgumentError if !letter.is_a?(String) || letter.empty? || letter.length > 1
+    if guesses.include?(letter)
+      :already_guessed
+    elsif ! (letter =~ /\A[a-zA-Z]\z/)
+      :invalid_character
+    elsif ! ('a'..'z').include? letter
+      :not_lower_case_letter
+    end
   end
 
   def guess(letter)
-    validate_letter(letter)
+    raise ValidateError if error(letter)
     guesses << letter
   end
 end
