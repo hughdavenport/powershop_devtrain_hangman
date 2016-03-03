@@ -2,307 +2,440 @@ require 'hangman'
 require 'errors'
 
 RSpec.describe Hangman do
-  describe "When I start a new game" do
+  describe "#initialize" do
     context "with no arguments" do
-      it "has a default lives of 10" do
-        expect(subject.lives).to eq 10
+      let(:lives) { 10 }
+      let(:word)  { "hangman" }
+
+      describe "the game" do
+        it { is_expected.not_to be_won }
+        it { is_expected.not_to be_lost }
+        it { is_expected.not_to be_finished }
       end
 
-      it "has a default word of hangman" do
-        subject.quit! # Used to allow visibility of word
-        expect(subject.word).to eq "hangman"
+      describe "#word (after quitting so that it is visible)" do
+        before { subject.quit! }
+
+        it "should be the default" do
+          expect(subject.word).to eq word
+        end
       end
 
-      it "should not have win" do
-        expect(subject).not_to be_won
+      describe "#lives" do
+        it "should be the default" do
+          expect(subject.lives).to eq lives
+        end
       end
 
-      it "should not have lost" do
-        expect(subject).not_to be_lost
-      end
-
-      it "should not be finished" do
-        expect(subject).not_to be_finished
-      end
-
-      it "should have a guessed_word of _______ (hangman)" do
-        expect(subject.guessed_word).to eq ([nil]*"hangman".length)
-      end
-
-      it "should not be able to view the word while not finished" do
-        expect(subject.word).to be_nil
+      describe "#guessed_word" do
+        it "should be empty" do
+          expect(subject.guessed_word).to eq ([nil]*word.length)
+        end
       end
     end
 
-    context "with an argument of default lives of 6" do
+    context "with an argument for the starting lives" do
       let(:lives) { 6 }
       subject     { Hangman.new(starting_lives: lives) }
 
-      it "should have the correct lives" do
-        expect(subject.lives).to eq lives
+      describe "#lives" do
+        it "should be correct" do
+          expect(subject.lives).to eq lives
+        end
       end
     end
 
-    context "with an argument for a word of powershop" do
+    context "with an argument for the word" do
       let(:word) { "powershop" }
       subject    { Hangman.new(word: word) }
 
-      it "should have the correct word" do
-        subject.quit! # Used to allow visibility of word
-        expect(subject.word).to eq word
+      describe "#word (after quitting so that it is visible)" do
+        before { subject.quit! }
+
+        it "should be correct" do
+          expect(subject.word).to eq word
+        end
       end
     end
   end
 
-  describe "Finishing a game" do
-    context "when I have a word of testing, and guess 6 random characters" do
-      let(:lives)   { 7 }
-      let(:word)    { "testing" }
-      let(:guesses) { (('a'..'z').to_a - word.chars.to_a).sample(7) }
-      subject do
-        hangman = Hangman.new(starting_lives: lives, word: word)
-        (1..6).each do |i|
-          hangman.guess(guesses[i])
-        end
-        hangman
-      end
+  context "when I am one turn off losing, with no correct guesses" do
+    let(:lives)   { 7 }
+    let(:word)    { "testing" }
+    let(:guesses) { (('a'..'z').to_a - word.chars.to_a).sample(6) }
+    subject       { Hangman.new(starting_lives: lives, word: word) }
+    before        { guesses.each { |guess| subject.guess(guess) } }
 
-      it "should not have won the game" do
-        expect(subject).not_to be_won
-      end
+    describe "the game" do
+      it { is_expected.not_to be_won }
+      it { is_expected.not_to be_lost }
+      it { is_expected.not_to be_finished }
+    end
 
-      it "should not have lost .. yet" do
-        expect(subject).not_to be_lost
-      end
-
-      it "should not be finished .. yet" do
-        expect(subject).not_to be_finished
-      end
-
-      it "should not be able to see the word .. yet" do
+    describe "#word" do
+      it "should be hidden" do
         expect(subject.word).to be_nil
       end
+    end
 
-      it "should have 1 life left" do
+    describe "#lives" do
+      it "should be 1" do
         expect(subject.lives).to eq 1
       end
+    end
 
-      it "should still have a guessed_word of _______ (testing)" do
+    describe "#guessed_word" do
+      it "should be empty" do
         expect(subject.guessed_word).to eq ([nil]*word.length)
-      end
-
-      it "should have the correct guesses" do
-        expect(subject.guesses).to eq guesses[1..6]
-      end
-
-      it "should lose next bad guess" do
-        subject.guess guesses[0]
-        expect(subject).to be_lost
-      end
-
-      it "should not win next bad guess" do
-        subject.guess guesses[0]
-        expect(subject).not_to be_won
-      end
-
-      it "should be finished with next bad guess" do
-        subject.guess guesses[0]
-        expect(subject).to be_finished
-      end
-
-      it "should be able to see the word with next bad guess" do
-        subject.guess guesses[0]
-        expect(subject.word).to eq word
-      end
-
-      it "should have 0 lives left with next bad guess" do
-        subject.guess guesses[0]
-        expect(subject.lives).to eq 0
-      end
-
-      it "should have the correct guesses after the last bad guess" do
-        subject.guess guesses[0]
-        expect(subject.guesses).to eq (guesses[1..6] + [guesses[0]])
       end
     end
 
-    context "When I have a word of megaprosopous, then I make the guesses e, a, o, u, i, m, r, s, and g" do
-      let(:lives)   { 7 }
-      let(:word)    { "megaprosopous" }
-      let(:guesses) { ['e', 'a', 'o', 'u', 'i', 'm', 'r', 's', 'g'] }
-      subject do
-        game = Hangman.new(starting_lives: lives, word: word)
-        guesses.each {|guess| game.guess(guess) }
-        # Just missing a p, lives should be 6
-        game
-      end
-
-      it "should not have won .. yet" do
-        expect(subject).not_to be_won
-      end
-
-      it "should not have lost" do
-        expect(subject).not_to be_lost
-      end
-
-      it "should be finished .. yet" do
-        expect(subject).not_to be_finished
-      end
-
-      it "should not be able to see the word .. yet" do
-        expect(subject.word).to be_nil
-      end
-
-      it "should have 6 lives (one less than 7)" do
-        expect(subject.lives).to eq 6
-      end
-
-      it "should have a guessed_word of mega_roso_ous (megaprosopous)" do
-        expect(subject.guessed_word).to eq (word.chars.to_a.map{|c| c == 'p' ? nil : c})
-      end
-
-      it "should have the correct guesses" do
+    describe "#guesses" do
+      it "should have the guesses I supplied" do
         expect(subject.guesses).to eq guesses
       end
+    end
 
-      it "should not win on a wrong letter" do
-        subject.guess 'z'
-        expect(subject).not_to be_won
+    context "then I make one more incorrect guess" do
+      let(:guess) { (('a'..'z').to_a - word.chars.to_a - guesses).sample }
+      before      { subject.guess(guess) }
+
+      describe "the game" do
+        it { is_expected.to be_lost }
+        it { is_expected.not_to be_won }
+        it { is_expected.to be_finished }
       end
 
-      it "should have the correct guesses after wrong letter" do
-        subject.guess 'z'
-        expect(subject.guesses).to eq (guesses + ['z'])
-      end
-
-      it "should not win on a repeat letter" do
-        begin
-          subject.guess 'g'
-        rescue ValidateError # Ignore this, tested later
+      describe "#word" do
+        it "should now be visible" do
+          expect(subject.word).to eq word
         end
-        expect(subject).not_to be_won
       end
 
-      it "should not lose on a wrong letter" do
-        subject.guess 'z'
-        expect(subject).not_to be_lost
-      end
-
-      it "should not lose on a repeat letter" do
-        begin
-          subject.guess 'g'
-        rescue ValidateError # Ignore this, tested later
+      describe "#lives" do
+        it "should be 0" do
+          expect(subject.lives).to eq 0
         end
-        expect(subject).not_to be_lost
       end
 
-      it "should win on a p" do
-        subject.guess 'p'
-        expect(subject).to be_won
+      describe "#guesses" do
+        it "should have both the original guesses, and the final guess" do
+          expect(subject.guesses).to eq (guesses + [guess])
+        end
+      end
+    end
+
+    context "then I make a correct guess" do
+      let(:guess) { word.chars.to_a.sample }
+      before      { subject.guess(guess) }
+
+      describe "the game" do
+        it { is_expected.not_to be_lost }
+        it { is_expected.not_to be_won }
+        it { is_expected.not_to be_finished }
       end
 
-      it "should not lose on a p" do
-        subject.guess 'p'
-        expect(subject).not_to be_lost
+      describe "#word" do
+        it "should be hidden" do
+          expect(subject.word).to be_nil
+        end
       end
 
-      it "should be finished after a p" do
-        subject.guess 'p'
-        expect(subject).to be_finished
+      describe "#lives" do
+        it "should be 1" do
+          expect(subject.lives).to eq 1
+        end
       end
 
-      it "should have 6 lives left after a p still" do
-        subject.guess 'p'
-        expect(subject.lives).to eq 6
-      end
-
-      it "should have a guessed word of megaprosopous after a p" do
-        subject.guess 'p'
-        expect(subject.guessed_word).to eq word.chars.to_a
-      end
-
-      it "should have the correct guesses after a p" do
-        subject.guess 'p'
-        expect(subject.guesses).to eq (guesses + ['p'])
-      end
-
-      it "should be able to see the word after a p" do
-        subject.guess 'p'
-        expect(subject.word).to eq word
+      describe "#guesses" do
+        it "should have both the original guesses, and the final guess" do
+          expect(subject.guesses).to eq (guesses + [guess])
+        end
       end
     end
   end
 
-  context "Invalid guesses" do
-    describe "#error" do
-      it "should not allow nil letter" do
-        expect { subject.error nil }.to raise_error(ArgumentError)
-      end
+  context "when I an one turn off winning, with one incorrect guess" do
+    let(:lives)   { 7 }
+    let(:word)    { "megaprosopous" }
+    let(:guesses) { ['e', 'a', 'o', 'u', 'i', 'm', 'r', 's', 'g'] } # Just missing a p, and i is incorrect
+    subject       { Hangman.new(starting_lives: lives, word: word) }
+    before        { guesses.each { |guess| subject.guess(guess) } }
 
-      it "should not allow non strings" do
-        expect { subject.error [] }.to raise_error(ArgumentError)
-      end
+    let(:missing_letter) { 'p' }
 
-      it "should not allow empty letters" do
-        expect { subject.error '' }.to raise_error(ArgumentError)
-      end
+    describe "the game" do
+      it { is_expected.not_to be_lost }
+      it { is_expected.not_to be_won }
+      it { is_expected.not_to be_finished }
+    end
 
-      it "should not allow multiple letters" do
-        expect { subject.error 'aa' }.to raise_error(ArgumentError)
-      end
-
-      it "should not allow upper case letters" do
-        expect(subject.error 'A').not_to be_nil
-      end
-
-      it "should not allow non alphabet letters" do
-        expect(subject.error '~').not_to be_nil
-      end
-
-      it "should not allow repeat wrong guesses" do
-        subject.guess 'z' # default word is hangman
-        expect(subject.error 'z').not_to be_nil
-      end
-
-      it "should not allow repeat correct guesses" do
-        subject.guess 'a' # default word is hangman
-        expect(subject.error 'a').not_to be_nil
+    describe "#word" do
+      it "should be hidden" do
+        expect(subject.word).to be_nil
       end
     end
 
-    describe "#guess" do
-      it "should not allow nil letter" do
-        expect { subject.guess nil }.to raise_error(ArgumentError)
+    describe "#lives" do
+      it "should be 6" do
+        expect(subject.lives).to eq 6
+      end
+    end
+
+    describe "#guessed_word" do
+      it "should be correct" do
+        expect(subject.guessed_word).to eq (word.chars.to_a.map { |character| character unless character == missing_letter })
+      end
+    end
+
+    describe "#guesses" do
+      it "should have the guesses I supplied" do
+        expect(subject.guesses).to eq guesses
+      end
+    end
+
+    context "then I make another incorrect guess" do
+      let(:guess) { 'z' }
+      before      { subject.guess(guess) }
+
+      describe "the game" do
+        it { is_expected.not_to be_lost }
+        it { is_expected.not_to be_won }
+        it { is_expected.not_to be_finished }
       end
 
-      it "should not allow non strings" do
-        expect { subject.guess [] }.to raise_error(ArgumentError)
+      describe "#word" do
+        it "should be hidden" do
+          expect(subject.word).to be_nil
+        end
       end
 
-      it "should not allow empty letters" do
-        expect { subject.guess '' }.to raise_error(ArgumentError)
+      describe "#lives" do
+        it "should be 5" do
+          expect(subject.lives).to eq 5
+        end
       end
 
-      it "should not allow multiple letters" do
-        expect { subject.guess 'aa' }.to raise_error(ArgumentError)
+      describe "#guessed_word" do
+        it "should be correct" do
+          expect(subject.guessed_word).to eq (word.chars.to_a.map { |character| character unless character == missing_letter })
+        end
       end
 
-      it "should not allow upper case letters" do
-        expect { subject.guess 'A' }.to raise_error(ValidateError)
+      describe "#guesses" do
+        it "should have the guesses I supplied, including the new guess" do
+          expect(subject.guesses).to eq guesses + [guess]
+        end
+      end
+    end
+
+    context "then I make a repeat guess" do
+      let(:guess) { 'g' }
+      before { expect { subject.guess(guess) }.to raise_error(ValidateError) }
+
+      describe "the game" do
+        it { is_expected.not_to be_lost }
+        it { is_expected.not_to be_won }
+        it { is_expected.not_to be_finished }
       end
 
-      it "should not allow non alphabet letters" do
-        expect { subject.guess '~' }.to raise_error(ValidateError)
+      describe "#word" do
+        it "should be hidden" do
+          expect(subject.word).to be_nil
+        end
       end
 
-      it "should not allow repeat wrong guesses" do
-        subject.guess 'z' # default word is hangman
-        expect { subject.guess 'z' }.to raise_error(ValidateError)
+      describe "#lives" do
+        it "should be 6" do
+          expect(subject.lives).to eq 6
+        end
       end
 
-      it "should not allow repeat correct guesses" do
-        subject.guess 'a' # default word is hangman
-        expect { subject.guess 'a' }.to raise_error(ValidateError)
+      describe "#guessed_word" do
+        it "should be correct" do
+          expect(subject.guessed_word).to eq (word.chars.to_a.map { |character| character unless character == missing_letter })
+        end
+      end
+
+      describe "#guesses" do
+        it "should have the only the original guesses I supplied" do
+          expect(subject.guesses).to eq guesses
+        end
+      end
+    end
+
+    context "then I make the last correct guess" do
+      let(:guess) { "p" }
+      before      { subject.guess(guess) }
+
+      describe "the game" do
+        it { is_expected.not_to be_lost }
+        it { is_expected.to be_won }
+        it { is_expected.to be_finished }
+      end
+
+      describe "#word" do
+        it "should now be visible" do
+          expect(subject.word).to eq word
+        end
+      end
+
+      describe "#lives" do
+        it "should be 6" do
+          expect(subject.lives).to eq 6
+        end
+      end
+
+      describe "#guesses" do
+        it "should have both the original guesses, and the final guess" do
+          expect(subject.guesses).to eq (guesses + [guess])
+        end
+      end
+
+      describe "#guessed_word" do
+        it "should be the same as the final word" do
+          expect(subject.guessed_word).to eq word.chars.to_a
+        end
+      end
+    end
+  end
+
+  describe "#error" do
+    context "with an argument of nil" do
+      let(:guess) { nil }
+
+      it "should raise an argument error" do
+        expect { subject.error(guess) }.to raise_error(ArgumentError)
+      end
+    end
+
+    context "with a non string argument" do
+      let(:guess) { [] }
+
+      it "should raise an argument error" do
+        expect { subject.error(guess) }.to raise_error(ArgumentError)
+      end
+    end
+
+    context "with an empty string argument" do
+      let(:guess) { '' }
+
+      it "should raise an argument error" do
+        expect { subject.error(guess) }.to raise_error(ArgumentError)
+      end
+    end
+
+    context "with a multiple character string argument" do
+      let(:guess) { 'aa' }
+
+      it "should raise an argument error" do
+        expect { subject.error(guess) }.to raise_error(ArgumentError)
+      end
+    end
+
+    context "with an upper case character argument" do
+      let(:guess) { 'A' }
+      let(:error) { :not_lower_case_letter }
+
+      it "should return the correct error message" do
+        expect(subject.error(guess)).to be error
+      end
+    end
+
+    context "with a non alphabet character argument" do
+      let(:guess) { '~' }
+      let(:error) { :invalid_character }
+
+      it "should return the correct error message" do
+        expect(subject.error(guess)).to be error
+      end
+    end
+
+    context "with a repeated incorrect guess as an argument" do
+      let(:guess) { 'z' }
+      let(:error) { :already_guessed }
+      before      { subject.guess(guess) }
+
+      it "should return the correct error message" do
+        expect(subject.error(guess)).to be error
+      end
+    end
+
+    context "with a repeated correct guess as an argument" do
+      let(:guess) { 'a' }
+      let(:error) { :already_guessed }
+      before      { subject.guess(guess) }
+
+      it "should return the correct error message" do
+        expect(subject.error(guess)).to be error
+      end
+    end
+  end
+
+  describe "#guess" do
+    context "with an argument of nil" do
+      let(:guess) { nil }
+
+      it "should raise an argument error" do
+        expect { subject.error(guess) }.to raise_error(ArgumentError)
+      end
+    end
+
+    context "with a non string argument" do
+      let(:guess) { [] }
+
+      it "should raise an argument error" do
+        expect { subject.error(guess) }.to raise_error(ArgumentError)
+      end
+    end
+
+    context "with an empty string argument" do
+      let(:guess) { '' }
+
+      it "should raise an argument error" do
+        expect { subject.error(guess) }.to raise_error(ArgumentError)
+      end
+    end
+
+    context "with a multiple character string argument" do
+      let(:guess) { 'aa' }
+
+      it "should raise an argument error" do
+        expect { subject.error(guess) }.to raise_error(ArgumentError)
+      end
+    end
+
+    context "with an upper case character argument" do
+      let(:guess) { 'A' }
+
+      it "should raise a validate error" do
+        expect { subject.guess (guess) }.to raise_error(ValidateError)
+      end
+    end
+
+    context "with a non alphabet character argument" do
+      let(:guess) { '~' }
+
+      it "should raise a validate error" do
+        expect { subject.guess (guess) }.to raise_error(ValidateError)
+      end
+    end
+
+    context "with a repeated incorrect guess argument" do
+      let(:guess) { 'z' }
+      before      { subject.guess(guess) }
+
+      it "should raise a validate error" do
+        expect { subject.guess (guess) }.to raise_error(ValidateError)
+      end
+    end
+
+    context "with a repeated correct guess argument" do
+      let(:guess) { 'a' }
+      before      { subject.guess(guess) }
+
+      it "should raise a validate error" do
+        expect { subject.guess (guess) }.to raise_error(ValidateError)
       end
     end
   end
