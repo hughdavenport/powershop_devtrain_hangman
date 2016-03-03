@@ -26,72 +26,67 @@ RSpec.describe ConsoleIO do
 
   subject { ConsoleIO.new(input: input, output: output) }
 
-  context "when input is ctrl-c" do
-    before { allow(input).to receive(:getch) { ctrl_c } }
+  describe "#getch" do
+    context "when input is ctrl-c" do
+      before { allow(input).to receive(:getch) { ctrl_c } }
 
-    describe "#getch" do
       it "should raise an interrupt error" do
         expect { subject.getch }.to raise_error(Interrupt)
       end
     end
-  end
 
-  context "when input is ctrl-d" do
-    before { allow(input).to receive(:getch) { ctrl_d } }
+    context "when input is ctrl-d" do
+      before { allow(input).to receive(:getch) { ctrl_d } }
 
-    describe "#getch" do
       it "should raise an EOFError" do
         expect { subject.getch }.to raise_error(EOFError)
       end
     end
-  end
 
-  context "when input is a single character" do
-    let(:character) { "a" }
-    before { allow(input).to receive(:getch) { character } }
+    context "when input is a single character" do
+      let(:character) { "a" }
+      before { allow(input).to receive(:getch) { character } }
 
-    describe "#getch" do
       it "should return the same letter" do
         expect(subject.getch).to eq character
       end
     end
-  end
 
-  context "when input is a series of characters" do
-    let(:chars) { ["a", "e", "w", "l", "o"] }
-    before do
-      i = 0
-      allow(input).to receive(:getch) { i+=1 if i < 5; chars[i-1]; }
-    end
+    context "when input is a series of characters" do
+      let(:chars) { ["a", "e", "w", "l", "o"] }
+      before do
+        i = 0
+        allow(input).to receive(:getch) { i+=1 if i < 5; chars[i-1]; }
+      end
 
-    describe "#getch" do
       it "should return the same characters in the correct order" do
         chars.each { |character| expect(subject.getch).to eq character }
       end
     end
   end
 
-  context "when printing a test message" do
-    let(:to_print) { "test" }
+  describe "#print" do
+    context "when printing a test message" do
+      let(:to_print) { "test" }
 
-    describe "#print" do
       it "should print the message then flush" do
         subject.print(to_print)
         expect(output.printed).to be_empty
         expect(output.flushed).to eq to_print
       end
     end
+  end
 
-    describe "#puts" do
+  describe "#puts" do
+    context "when printing a test message" do
+      let(:to_print) { "test" }
       it "should print the message with a newline then flush" do
         subject.puts(to_print)
         expect(output.printed).to be_empty
         expect(output.flushed).to eq "#{to_print}\n"
       end
     end
-  end
 
-  describe "#puts" do
     context "with no arguments" do
       it "should print and flush a newline" do
         subject.puts
