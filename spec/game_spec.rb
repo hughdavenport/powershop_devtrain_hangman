@@ -51,7 +51,7 @@ RSpec.describe Game do
 
   describe "#run" do
     context "when there are no invalid characters" do
-      let(:guesses) { 0.upto(10).map { ('a'..'m').to_a.sample } }
+      let(:guesses) { ['d', 'g', 'a', 'g', 'e', 'c', 'l', 'a', 'i', 'c', 'a'] }
 
       it "should run until finished, and consume all characters" do
         subject.run
@@ -64,11 +64,11 @@ RSpec.describe Game do
     context "when there are invalid characters as well as valid characters" do
       let(:guesses) do
         [
-          ('n'..'z').to_a.sample,
-          ('A'..'Z').to_a.sample,
-          '~',
-          ('0'..'9').to_a.sample,
-        ] + 0.upto(10).map { ('a'..'m').to_a.sample }
+          'o', # already tested (see the hangman double)
+          'X', # upper case
+          '~', # invalid
+          '3', # invalid
+        ] + ['d', 'd', 'k', 'j', 'd', 'e', 'b', 'e', 'd', 'g', 'k']
       end
 
       it "should loop until finished, and consume all characters, and display the correct number of errors" do
