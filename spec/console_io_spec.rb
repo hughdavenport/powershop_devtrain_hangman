@@ -91,8 +91,8 @@ RSpec.describe ConsoleIO do
     end
   end
 
-  context "with no arguments" do
-    describe "#puts" do
+  describe "#puts" do
+    context "with no arguments" do
       it "should print and flush a newline" do
         subject.puts
         expect(output.printed).to be_empty
@@ -102,10 +102,12 @@ RSpec.describe ConsoleIO do
   end
 
   describe "#clear_screen" do
-    it "should print the beginning of line then erase screen ANSI sequences then flush" do
-      subject.clear_screen
-      expect(output.printed).to be_empty
-      expect(output.flushed).to eq "#{ansi_beginning_of_line}#{ansi_erase_screen}"
+    context "with no arguments" do
+      it "should print the beginning of line then erase screen ANSI sequences then flush" do
+        subject.clear_screen
+        expect(output.printed).to be_empty
+        expect(output.flushed).to eq "#{ansi_beginning_of_line}#{ansi_erase_screen}"
+      end
     end
   end
 end
