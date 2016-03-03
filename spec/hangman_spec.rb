@@ -62,7 +62,8 @@ RSpec.describe Hangman do
   context "when I am one turn off losing, with no correct guesses" do
     let(:lives)   { 7 }
     let(:word)    { "testing" }
-    let(:guesses) { (('a'..'z').to_a - word.chars.to_a).sample(6) }
+    let(:guesses) { ['v', 'a', 'c', 'u', 'z', 'k'] }
+    let(:correct) { 'e' }
     subject       { Hangman.new(starting_lives: lives, word: word) }
     before        { guesses.each { |guess| subject.guess(guess) } }
 
@@ -97,7 +98,7 @@ RSpec.describe Hangman do
     end
 
     context "then I make one more incorrect guess" do
-      let(:guess) { (('a'..'z').to_a - word.chars.to_a - guesses).sample }
+      let(:guess) { 'o' }
       before      { subject.guess(guess) }
 
       describe "the game" do
@@ -126,7 +127,7 @@ RSpec.describe Hangman do
     end
 
     context "then I make a correct guess" do
-      let(:guess) { word.chars.to_a.sample }
+      let(:guess) { correct }
       before      { subject.guess(guess) }
 
       describe "the game" do
@@ -265,7 +266,7 @@ RSpec.describe Hangman do
     end
 
     context "then I make the last correct guess" do
-      let(:guess) { "p" }
+      let(:guess) { 'p' }
       before      { subject.guess(guess) }
 
       describe "the game" do
