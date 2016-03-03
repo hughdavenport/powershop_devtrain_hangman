@@ -9,6 +9,8 @@ class ConsoleGamestate
     gamestate
   end
 
+  private
+
   def finished_state(hangman, language)
     [
       language.translate(:game_over),

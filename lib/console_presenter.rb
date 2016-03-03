@@ -32,6 +32,8 @@ class ConsolePresenter
     @io.getch
   end
 
+  private
+
   def translate(string, args={})
     @language.translate(string, args)
   end

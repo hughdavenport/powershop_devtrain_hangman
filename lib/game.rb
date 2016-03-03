@@ -20,6 +20,8 @@ class Game
     @presenter.display_game(@hangman)
   end
 
+  private
+
   def guess
     @presenter.display_game(@hangman)
     begin

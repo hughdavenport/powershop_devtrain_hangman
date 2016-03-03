@@ -10,6 +10,8 @@ class GraphicalConsoleGamestate < ConsoleGamestate
     ].join("\n")
   end
 
+  private
+
   def picture(lives)
     lives = pictures.length - 1 if lives >= pictures.length
     pictures[lives]

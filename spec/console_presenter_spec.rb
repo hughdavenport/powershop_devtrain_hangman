@@ -89,23 +89,5 @@ RSpec.describe ConsolePresenter do
         expect(subject.getch).to eq letter
       end
     end
-
-    describe "translate" do
-      let(:string)       { :teststring }
-      let(:singlearg)    { {:arg1 => "arg1", :arg2 => "arg2"} }
-      let(:multipleargs) { {:arg1 => "arg1", :arg2 => "arg2"} }
-
-      it "should call the language translate" do
-        expect(subject.translate(string)).to eq language.translate(string)
-      end
-
-      it "should call the language translate with a single arg" do
-        expect(subject.translate(string, singlearg)).to eq language.translate(string, singlearg)
-      end
-
-      it "should call the language translate with multiple args" do
-        expect(subject.translate(string, multipleargs)).to eq language.translate(string, multipleargs)
-      end
-    end
   end
 end

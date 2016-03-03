@@ -49,52 +49,6 @@ RSpec.describe Game do
 
   subject { Game.new(hangman: hangman, presenter: presenter) }
 
-  describe "#error" do
-    it "should fail on a capital letter" do
-      expect(subject.error('A')).to eq :input_is_not_lower_case
-    end
-
-    it "should fail on an already guessed letter" do
-      expect(subject.error('z')).to eq :input_has_already_been_guessed
-    end
-
-    it "should fail on a tilde as invalid" do
-      expect(subject.error('~')).to eq :input_is_invalid
-    end
-
-    it "should fail on a digit as invalid" do
-      expect(subject.error('1')).to eq :input_is_invalid
-    end
-
-    it "should accept a 'valid' letter" do
-      expect(subject.error('a')).to be_nil
-    end
-  end
-
-  describe "#guess" do
-    context "contains error letter" do
-      let(:guesses) { ['A', 'a'] }
-
-      it "should get an error, loop again, then return the valid input" do
-        expect(subject.guess).to eq 'a'
-        expect(presenter.has_error?).to be true
-        expect(presenter.asked).to eq 2
-        expect(presenter).to be_displayed
-      end
-    end
-
-    context "contains no error letter" do
-      let(:guesses) { ['a'] }
-
-      it "should return correct input, and not have an error" do
-        expect(subject.guess).to eq 'a'
-        expect(presenter.has_error?).to be false
-        expect(presenter.asked).to eq 1
-        expect(presenter).to be_displayed
-      end
-    end
-  end
-
   describe "#run" do
     context "No errors" do
       let(:guesses) { 0.upto(10).map { ('a'..'m').to_a.sample } }
@@ -108,12 +62,19 @@ RSpec.describe Game do
     end
 
     context "Has errors" do
-      let(:guesses) { 0.upto(4).map { ('n'..'z').to_a.sample } + 0.upto(10).map { ('a'..'m').to_a.sample } }
+      let(:guesses) do
+        [
+          ('n'..'z').to_a.sample,
+          ('A'..'Z').to_a.sample,
+          '~',
+          ('0'..'9').to_a.sample,
+        ] + 0.upto(10).map { ('a'..'m').to_a.sample }
+      end
 
       it "should loop until finished, and have asked some errors" do
         subject.run
         expect(hangman.guesses).to eq 7
-        expect(presenter.asked).to eq 12 # 5 errors
+        expect(presenter.asked).to eq 11 # 4 errors
         expect(presenter.has_error?).to be true
       end
     end
