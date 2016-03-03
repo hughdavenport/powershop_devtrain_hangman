@@ -50,10 +50,10 @@ RSpec.describe Game do
   subject { Game.new(hangman: hangman, presenter: presenter) }
 
   describe "#run" do
-    context "No errors" do
+    context "when there are no invalid characters" do
       let(:guesses) { 0.upto(10).map { ('a'..'m').to_a.sample } }
 
-      it "should loop until finished" do
+      it "should run until finished, and consume all characters" do
         subject.run
         expect(hangman.guesses).to eq 7
         expect(presenter.asked).to eq 7
@@ -61,7 +61,7 @@ RSpec.describe Game do
       end
     end
 
-    context "Has errors" do
+    context "when there are invalid characters as well as valid characters" do
       let(:guesses) do
         [
           ('n'..'z').to_a.sample,
@@ -71,7 +71,7 @@ RSpec.describe Game do
         ] + 0.upto(10).map { ('a'..'m').to_a.sample }
       end
 
-      it "should loop until finished, and have asked some errors" do
+      it "should loop until finished, and consume all characters, and display the correct number of errors" do
         subject.run
         expect(hangman.guesses).to eq 7
         expect(presenter.asked).to eq 11 # 4 errors
