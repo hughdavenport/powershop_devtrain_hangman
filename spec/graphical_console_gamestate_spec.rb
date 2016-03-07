@@ -294,7 +294,7 @@ EOF
     end
 
     context "with more 10 lives left" do
-      let(:lives) { 11 }
+      let(:lives) { 12 }
 
       describe "#state" do
         it "should end with an empty hangman picture" do
