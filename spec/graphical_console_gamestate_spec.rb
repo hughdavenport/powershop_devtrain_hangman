@@ -293,6 +293,16 @@ EOF
       end
     end
 
+    context "with more 10 lives left" do
+      let(:lives) { 11 }
+
+      describe "#state" do
+        it "should end with an empty hangman picture" do
+          expect(subject).to end_with empty_picture
+        end
+      end
+    end
+
     context "with 10 lives left" do
       let(:lives) { 10 }
 
@@ -403,6 +413,16 @@ EOF
       describe "#state" do
         it "should start with the parent class #state method" do
           expect(subject).to start_with parent_state
+        end
+      end
+
+      context "with more 10 lives left" do
+        let(:lives) { 11 }
+
+        describe "#state" do
+          it "should end with an empty hangman picture" do
+            expect(subject).to end_with empty_picture
+          end
         end
       end
 
