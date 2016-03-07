@@ -218,22 +218,6 @@ RSpec.describe Language do
       end
     end
 
-    context "with an argument of mi (Maori)" do
-      subject { LanguageLoader.load("mi") }
-
-      describe "#lang" do
-        it "should be set to maori" do
-          expect(subject.lang).to eq "mi"
-        end
-      end
-
-      describe "#tranlate" do
-        it "TODO should have tests" do
-          expect(true).to be false
-        end
-      end
-    end
-
     context "with an invalid argument" do
       subject { LanguageLoader.load("invalid") }
 
