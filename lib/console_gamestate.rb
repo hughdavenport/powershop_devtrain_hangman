@@ -1,11 +1,11 @@
 class ConsoleGamestate
-  def state(hangman, language)
+  def state(hangman, language, debug=false)
     gamestate = if hangman.finished?
       finished_state(hangman, language)
     else
       in_progress_state(hangman, language)
     end
-    gamestate += hangman.inspect if @debug
+    gamestate += "\n#{hangman.inspect}" if debug
     gamestate
   end
 

@@ -106,4 +106,22 @@ RSpec.describe ConsoleGamestate do
       end
     end
   end
+
+  context "with debug mode" do
+    subject { ConsoleGamestate.new.state(hangman, language, true) }
+
+    describe "#state" do
+      it "should include the inspection of the hangman object" do
+        expect(subject).to include hangman.inspect
+      end
+    end
+  end
+
+  context "without debug mode" do
+    describe "#state" do
+      it "should not include the inspection of the hangman object" do
+        expect(subject).not_to include hangman.inspect
+      end
+    end
+  end
 end

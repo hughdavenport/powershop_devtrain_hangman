@@ -2,9 +2,9 @@ require_relative 'console_gamestate'
 
 class GraphicalConsoleGamestate < ConsoleGamestate
   # Actually has a graphical representation of the hanging man
-  def state(hangman, language)
+  def state(hangman, language, debug=false)
     text = [
-      super(hangman, language),
+      super(hangman, language, debug),
       '',
       picture(hangman.lives),
     ].join("\n")

@@ -16,7 +16,7 @@ class ConsolePresenter
   def display_game(hangman, error=nil)
     @io.clear_screen
     display_error(error) if error
-    @io.puts(@gamestate.state(hangman, @language))
+    @io.puts(@gamestate.state(hangman, @language, @debug))
   end
 
   def display_error(error=nil)
