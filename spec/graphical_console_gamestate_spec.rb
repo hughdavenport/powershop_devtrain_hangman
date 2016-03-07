@@ -8,13 +8,13 @@ RSpec.describe GraphicalConsoleGamestate do
   let(:guess_word) { "p_______c" }
   let(:lives) { 7 }
   let(:hangman) do
-    hangman = double("Hangman")
-    allow(hangman).to receive(:guessed_word) { ['p'] + [nil]*(word.length-2) + ['c'] }
-    allow(hangman).to receive(:lives)        { lives }
-    allow(hangman).to receive(:guesses)      { guesses }
-    allow(hangman).to receive(:word)         { word }
-    allow(hangman).to receive(:finished?)    { false }
-    hangman
+    double("Hangman").tap do |hangman|
+      allow(hangman).to receive(:guessed_word) { ['p'] + [nil]*(word.length-2) + ['c'] }
+      allow(hangman).to receive(:lives)        { lives }
+      allow(hangman).to receive(:guesses)      { guesses }
+      allow(hangman).to receive(:word)         { word }
+      allow(hangman).to receive(:finished?)    { false }
+    end
   end
 
   let(:parent_state) { ConsoleGamestate.new.state(hangman, language) }

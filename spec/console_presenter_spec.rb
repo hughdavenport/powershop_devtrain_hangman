@@ -3,19 +3,19 @@ require 'console_presenter'
 RSpec.describe ConsolePresenter do
   let(:input)  { double("STDIN") }
   let(:output) do
-    output = double("STDOUT")
-    printed = ""
-    allow(output).to receive(:print) do |text|
-      printed += text
-    end
-    flushed = ""
-    allow(output).to receive(:flush) do
-      flushed += printed
+    double("STDOUT").tap do |output|
       printed = ""
+      allow(output).to receive(:print) do |text|
+        printed += text
+      end
+      flushed = ""
+      allow(output).to receive(:flush) do
+        flushed += printed
+        printed = ""
+      end
+      allow(output).to receive(:printed) { printed }
+      allow(output).to receive(:flushed) { flushed }
     end
-    allow(output).to receive(:printed) { printed }
-    allow(output).to receive(:flushed) { flushed }
-    output
   end
   let(:io)       { ConsoleIO.new(input: input, output: output) }
   let(:language) { Language.new } # Will always just do [[:langstringhere||:argshere]] syntax, test langs seperately
@@ -25,20 +25,16 @@ RSpec.describe ConsolePresenter do
 
   let(:word) { "pneumatic" }
   let(:hangman) do
-    hangman = double("Hangman")
-    allow(hangman).to receive(:guessed_word) { ['p'] + [nil]*(word.length-1) }
-    allow(hangman).to receive(:lives)        { 7 }
-    allow(hangman).to receive(:guesses)      { ['p'] }
-    allow(hangman).to receive(:word)         { word }
-    allow(hangman).to receive(:finished?)    { false }
-    hangman
+    double("Hangman").tap do |hangman|
+      allow(hangman).to receive(:guessed_word) { ['p'] + [nil]*(word.length-1) }
+      allow(hangman).to receive(:lives)        { 7 }
+      allow(hangman).to receive(:guesses)      { ['p'] }
+      allow(hangman).to receive(:word)         { word }
+      allow(hangman).to receive(:finished?)    { false }
+    end
   end
 
-  let(:gamestate) do
-    gamestate = double("Gamestate")
-    allow(gamestate).to receive(:state) { "__gamestate__" }
-    gamestate
-  end
+  let(:gamestate) { double("Gamestate").tap { |gamestate| allow(gamestate).to receive(:state) { "__gamestate__" } } }
 
   let(:ansi_beginning_of_line) { "\e[H" }
   let(:ansi_erase_screen)      { "\e[2J" }
