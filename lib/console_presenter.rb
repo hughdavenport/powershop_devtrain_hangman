@@ -28,7 +28,7 @@ class ConsolePresenter
     @io.print(message)
   end
 
-  def getch
+  def input_character
     @io.getch
   end
 

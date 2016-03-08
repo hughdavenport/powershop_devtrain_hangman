@@ -26,7 +26,7 @@ class Game
     @presenter.display_game(@hangman)
     begin
       @presenter.ask_for_letter
-      letter = @presenter.getch
+      letter = @presenter.input_character
       break unless error(letter)
       @presenter.display_game(@hangman, error(letter))
     end while true

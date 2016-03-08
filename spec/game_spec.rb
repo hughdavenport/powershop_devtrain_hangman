@@ -14,7 +14,7 @@ RSpec.describe Game do
         asked += 1
       }
       allow(presenter).to receive(:asked) { asked }
-      allow(presenter).to receive(:getch) { guesses.shift } # guesses should be let'd later
+      allow(presenter).to receive(:input_character) { guesses.shift } # guesses should be let'd later
     end
   end
 

@@ -93,7 +93,7 @@ RSpec.describe ConsolePresenter do
       before           { allow(input).to receive(:getch) { character } }
 
       it "should return the same character" do
-        expect(subject.getch).to eq character
+        expect(subject.input_character).to eq character
       end
     end
   end
