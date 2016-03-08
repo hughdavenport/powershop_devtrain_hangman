@@ -53,31 +53,31 @@ RSpec.describe Language do
         end
 
         it "should return the correct phrase for lives remaining in current game, with 4 lives left" do
-          expect(subject.translate(:you_have_lives_remaining, {:lives => 4})).to eq "You have 4 lives remaining"
+          expect(subject.translate(:you_have_lives_remaining, lives: 4)).to eq "You have 4 lives remaining"
         end
 
         it "should return the correct phrase for lives remaining in finished game, with 0 lives left" do
-          expect(subject.translate(:you_had_lives_remaining, {:lives => 0})).to eq "You had 0 lives remaining"
+          expect(subject.translate(:you_had_lives_remaining, lives: 0)).to eq "You had 0 lives remaining"
         end
 
         it "should return the correct phrase for the current guess, with a guess of h_ngm_n" do
-          expect(subject.translate(:current_guess_is, {:guess => "h_ngm_n"})).to eq "Current guess is: h_ngm_n"
+          expect(subject.translate(:current_guess_is, guess: "h_ngm_n")).to eq "Current guess is: h_ngm_n"
         end
 
         it "should return the correct phrase for final guess, with a guess of hangman" do
-          expect(subject.translate(:final_guess_was, {:guess => "hangman"})).to eq "Final guess was: hangman"
+          expect(subject.translate(:final_guess_was, guess: "hangman")).to eq "Final guess was: hangman"
         end
 
         it "should return the correct phrase for current guess letters, with a e i o u" do
-          expect(subject.translate(:you_have_guessed, {:guesses => "a e i o u"})).to eq "You have guessed: a e i o u"
+          expect(subject.translate(:you_have_guessed, guesses: "a e i o u")).to eq "You have guessed: a e i o u"
         end
 
         it "should return the correct phrase for final guessed letters, with a b c z x y" do
-          expect(subject.translate(:you_had_guessed, {:guesses => "a b c z x y"})).to eq "You had guessed: a b c z x y"
+          expect(subject.translate(:you_had_guessed, guesses: "a b c z x y")).to eq "You had guessed: a b c z x y"
         end
 
         it "should return the correct phrase for the displayed word, with a word of powershop" do
-          expect(subject.translate(:the_word_was, {:word => "powershop"})).to eq "The word was: powershop"
+          expect(subject.translate(:the_word_was, word: "powershop")).to eq "The word was: powershop"
         end
       end
     end
@@ -121,31 +121,31 @@ RSpec.describe Language do
         end
 
         it "should return the correct phrase for lives remaining in current game, with 4 lives left" do
-          expect(subject.translate(:you_have_lives_remaining, {:lives => 4})).to eq "Usted tiene 4 vidas restante"
+          expect(subject.translate(:you_have_lives_remaining, lives: 4)).to eq "Usted tiene 4 vidas restante"
         end
 
         it "should return the correct phrase for lives remaining in finished game, with 0 lives left" do
-          expect(subject.translate(:you_had_lives_remaining, {:lives => 0})).to eq "Usted tenía 0 vidas restante"
+          expect(subject.translate(:you_had_lives_remaining, lives: 0)).to eq "Usted tenía 0 vidas restante"
         end
 
         it "should return the correct phrase for the current guess, with a guess of h_ngm_n" do
-          expect(subject.translate(:current_guess_is, {:guess => "h_ngm_n"})).to eq "Conjectura actual es: h_ngm_n"
+          expect(subject.translate(:current_guess_is, guess: "h_ngm_n")).to eq "Conjectura actual es: h_ngm_n"
         end
 
         it "should return the correct phrase for final guess, with a guess of hangman" do
-          expect(subject.translate(:final_guess_was, {:guess => "hangman"})).to eq "Conjectura final fue: hangman"
+          expect(subject.translate(:final_guess_was, guess: "hangman")).to eq "Conjectura final fue: hangman"
         end
 
         it "should return the correct phrase for current guess letters, with a e i o u" do
-          expect(subject.translate(:you_have_guessed, {:guesses => "a e i o u"})).to eq "Usted tiene adivinado: a e i o u"
+          expect(subject.translate(:you_have_guessed, guesses: "a e i o u")).to eq "Usted tiene adivinado: a e i o u"
         end
 
         it "should return the correct phrase for final guessed letters, with a b c z x y" do
-          expect(subject.translate(:you_had_guessed, {:guesses => "a b c z x y"})).to eq "Usted ha adivinado: a b c z x y"
+          expect(subject.translate(:you_had_guessed, guesses: "a b c z x y")).to eq "Usted ha adivinado: a b c z x y"
         end
 
         it "should return the correct phrase for the displayed word, with a word of powershop" do
-          expect(subject.translate(:the_word_was, {:word => "powershop"})).to eq "La palabra fue: powershop"
+          expect(subject.translate(:the_word_was, word: "powershop")).to eq "La palabra fue: powershop"
         end
       end
     end
@@ -189,31 +189,31 @@ RSpec.describe Language do
         end
 
         it "should return the correct phrase for lives remaining in current game, with 4 lives left" do
-          expect(subject.translate(:you_have_lives_remaining, {:lives => 4})).to eq "Vous avez 4 vies restant"
+          expect(subject.translate(:you_have_lives_remaining, lives: 4)).to eq "Vous avez 4 vies restant"
         end
 
         it "should return the correct phrase for lives remaining in finished game, with 0 lives left" do
-          expect(subject.translate(:you_had_lives_remaining, {:lives => 0})).to eq "Vous aviez 0 vies restant"
+          expect(subject.translate(:you_had_lives_remaining, lives: 0)).to eq "Vous aviez 0 vies restant"
         end
 
         it "should return the correct phrase for the current guess, with a guess of h_ngm_n" do
-          expect(subject.translate(:current_guess_is, {:guess => "h_ngm_n"})).to eq "Conjecture actualle est: h_ngm_n"
+          expect(subject.translate(:current_guess_is, guess: "h_ngm_n")).to eq "Conjecture actualle est: h_ngm_n"
         end
 
         it "should return the correct phrase for final guess, with a guess of hangman" do
-          expect(subject.translate(:final_guess_was, {:guess => "hangman"})).to eq "Conjecture finale était: hangman"
+          expect(subject.translate(:final_guess_was, guess: "hangman")).to eq "Conjecture finale était: hangman"
         end
 
         it "should return the correct phrase for current guess letters, with a e i o u" do
-          expect(subject.translate(:you_have_guessed, {:guesses => "a e i o u"})).to eq "Vous avez deviné: a e i o u"
+          expect(subject.translate(:you_have_guessed, guesses: "a e i o u")).to eq "Vous avez deviné: a e i o u"
         end
 
         it "should return the correct phrase for final guessed letters, with a b c z x y" do
-          expect(subject.translate(:you_had_guessed, {:guesses => "a b c z x y"})).to eq "Vous aviez deviné: a b c z x y"
+          expect(subject.translate(:you_had_guessed, guesses: "a b c z x y")).to eq "Vous aviez deviné: a b c z x y"
         end
 
         it "should return the correct phrase for the displayed word, with a word of powershop" do
-          expect(subject.translate(:the_word_was, {:word => "powershop"})).to eq "Le mot était: powershop"
+          expect(subject.translate(:the_word_was, word: "powershop")).to eq "Le mot était: powershop"
         end
       end
     end

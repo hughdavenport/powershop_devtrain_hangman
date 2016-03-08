@@ -15,18 +15,18 @@ class ConsoleGamestate
     [
       language.translate(:game_over),
       language.translate(hangman.won? ? :you_won : :you_lost),
-      language.translate(:you_had_lives_remaining, {:lives => hangman.lives}),
-      language.translate(:final_guess_was, {:guess => guessed_word(hangman)}),
-      language.translate(:you_had_guessed, {:guesses => hangman.guesses.join(" ")}),
-      language.translate(:the_word_was, {:word => hangman.word}),
+      language.translate(:you_had_lives_remaining, lives: hangman.lives),
+      language.translate(:final_guess_was, guess: guessed_word(hangman)),
+      language.translate(:you_had_guessed, guesses: hangman.guesses.join(" ")),
+      language.translate(:the_word_was, word: hangman.word),
     ].join("\n")
   end
 
   def in_progress_state(hangman, language)
     [
-      language.translate(:you_have_lives_remaining, {:lives => hangman.lives}),
-      language.translate(:current_guess_is, {:guess => guessed_word(hangman)}),
-      language.translate(:you_have_guessed, {:guesses => hangman.guesses.join(" ")}),
+      language.translate(:you_have_lives_remaining, lives: hangman.lives),
+      language.translate(:current_guess_is, guess: guessed_word(hangman)),
+      language.translate(:you_have_guessed, guesses: hangman.guesses.join(" ")),
     ].join("\n")
   end
 
