@@ -3,6 +3,13 @@ if ENV.fetch("HANGMAN_DEBUG", nil)
   require 'simplecov'
   SimpleCov.start
 end
+
 require_relative 'lib/game'
-g = Game.new
+require_relative 'lib/language_loader'
+require_relative 'lib/console_presenter'
+
+language = LanguageLoader.load(ENV.fetch("LANGUAGE", "en"))
+debug = ENV.fetch("HANGMAN_DEBUG", nil)
+
+g = Game.new(presenter: ConsolePresenter.new(debug: debug, language: language))
 g.run

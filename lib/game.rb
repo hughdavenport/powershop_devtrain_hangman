@@ -4,10 +4,8 @@ require_relative 'console_presenter'
 require_relative 'errors'
 
 class Game
-  def initialize(debug: ENV.fetch("HANGMAN_DEBUG", nil),
-                 hangman: Hangman.new(word: Wordlist.new.word),
-                 language: LanguageLoader.load(ENV.fetch("LANGUAGE", "en")),
-                 presenter: ConsolePresenter.new(debug: debug, language: language))
+  def initialize(hangman: Hangman.new(word: Wordlist.new.word),
+                 presenter: ConsolePresenter.new)
     # TODO get a word based on language
     @hangman = hangman
     @presenter = presenter
