@@ -8,7 +8,7 @@ class ConsoleGamestate
       end,
       debug_state(hangman, language, debug),
       extra_state(hangman, language, debug),
-    ].select { |entry| entry }.join("\n")
+    ].compact.join("\n")
   end
 
   protected
