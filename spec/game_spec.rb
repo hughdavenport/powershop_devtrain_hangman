@@ -21,10 +21,10 @@ RSpec.describe Game do
   let(:hangman) do
     double("Hangman").tap do |hangman|
       guesses = 0
-      allow(hangman).to receive(:guess) {|letter| guesses += 1 }
+      allow(hangman).to receive(:submit_guess) {|letter| guesses += 1 }
       allow(hangman).to receive(:finished?) { guesses >= 7 } # Just a testing number, real end game tested elsewhere
       allow(hangman).to receive(:guesses) { guesses }
-      allow(hangman).to receive(:error) do |letter|
+      allow(hangman).to receive(:error_message) do |letter|
         # just some testing data
         if ('a'..'m').include?(letter)
           # good, always (not in real hangman object, but thats tested elsewhere

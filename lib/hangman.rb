@@ -39,8 +39,7 @@ class Hangman
     @word if finished?
   end
 
-  def error(letter)
-    raise ArgumentError if !letter.is_a?(String) || letter.empty? || letter.length > 1
+  def error_message(letter)
     if guesses.include?(letter)
       :already_guessed
     elsif ! (letter =~ /\A[a-zA-Z]\z/)
@@ -50,8 +49,8 @@ class Hangman
     end
   end
 
-  def guess(letter)
-    raise ValidateError if error(letter)
+  def submit_guess(letter)
+    raise ValidateError if error_message(letter)
     guesses << letter
   end
 end

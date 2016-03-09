@@ -13,7 +13,7 @@ class Game
 
   def run
     until @hangman.finished?
-      @hangman.guess(guess)
+      @hangman.submit_guess(guess)
     end
     @presenter.display_game(@hangman)
   end
@@ -36,6 +36,6 @@ class Game
       already_guessed:       :input_has_already_been_guessed,
       invalid_character:     :input_is_invalid,
       not_lower_case_letter: :input_is_not_lower_case,
-    }[@hangman.error(letter)]
+    }[@hangman.error_message(letter)]
   end
 end

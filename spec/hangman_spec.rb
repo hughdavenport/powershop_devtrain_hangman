@@ -65,7 +65,7 @@ RSpec.describe Hangman do
     let(:guesses) { ['v', 'a', 'c', 'u', 'z', 'k'] }
     let(:correct) { 'e' }
     subject       { Hangman.new(starting_lives: lives, word: word) }
-    before        { guesses.each { |guess| subject.guess(guess) } }
+    before        { guesses.each { |guess| subject.submit_guess(guess) } }
 
     describe "the game" do
       it { is_expected.not_to be_won }
@@ -99,7 +99,7 @@ RSpec.describe Hangman do
 
     context "then I make one more incorrect guess" do
       let(:guess) { 'o' }
-      before      { subject.guess(guess) }
+      before      { subject.submit_guess(guess) }
 
       describe "the game" do
         it { is_expected.to be_lost }
@@ -128,7 +128,7 @@ RSpec.describe Hangman do
 
     context "then I make a correct guess" do
       let(:guess) { correct }
-      before      { subject.guess(guess) }
+      before      { subject.submit_guess(guess) }
 
       describe "the game" do
         it { is_expected.not_to be_lost }
@@ -161,7 +161,7 @@ RSpec.describe Hangman do
     let(:word)    { "megaprosopous" }
     let(:guesses) { ['e', 'a', 'o', 'u', 'i', 'm', 'r', 's', 'g'] } # Just missing a p, and i is incorrect
     subject       { Hangman.new(starting_lives: lives, word: word) }
-    before        { guesses.each { |guess| subject.guess(guess) } }
+    before        { guesses.each { |guess| subject.submit_guess(guess) } }
 
     let(:missing_letter) { 'p' }
 
@@ -197,7 +197,7 @@ RSpec.describe Hangman do
 
     context "then I make another incorrect guess" do
       let(:guess) { 'z' }
-      before      { subject.guess(guess) }
+      before      { subject.submit_guess(guess) }
 
       describe "the game" do
         it { is_expected.not_to be_lost }
@@ -232,7 +232,7 @@ RSpec.describe Hangman do
 
     context "then I make a repeat guess" do
       let(:guess) { 'g' }
-      before { expect { subject.guess(guess) }.to raise_error(ValidateError) }
+      before { expect { subject.submit_guess(guess) }.to raise_error(ValidateError) }
 
       describe "the game" do
         it { is_expected.not_to be_lost }
@@ -267,7 +267,7 @@ RSpec.describe Hangman do
 
     context "then I make the last correct guess" do
       let(:guess) { 'p' }
-      before      { subject.guess(guess) }
+      before      { subject.submit_guess(guess) }
 
       describe "the game" do
         it { is_expected.not_to be_lost }
@@ -301,45 +301,13 @@ RSpec.describe Hangman do
     end
   end
 
-  describe "#error" do
-    context "with an argument of nil" do
-      let(:guess) { nil }
-
-      it "should raise an argument error" do
-        expect { subject.error(guess) }.to raise_error(ArgumentError)
-      end
-    end
-
-    context "with a non string argument" do
-      let(:guess) { [] }
-
-      it "should raise an argument error" do
-        expect { subject.error(guess) }.to raise_error(ArgumentError)
-      end
-    end
-
-    context "with an empty string argument" do
-      let(:guess) { '' }
-
-      it "should raise an argument error" do
-        expect { subject.error(guess) }.to raise_error(ArgumentError)
-      end
-    end
-
-    context "with a multiple character string argument" do
-      let(:guess) { 'aa' }
-
-      it "should raise an argument error" do
-        expect { subject.error(guess) }.to raise_error(ArgumentError)
-      end
-    end
-
+  describe "#error_message" do
     context "with an upper case character argument" do
       let(:guess) { 'A' }
       let(:error) { :not_lower_case_letter }
 
       it "should return the correct error message" do
-        expect(subject.error(guess)).to be error
+        expect(subject.error_message(guess)).to be error
       end
     end
 
@@ -348,61 +316,61 @@ RSpec.describe Hangman do
       let(:error) { :invalid_character }
 
       it "should return the correct error message" do
-        expect(subject.error(guess)).to be error
+        expect(subject.error_message(guess)).to be error
       end
     end
 
     context "with a repeated incorrect guess as an argument" do
       let(:guess) { 'z' }
       let(:error) { :already_guessed }
-      before      { subject.guess(guess) }
+      before      { subject.submit_guess(guess) }
 
       it "should return the correct error message" do
-        expect(subject.error(guess)).to be error
+        expect(subject.error_message(guess)).to be error
       end
     end
 
     context "with a repeated correct guess as an argument" do
       let(:guess) { 'a' }
       let(:error) { :already_guessed }
-      before      { subject.guess(guess) }
+      before      { subject.submit_guess(guess) }
 
       it "should return the correct error message" do
-        expect(subject.error(guess)).to be error
+        expect(subject.error_message(guess)).to be error
       end
     end
   end
 
-  describe "#guess" do
+  describe "#submit_guess" do
     context "with an argument of nil" do
       let(:guess) { nil }
 
-      it "should raise an argument error" do
-        expect { subject.error(guess) }.to raise_error(ArgumentError)
+      it "should raise an validate error" do
+        expect { subject.submit_guess(guess) }.to raise_error(ValidateError)
       end
     end
 
     context "with a non string argument" do
       let(:guess) { [] }
 
-      it "should raise an argument error" do
-        expect { subject.error(guess) }.to raise_error(ArgumentError)
+      it "should raise an validate error" do
+        expect { subject.submit_guess(guess) }.to raise_error(ValidateError)
       end
     end
 
     context "with an empty string argument" do
       let(:guess) { '' }
 
-      it "should raise an argument error" do
-        expect { subject.error(guess) }.to raise_error(ArgumentError)
+      it "should raise an validate error" do
+        expect { subject.submit_guess(guess) }.to raise_error(ValidateError)
       end
     end
 
     context "with a multiple character string argument" do
       let(:guess) { 'aa' }
 
-      it "should raise an argument error" do
-        expect { subject.error(guess) }.to raise_error(ArgumentError)
+      it "should raise an validate error" do
+        expect { subject.submit_guess(guess) }.to raise_error(ValidateError)
       end
     end
 
@@ -410,7 +378,7 @@ RSpec.describe Hangman do
       let(:guess) { 'A' }
 
       it "should raise a validate error" do
-        expect { subject.guess (guess) }.to raise_error(ValidateError)
+        expect { subject.submit_guess(guess) }.to raise_error(ValidateError)
       end
     end
 
@@ -418,25 +386,25 @@ RSpec.describe Hangman do
       let(:guess) { '~' }
 
       it "should raise a validate error" do
-        expect { subject.guess (guess) }.to raise_error(ValidateError)
+        expect { subject.submit_guess(guess) }.to raise_error(ValidateError)
       end
     end
 
     context "with a repeated incorrect guess argument" do
       let(:guess) { 'z' }
-      before      { subject.guess(guess) }
+      before      { subject.submit_guess(guess) }
 
       it "should raise a validate error" do
-        expect { subject.guess (guess) }.to raise_error(ValidateError)
+        expect { subject.submit_guess(guess) }.to raise_error(ValidateError)
       end
     end
 
     context "with a repeated correct guess argument" do
       let(:guess) { 'a' }
-      before      { subject.guess(guess) }
+      before      { subject.submit_guess(guess) }
 
       it "should raise a validate error" do
-        expect { subject.guess (guess) }.to raise_error(ValidateError)
+        expect { subject.submit_guess(guess) }.to raise_error(ValidateError)
       end
     end
   end
