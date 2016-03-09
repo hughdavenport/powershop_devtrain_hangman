@@ -27,9 +27,9 @@ RSpec.describe Hangman do
         end
       end
 
-      describe "#guessed_word" do
+      describe "#word_guessed_so_far" do
         it "should be empty" do
-          expect(subject.guessed_word).to eq ([nil]*word.length)
+          expect(subject.word_guessed_so_far).to eq ([nil]*word.length)
         end
       end
     end
@@ -85,9 +85,9 @@ RSpec.describe Hangman do
       end
     end
 
-    describe "#guessed_word" do
+    describe "#word_guessed_so_far" do
       it "should be empty" do
-        expect(subject.guessed_word).to eq ([nil]*word.length)
+        expect(subject.word_guessed_so_far).to eq ([nil]*word.length)
       end
     end
 
@@ -183,9 +183,9 @@ RSpec.describe Hangman do
       end
     end
 
-    describe "#guessed_word" do
+    describe "#word_guessed_so_far" do
       it "should be correct" do
-        expect(subject.guessed_word).to eq (word.chars.to_a.map { |character| character unless character == missing_letter })
+        expect(subject.word_guessed_so_far).to eq (word.chars.to_a.map { |character| character unless character == missing_letter })
       end
     end
 
@@ -217,9 +217,9 @@ RSpec.describe Hangman do
         end
       end
 
-      describe "#guessed_word" do
+      describe "#word_guessed_so_far" do
         it "should be correct" do
-          expect(subject.guessed_word).to eq (word.chars.to_a.map { |character| character unless character == missing_letter })
+          expect(subject.word_guessed_so_far).to eq (word.chars.to_a.map { |character| character unless character == missing_letter })
         end
       end
 
@@ -252,9 +252,9 @@ RSpec.describe Hangman do
         end
       end
 
-      describe "#guessed_word" do
+      describe "#word_guessed_so_far" do
         it "should be correct" do
-          expect(subject.guessed_word).to eq (word.chars.to_a.map { |character| character unless character == missing_letter })
+          expect(subject.word_guessed_so_far).to eq (word.chars.to_a.map { |character| character unless character == missing_letter })
         end
       end
 
@@ -293,9 +293,9 @@ RSpec.describe Hangman do
         end
       end
 
-      describe "#guessed_word" do
+      describe "#word_guessed_so_far" do
         it "should be the same as the final word" do
-          expect(subject.guessed_word).to eq word.chars.to_a
+          expect(subject.word_guessed_so_far).to eq word.chars.to_a
         end
       end
     end

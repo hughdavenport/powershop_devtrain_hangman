@@ -10,7 +10,7 @@ class Hangman
   end
 
   def won?
-    lives > 0 && guessed_word.join() == @word
+    lives > 0 && word_guessed_so_far.join() == @word
   end
 
   def lost?
@@ -33,7 +33,7 @@ class Hangman
     @guesses.reject { |letter| @word.include?(letter) }
   end
 
-  def guessed_word
+  def word_guessed_so_far
     @word.chars.map { |letter| letter if @guesses.include?(letter) }
   end
 
