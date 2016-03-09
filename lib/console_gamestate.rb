@@ -1,12 +1,24 @@
 class ConsoleGamestate
   def state(hangman, language, debug=false)
-    gamestate = if hangman.finished?
-      finished_state(hangman, language)
-    else
-      in_progress_state(hangman, language)
-    end
-    gamestate += "\n#{hangman.inspect}" if debug
-    gamestate
+    [
+      if hangman.finished?
+        finished_state(hangman, language)
+      else
+        in_progress_state(hangman, language)
+      end,
+      debug_state(hangman, language, debug),
+      extra_state(hangman, language, debug),
+    ].select { |entry| entry }.join("\n")
+  end
+
+  protected
+
+  def debug_state(hangman, language, debug)
+    hangman.inspect if debug
+  end
+
+  def extra_state(hangman, language, debug)
+
   end
 
   private

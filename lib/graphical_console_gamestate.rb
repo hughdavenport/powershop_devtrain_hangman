@@ -2,12 +2,11 @@ require_relative 'console_gamestate'
 
 class GraphicalConsoleGamestate < ConsoleGamestate
   # Actually has a graphical representation of the hanging man
-  def state(hangman, language, debug=false)
-    text = [
-      super(hangman, language, debug),
-      '',
-      picture(hangman.lives),
-    ].join("\n")
+
+  protected
+
+  def extra_state(hangman, language, debug=false)
+    picture(hangman.lives)
   end
 
   private
@@ -54,11 +53,13 @@ class GraphicalConsoleGamestate < ConsoleGamestate
 
 
 
+
 EOF
   end
 
   def missing_pole_picture
     <<EOF
+
 
 
 
@@ -83,6 +84,7 @@ EOF
 
   def missing_beam_picture
     <<EOF
+
      |
      |
      |
@@ -107,6 +109,7 @@ EOF
 
   def missing_support_picture
     <<EOF
+
      +------------
      |
      |
@@ -131,6 +134,7 @@ EOF
 
   def missing_rope_picture
     <<EOF
+
      +------------
      |  /
      | /
@@ -155,6 +159,7 @@ EOF
 
   def missing_head_picture
     <<EOF
+
      +-----------+
      |  /        |
      | /         |
@@ -179,6 +184,7 @@ EOF
 
   def missing_torso_picture
     <<EOF
+
      +-----------+
      |  /        |
      | /        _|_
@@ -203,6 +209,7 @@ EOF
 
   def missing_both_arms_picture
     <<EOF
+
      +-----------+
      |  /        |
      | /        _|_
@@ -227,6 +234,7 @@ EOF
 
   def missing_both_legs_picture
     <<EOF
+
      +-----------+
      |  /        |
      | /        _|_
@@ -251,6 +259,7 @@ EOF
 
   def missing_right_leg_picture
     <<EOF
+
      +-----------+
      |  /        |
      | /        _|_
@@ -275,6 +284,7 @@ EOF
 
   def game_over_picture
     <<EOF
+
      +-----------+
      |  /        |
      | /        _|_
