@@ -4,6 +4,12 @@ require_relative 'console_presenter'
 require_relative 'errors'
 
 class Game
+  ERROR_MAPPINGS = {
+    already_guessed:       :input_has_already_been_guessed,
+    invalid_character:     :input_is_invalid,
+    not_lower_case_letter: :input_is_not_lower_case,
+  }
+
   def initialize(hangman: Hangman.new(word: Wordlist.new.word),
                  presenter: ConsolePresenter.new)
     # TODO get a word based on language
@@ -32,10 +38,6 @@ class Game
   end
 
   def error(letter)
-    {
-      already_guessed:       :input_has_already_been_guessed,
-      invalid_character:     :input_is_invalid,
-      not_lower_case_letter: :input_is_not_lower_case,
-    }[@hangman.error_message(letter)]
+    ERROR_MAPPINGS[@hangman.error_message(letter)]
   end
 end
