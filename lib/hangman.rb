@@ -1,7 +1,9 @@
 class Hangman
   attr_reader :guesses
 
-  def initialize(starting_lives: 10, word: "hangman")
+  DEFAULT_STARTING_LIVES = 10
+
+  def initialize(starting_lives: DEFAULT_STARTING_LIVES, word: "hangman")
     @starting_lives = starting_lives
     @word = word
     @guesses = []
