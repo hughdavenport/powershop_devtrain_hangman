@@ -1,12 +1,16 @@
 require_relative 'language'
+require_relative 'langs/en'
+require_relative 'langs/es'
+require_relative 'langs/fr'
 
 class LanguageLoader
+  LANGUAGES = {
+    en: Language_en.new,
+    es: Language_es.new,
+    fr: Language_fr.new,
+  }
+
   def self.load(lang="en")
-    begin
-      require_relative 'langs/' + lang
-      Object.const_get('Language_' + lang).new
-    rescue NameError, LoadError
-      raise NoSuchLanguageError
-    end
+    LANGUAGES.fetch(lang.to_sym) { raise NoSuchLanguageError }
   end
 end
